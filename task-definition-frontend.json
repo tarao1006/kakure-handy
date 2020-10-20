@@ -1,0 +1,31 @@
+{
+  "family": "kakure-handy-frontend-task",
+  "requiresCompatibilities": [
+    "EC2"
+  ],
+  "networkMode": "bridge",
+  "executionRoleArn": "arn:aws:iam::919536241343:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "kakure-handy-frontend",
+      "image": "919536241343.dkr.ecr.ap-northeast-1.amazonaws.com/kakure-handy/frontend:latest",
+      "cpu": 0,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 0,
+          "containerPort": 80,
+          "protocol": "tcp"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/kakure-handy-frontend-task",
+          "awslogs-region": "ap-northeast-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
