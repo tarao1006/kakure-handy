@@ -19,7 +19,7 @@ import {
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import useUser from '../hooks/useUser'
-import Loading from './loading'
+import Loading from './Loading'
 
 const Copyright: React.FC = () => {
   return (

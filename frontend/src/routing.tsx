@@ -4,13 +4,15 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
-import LogIn from './components/logIn';
-import Top from './components/top';
-import Tables from './components/tables';
-import Table from './components/table';
+import { AuthProvider } from './auth';
+import LogIn from './components/LogIn';
+import Top from './components/Top';
+import Tables from './components/Tables';
+import Table from './components/Table';
 import NewOrder from './components/NewOrder';
-import Loading from './components/loading';
-import { UserStatus } from './hooks/useUser';
+import Loading from './components/Loading';
+import Header from './components/Header';
+import useUser, { UserStatus } from './hooks/useUser';
 
 interface RedirectRouteProps {
   path: string
@@ -36,40 +38,44 @@ const RedirectRoute: React.FC<RedirectRouteProps> = ({ path, userStatus, Child, 
   )
 }
 
-const Routing = ({ userStatus }) => {
+const Routing = () => {
+  const { userStatus } = useUser();
 
   return (
     <Router>
-      <RedirectRoute
-        path='/'
-        exact
-        userStatus={userStatus}
-        Child={Top}
-      />
-      <RedirectRoute
-        path='/tables'
-        exact
-        userStatus={userStatus}
-        Child={Tables}
-      />
-      <RedirectRoute
-        path='/new-order'
-        userStatus={userStatus}
-        Child={NewOrder}
-      />
-      <RedirectRoute
-        path='/table/:id'
-        exact
-        userStatus={userStatus}
-        Child={Table}
-      />
-      <Route path='/login' render={() => {
-        if (!userStatus.updated) {
-          return <Loading />
-        } else {
-          return userStatus.user ? <Redirect to='/' /> : <LogIn />
-        }}
-      } />
+      <AuthProvider>
+        <Header userStatus={userStatus} />
+        <RedirectRoute
+          path='/'
+          exact
+          userStatus={userStatus}
+          Child={Top}
+        />
+        <RedirectRoute
+          path='/tables'
+          exact
+          userStatus={userStatus}
+          Child={Tables}
+        />
+        <RedirectRoute
+          path='/new-order'
+          userStatus={userStatus}
+          Child={NewOrder}
+        />
+        <RedirectRoute
+          path='/table/:id'
+          exact
+          userStatus={userStatus}
+          Child={Table}
+        />
+        <Route path='/login' render={() => {
+          if (!userStatus.updated) {
+            return <Loading />
+          } else {
+            return userStatus.user ? <Redirect to='/' /> : <LogIn />
+          }}
+        } />
+      </AuthProvider>
     </Router>
   )
 }

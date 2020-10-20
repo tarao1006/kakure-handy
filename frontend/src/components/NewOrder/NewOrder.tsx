@@ -11,7 +11,7 @@ import {
   convertToTables,
   convertToItems,
 } from '../../model';
-import Loading from '../loading';
+import Loading from '../Loading';
 import { getTables } from '../../api/table';
 import { getItems } from '../../api/item';
 import { createOrder } from '../../api/order';
