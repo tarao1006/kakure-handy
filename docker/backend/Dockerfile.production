@@ -1,0 +1,20 @@
+FROM golang:latest AS build
+
+ENV GOOS=linux \
+  GOARCH=amd64 \
+  CGO_ENABLED=0
+
+WORKDIR /app
+
+COPY go.mod .
+RUN go mod download
+
+COPY . .
+
+RUN go build -o main
+
+FROM scratch
+COPY --from=golang:latest /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt 
+COPY --from=build /app/main /main
+
+CMD ["/main"]
