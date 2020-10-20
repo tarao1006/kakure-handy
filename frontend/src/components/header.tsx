@@ -10,9 +10,11 @@ import {
   IconButton,
   MenuItem,
   Menu,
+  Button,
+  Typography,
   CssBaseline
 } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { AuthContext, logout } from '../auth';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -24,23 +26,37 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       flexShrink: 1,
       flexBasis: "auto",
-    }
+    },
   }),
 );
 
 const Header: React.FC<{}> = () => {
   const { currentUser } = React.useContext(AuthContext);
   const classes = useStyles();
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
+  const [isLogInPage, setIsLogInPage] = React.useState<boolean>(false);
   const [auth, setAuth] = React.useState<boolean>(!!currentUser);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const history = useHistory();
+  const location = useLocation();
   const open = Boolean(anchorEl);
 
   React.useEffect(() => {
-    if (currentUser) {
-      setAuth(true);
+    if (location.pathname === '/login') {
+      setIsLogInPage(true);
     } else {
-      setAuth(false);
+      setIsLogInPage(false);
+    }
+  }, [location]);
+
+  React.useEffect(() => {
+    if (currentUser !== undefined ) {
+      setIsLoading(false);
+      if (currentUser) {
+        setAuth(true);
+      } else {
+        setAuth(false);
+      }
     }
   }, [currentUser]);
 
@@ -61,6 +77,10 @@ const Header: React.FC<{}> = () => {
     logout();
   }
 
+  const handleLogin = () => {
+    history.push('/login');
+  }
+
   return (
     <>
       <CssBaseline />
@@ -70,8 +90,11 @@ const Header: React.FC<{}> = () => {
             <MenuIcon />
           </IconButton>
           <div className={classes.invisibleSpace} />
-          {auth &&
-            <div>
+          {isLoading || isLogInPage 
+          ? <></>
+          :
+            auth
+           ? (<div>
               <IconButton
                 edge="end"
                 onClick={handleMenu}
@@ -98,7 +121,20 @@ const Header: React.FC<{}> = () => {
                   ログアウト
                 </MenuItem>
               </Menu>
-            </div>
+            </div>)
+            : (
+              <div>
+                <Button
+                  variant="outlined"
+                  color="inherit"
+                  onClick={handleLogin}
+                >
+                <Typography color="inherit">
+                  ログイン
+                </Typography>
+                </Button>
+              </div>
+            )
           }
         </Toolbar>
       </AppBar>
