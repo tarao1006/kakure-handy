@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  backend-production:
+    build:
+      context: ./backend
+      dockerfile: ../docker/backend/Dockerfile.production
+    container_name: kakure-handy-backend-production
+    ports:
+      - 8000:8000
+
+  frontend-production:
+    build:
+      context: ./frontend
+      dockerfile: ../docker/frontend/Dockerfile.production
+    container_name: kakure-handy-frontend-production
+    ports:
+      - 8080:80

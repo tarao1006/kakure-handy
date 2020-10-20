@@ -1,0 +1,56 @@
+version: "3"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: kakure-handy-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 3306:3306
+    volumes:
+      - data-volume:/var/lib/mysql
+      - ./docker/sql:/etc/mysql/conf.d
+
+  migration:
+    image: flyway/flyway
+    container_name: kakure-handy-migration
+    depends_on:
+      - db
+    volumes:
+      - ./database/migration:/flyway/sql
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ../docker/backend/Dockerfile
+    command: reflex -r '\.go$$' -s -- sh -c 'go run web.go'
+    container_name: kakure-handy-backend
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend:/app
+      - ${GOOGLE_APPLICATION_CREDENTIALS}:/tmp/serviceAccount.json
+    working_dir: /app
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../docker/frontend/Dockerfile
+    command: webpack-dev-server
+    container_name: kakure-handy-frontend
+    ports:
+      - 8080:8080
+    environment:
+      - BACKEND_API_BASE=http://localhost:8000
+    env_file:
+      - .firebase.env
+    volumes:
+      - ./frontend:/app
+      - node_modules-volume:/app/node_modules
+    working_dir: /app
+
+volumes:
+  data-volume:
+  node_modules-volume:
