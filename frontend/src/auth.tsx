@@ -39,8 +39,12 @@ const login = async (email: string, password: string, persist: boolean) => {
   return firebase.auth().signInWithEmailAndPassword(email, password);
 }
 
-const logout = async () => {
+const logout = () => {
   return firebase.auth().signOut();
 }
 
-export { AuthContext, AuthProvider, login, logout };
+const resetEmail = (email: string) => {
+  return firebase.auth().sendPasswordResetEmail(email);
+}
+
+export { AuthContext, AuthProvider, login, logout, resetEmail };

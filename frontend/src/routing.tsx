@@ -12,6 +12,8 @@ import Table from './components/Table';
 import NewOrder from './components/NewOrder';
 import Loading from './components/Loading';
 import Header from './components/Header';
+import ForgetPassword from './components/ForgetPassword';
+import MailSent from './components/MailSent';
 
 interface RedirectRouteProps {
   path: string
@@ -37,16 +39,33 @@ const RedirectRoute: React.FC<RedirectRouteProps> = ({ path, Child, exact }) => 
   )
 }
 
+const LogInRoute = () => {
+  const { currentUser } = React.useContext(AuthContext);
+
+  return (
+    <Route
+      path="/login"
+      render={() => {
+        if (currentUser === undefined) {
+          return <Loading />
+        } else {
+          return currentUser === null ? <LogIn /> : <Redirect to="/" />
+        }
+      }}
+    />
+  )
+}
+
 const Routing = () => {
 
   return (
     <Router>
       <AuthProvider>
         <Header />
-        <RedirectRoute
-          path='/'
+        <Route
+          path="/"
           exact
-          Child={Top}
+          component={Top}
         />
         <RedirectRoute
           path='/tables'
@@ -62,7 +81,17 @@ const Routing = () => {
           exact
           Child={Table}
         />
-        <Route path='/login' component={LogIn} />
+        <Route
+          path='/forget-password'
+          exact
+          component={ForgetPassword}
+        />
+        <Route
+          path='/mail-sent'
+          exact
+          component={MailSent}
+        />
+        <LogInRoute />
       </AuthProvider>
     </Router>
   )

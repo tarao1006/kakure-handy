@@ -4,50 +4,23 @@ import {
   useLocation
 } from 'react-router-dom';
 import {
-  Button,
-  TextField,
   Avatar,
+  Box,
+  Button,
+  Checkbox,
+  Container,
   CssBaseline,
   FormControlLabel,
-  Checkbox,
-  Link,
   Grid,
-  Box,
+  Link,
+  TextField,
   Typography,
-  Container,
-  makeStyles
 } from '@material-ui/core';
-import { AuthContext, login } from '../auth';
+import { login } from '../auth';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import useStyles from '../hooks/useStyles';
 import Loading from './Loading'
-
-const Copyright: React.FC = () => {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {`Copyright © Kakure ${new Date().getFullYear()}.`}
-    </Typography>
-  );
-}
-
-const useStyles = makeStyles(theme => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%',
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+import Copyright from './Copyright';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -57,7 +30,6 @@ const defaultEmailAddress = "user01@example.com";
 const defaultPassword = "password"
 
 const LogIn = () => {
-  const { currentUser } = React.useContext(AuthContext);
   const [isLoading, setIsLoading] = React.useState(false)
   const [emailAddress, setEmailAddress] = React.useState(defaultEmailAddress);
   const [password, setPassword] = React.useState(defaultPassword);
@@ -65,10 +37,6 @@ const LogIn = () => {
   const classes = useStyles();
   const query = useQuery();
   const history = useHistory();
-
-  React.useEffect(() => {
-    currentUser && history.push(query.get('redirect_to') ?? '/');
-  }, [currentUser])
 
   const handleEmailAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmailAddress(e.target.value)
@@ -87,6 +55,10 @@ const LogIn = () => {
 
   const handleCheckbox = () => {
     setChecked(!checked);
+  }
+
+  const handleForgetPassword = () => {
+    history.push('/forget-password');
   }
 
   return (
@@ -132,7 +104,7 @@ const LogIn = () => {
           />
           <FormControlLabel
             control={<Checkbox checked={checked} color="primary" onChange={handleCheckbox} />}
-            label="Remember me"
+            label="パスワードを保存する"
           />
           <Button
             type="submit"
@@ -145,13 +117,8 @@ const LogIn = () => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link variant="body2" onClick={handleForgetPassword}>
                 パスワードを忘れた場合
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                新規登録
               </Link>
             </Grid>
           </Grid>

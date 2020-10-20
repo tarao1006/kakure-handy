@@ -33,8 +33,6 @@ const useStyles = makeStyles((theme: Theme) =>
 const Header: React.FC<{}> = () => {
   const { currentUser } = React.useContext(AuthContext);
   const classes = useStyles();
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [isLogInPage, setIsLogInPage] = React.useState<boolean>(false);
   const [auth, setAuth] = React.useState<boolean>(!!currentUser);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const history = useHistory();
@@ -42,16 +40,7 @@ const Header: React.FC<{}> = () => {
   const open = Boolean(anchorEl);
 
   React.useEffect(() => {
-    if (location.pathname === '/login') {
-      setIsLogInPage(true);
-    } else {
-      setIsLogInPage(false);
-    }
-  }, [location]);
-
-  React.useEffect(() => {
     if (currentUser !== undefined ) {
-      setIsLoading(false);
       if (currentUser) {
         setAuth(true);
       } else {
@@ -90,11 +79,8 @@ const Header: React.FC<{}> = () => {
             <MenuIcon />
           </IconButton>
           <div className={classes.invisibleSpace} />
-          {isLoading || isLogInPage 
-          ? <></>
-          :
-            auth
-           ? (<div>
+          {auth &&
+            <div>
               <IconButton
                 edge="end"
                 onClick={handleMenu}
@@ -121,20 +107,7 @@ const Header: React.FC<{}> = () => {
                   ログアウト
                 </MenuItem>
               </Menu>
-            </div>)
-            : (
-              <div>
-                <Button
-                  variant="outlined"
-                  color="inherit"
-                  onClick={handleLogin}
-                >
-                <Typography color="inherit">
-                  ログイン
-                </Typography>
-                </Button>
-              </div>
-            )
+            </div>
           }
         </Toolbar>
       </AppBar>
