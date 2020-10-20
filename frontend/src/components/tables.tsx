@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { List, ListItem, ListItemText } from '@material-ui/core';
-import useUser from '../hooks/useUser';
+import { AuthContext } from '../auth';
 import { getTables } from '../api/table'
 import { Table, convertToTables } from '../model';
 
@@ -17,7 +17,7 @@ const convertTimeToHM = (start: Date, end: Date): string => {
 }
 
 const Tables = () => {
-  const { userStatus } = useUser();
+  const { currentUser } = React.useContext(AuthContext);
   const [tables, setTables] = React.useState<Table[]>([]);
   const [date, setDate] = React.useState<Date>(new Date());
 
@@ -25,8 +25,8 @@ const Tables = () => {
     let cleanedUp = false;
     const fetch = async () => {
       if (!cleanedUp) {
-        if (userStatus.user) {
-          const token = await userStatus.user.getIdToken();
+        if (currentUser) {
+          const token = await currentUser.getIdToken();
           let t = await getTables(token);
           t = convertToTables(t);
           setTables(t);
@@ -38,7 +38,7 @@ const Tables = () => {
       cleanedUp = true;
     }
     return cleanUp;
-  }, [userStatus.user]);
+  }, [currentUser]);
 
   React.useEffect(() => {
     const subscription = setInterval(() => {

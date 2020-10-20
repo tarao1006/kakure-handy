@@ -12,8 +12,8 @@ import {
   Menu,
   CssBaseline
 } from '@material-ui/core';
-import useUser, { UserStatus } from '../hooks/useUser';
 import { useHistory } from 'react-router-dom';
+import { AuthContext, logout } from '../auth';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -28,25 +28,21 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-interface HeaderProps {
-  userStatus: UserStatus
-}
-
-const Header: React.FC<HeaderProps> = ({ userStatus }) => {
+const Header: React.FC<{}> = () => {
+  const { currentUser } = React.useContext(AuthContext);
   const classes = useStyles();
-  const [auth, setAuth] = React.useState<boolean>(!!userStatus.user);
+  const [auth, setAuth] = React.useState<boolean>(!!currentUser);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const history = useHistory();
-  const { logout } = useUser();
   const open = Boolean(anchorEl);
 
   React.useEffect(() => {
-    if (userStatus.user) {
+    if (currentUser) {
       setAuth(true);
     } else {
       setAuth(false);
     }
-  }, [userStatus]);
+  }, [currentUser]);
 
   const handleClick = () => {
     history.push('/');

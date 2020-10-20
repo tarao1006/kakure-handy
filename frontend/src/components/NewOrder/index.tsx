@@ -1,2 +1,1 @@
-export * from './NewOrder';
-export { default } from './NewOrder';
+export { NewOrder as default } from './NewOrder';

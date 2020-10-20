@@ -17,8 +17,8 @@ import {
   Container,
   makeStyles
 } from '@material-ui/core';
+import { AuthContext, login } from '../auth';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import useUser from '../hooks/useUser'
 import Loading from './Loading'
 
 const Copyright: React.FC = () => {
@@ -57,6 +57,7 @@ const defaultEmailAddress = "user01@example.com";
 const defaultPassword = "password"
 
 const LogIn = () => {
+  const { currentUser } = React.useContext(AuthContext);
   const [isLoading, setIsLoading] = React.useState(false)
   const [emailAddress, setEmailAddress] = React.useState(defaultEmailAddress);
   const [password, setPassword] = React.useState(defaultPassword);
@@ -64,7 +65,10 @@ const LogIn = () => {
   const classes = useStyles();
   const query = useQuery();
   const history = useHistory();
-  const { login } = useUser();
+
+  React.useEffect(() => {
+    currentUser && history.push(query.get('redirect_to') ?? '/');
+  }, [currentUser])
 
   const handleEmailAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmailAddress(e.target.value)

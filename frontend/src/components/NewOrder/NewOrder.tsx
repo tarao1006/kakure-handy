@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../../auth';
 import NewOrderStepper, { 
   SelectItem,
   SelectTable,
@@ -15,10 +16,9 @@ import Loading from '../Loading';
 import { getTables } from '../../api/table';
 import { getItems } from '../../api/item';
 import { createOrder } from '../../api/order';
-import useUser from '../../hooks/useUser';
 
-const NewOrder = () => {
-  const { userStatus } = useUser();
+export const NewOrder = () => {
+  const { currentUser } = React.useContext(AuthContext);
   const history = useHistory();
   const [token, setToken] = React.useState<string>();
   const [tables, setTables] = React.useState<Table[]>([]);
@@ -31,8 +31,8 @@ const NewOrder = () => {
   React.useEffect(() => {
     let cleanedUp = false;
     const fetch = async () => {
-      if (!cleanedUp && userStatus.user) {
-        const newToken = await userStatus.user.getIdToken();
+      if (!cleanedUp && currentUser) {
+        const newToken = await currentUser.getIdToken();
         const newTables = convertToTables(await getTables(newToken)).filter(table => !table.isEnded);
         const newItems = convertToItems(await getItems(newToken));
         setToken(newToken);
@@ -45,7 +45,7 @@ const NewOrder = () => {
       cleanedUp = true;
     }
     return cleanUp;
-  }, [userStatus.user]);
+  }, [currentUser]);
 
   React.useEffect(() => {
     if (tables.length === 0 || items.length === 0) {
@@ -56,7 +56,7 @@ const NewOrder = () => {
   }, [tables, items]);
 
   const handleOrder = async () => {
-    if (userStatus.user) {
+    if (currentUser) {
       const order = await createOrder(token, targetTable.id, targetItems);
       history.push('/');
     }
@@ -121,5 +121,3 @@ const NewOrder = () => {
     />
   )
 }
-
-export default NewOrder;
