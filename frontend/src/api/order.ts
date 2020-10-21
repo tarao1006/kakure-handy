@@ -7,7 +7,7 @@ export const createOrder = async (idToken: string, tableId: number, items: Item[
     "quantity": item.count
   }));
 
-  const res = await fetch(`${base.BACKEND_API_BASE}/table/${tableId}/order`, {
+  const res = await fetch(`${base.BACKEND_URL}/table/${tableId}/order`, {
     method: 'POST',
     headers: new Headers({
       Authorization: `Bearer ${idToken}`

@@ -1,7 +1,7 @@
 import * as base from './base';
 
 export const getTables = async (idToken: string): Promise<any[]> => {
-  const res = await fetch(`${base.BACKEND_API_BASE}/table`, {
+  const res = await fetch(`${base.BACKEND_URL}/table`, {
     method: "GET",
     headers: new Headers({
       Authorization: `Bearer ${idToken}`
@@ -13,7 +13,7 @@ export const getTables = async (idToken: string): Promise<any[]> => {
 }
 
 export const getTable = async (idToken: string, id: string) => {
-  const res = await fetch(`${base.BACKEND_API_BASE}/${id}`, {
+  const res = await fetch(`${base.BACKEND_URL}/${id}`, {
     method: "GET",
     headers: new Headers({
       Authorization: `Bearer ${idToken}`
