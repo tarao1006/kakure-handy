@@ -5,13 +5,13 @@ import {
   Redirect
 } from 'react-router-dom';
 import { AuthProvider, AuthContext } from './auth';
-import LogIn from './components/LogIn';
+import Header from './components/Header';
+import Loading from './components/Loading';
 import Top from './components/Top';
 import Tables from './components/Tables';
-import Table from './components/Table';
 import NewOrder from './components/NewOrder';
-import Loading from './components/Loading';
-import Header from './components/Header';
+import Table from './components/Table';
+import LogIn from './components/LogIn';
 import ForgetPassword from './components/ForgetPassword';
 import MailSent from './components/MailSent';
 
