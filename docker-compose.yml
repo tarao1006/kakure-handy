@@ -38,7 +38,7 @@ services:
     build:
       context: ./frontend
       dockerfile: ../docker/frontend/Dockerfile
-    command: webpack-dev-server
+    command: webpack-dev-server --config webpack.dev.js
     container_name: kakure-handy-frontend
     ports:
       - 8080:8080

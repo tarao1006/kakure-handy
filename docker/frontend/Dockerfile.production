@@ -9,7 +9,7 @@ RUN yarn install
 
 COPY . .
 
-RUN yarn build
+RUN yarn build --config webpack.prod.js
 
 FROM nginx:latest
 
