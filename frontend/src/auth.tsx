@@ -44,7 +44,7 @@ const logout = () => {
 }
 
 const resetEmail = (email: string) => {
-  return firebase.auth().sendPasswordResetEmail(email);
+  return firebase.auth().sendPasswordResetEmail(email, {url: process.env.BACKEND_URL});
 }
 
 export { AuthContext, AuthProvider, login, logout, resetEmail };
