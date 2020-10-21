@@ -5,6 +5,8 @@ services:
     build:
       context: ./backend
       dockerfile: ../docker/backend/Dockerfile.production
+      args:
+        - GOOGLE_APPLICATION_CREDENTIALS_STR=${GOOGLE_APPLICATION_CREDENTIALS_STR}
     container_name: kakure-handy-backend-production
     ports:
       - 8000:8000

@@ -4,7 +4,10 @@ MIGRATION_SERVICE:=migration
 DOCKER_COMPOSE:=`which docker-compose`
 FLYWAY_CONF:=-url=jdbc:mysql://db:3306/kakure -user=root -password=password
 
-export GOOGLE_APPLICATION_CREDENTIALS=$(HOME)/.config/gcloud/kakure_handy.json
+include .firebase.env
+export $(shell sed 's/=.*//' .firebase.env)
+export GOOGLE_APPLICATION_CREDENTIALS:=$(HOME)/.config/gcloud/kakure_handy.json
+export GOOGLE_APPLICATION_CREDENTIALS_STR:=$(shell python3 json_parse.py --file $(GOOGLE_APPLICATION_CREDENTIALS))
 
 mysql/client:
 	$(DOCKER_COMPOSE) exec $(DB_SERVICE) mysql -uroot -ppassword $(DB_NAME)
@@ -32,3 +35,15 @@ docker-compose/up:
 
 docker-compose/build:
 	$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE) up --build
+
+docker-compose/prod/up:
+	$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE_PROD) up
+
+docker-compose/prod/build:
+	$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE_PROD) build
+
+docker-compose/prod/build/backend:
+	$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE_PROD) build backend-production
+
+docker-compose/prod/build/frontdnd:
+	$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE_PROD) build frontdnd-production

@@ -6,6 +6,8 @@ ENV GOOS=linux \
 
 WORKDIR /app
 
+ARG GOOGLE_APPLICATION_CREDENTIALS_STR
+RUN echo $GOOGLE_APPLICATION_CREDENTIALS_STR > /tmp/serviceAccount.json
 COPY go.mod .
 RUN go mod download
 
@@ -14,7 +16,8 @@ COPY . .
 RUN go build -o main
 
 FROM scratch
-COPY --from=golang:latest /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt 
+COPY --from=golang:latest /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY --from=build /tmp/serviceAccount.json /tmp/serviceAccount.json
 COPY --from=build /app/main /main
 
 CMD ["/main"]
