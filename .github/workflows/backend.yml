@@ -30,8 +30,9 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: kakure-handy/backend
         IMAGE_TAG: ${{ github.sha }}
+        GOOGLE_APPLICATION_CREDENTIALS_STR: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_STR }}
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f ./docker/backend/Dockerfile.production ./backend
+        docker build --build-arg GOOGLE_APPLICATION_CREDENTIALS_STR=${GOOGLE_APPLICATION_CREDENTIALS_STR} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f ./docker/backend/Dockerfile.production ./backend
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
