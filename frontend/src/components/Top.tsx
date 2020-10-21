@@ -49,7 +49,7 @@ const Top = () => {
 
   React.useEffect(() => {
     console.log(process.env.FIREBASE_API_KEY);
-    console.log(process.env.BACKEND_API_BASE);
+    console.log(process.env.FIREBASE_AUTH_DOMAIN);
     console.log(process.env.BACKEND_URL);
   }, [])
 
