@@ -47,12 +47,6 @@ const Top = () => {
   const classes = useTopStyles();
   const { currentUser } = React.useContext(AuthContext);
 
-  React.useEffect(() => {
-    console.log(process.env.FIREBASE_API_KEY);
-    console.log(process.env.FIREBASE_AUTH_DOMAIN);
-    console.log(process.env.BACKEND_URL);
-  }, [])
-
   return (
     <Container component="main" maxWidth="xs" className={classes.paper}>
       {currentUser === undefined
