@@ -7,7 +7,7 @@ import {
   Select,
 } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
-import { Item } from '../../../model';
+import { Item, MIN_ORDER_COUNT, MAX_ORDER_COUNT } from '../../../model';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 let numList = [];
-for (let i = 0; i <= 15; ++i) {
+for (let i = 0; i <= MAX_ORDER_COUNT; ++i) {
   numList.push(i);
 }
 
@@ -53,10 +53,9 @@ interface FoldedListItemProps {
 const Controller: React.FC<FoldedListItemProps> = ({ item, handleSet, increment, decrement }) => {
   const classes = useStyles();
 
-  const handleChange = (e: React.ChangeEvent<{ value: unknown }>) => {
-    let newItem = new Item(item.id, item.categoryId, item.subcategoryId, item.name, item.price) as Item;
-    const newValue = e.target.value as number;
-    newItem.count = newValue;
+  const handleChange = (e: React.ChangeEvent<{ value: number }>) => {
+    let newItem = new Item(item.id, item.categoryId, item.subcategoryId, item.name, item.price);
+    newItem.count = e.target.value;
     handleSet(newItem);
   }
 
@@ -70,13 +69,13 @@ const Controller: React.FC<FoldedListItemProps> = ({ item, handleSet, increment,
 
   return (
     <div className={classes.icon}>
-      <IconButton size='small' onClick={handleDecrement}>
+      <IconButton size='small' onClick={handleDecrement} disabled={item.count <= MIN_ORDER_COUNT}>
         <Remove />
       </IconButton>
       <FormControl>
         <NumberSelectList value={item.count} handleChange={handleChange} />
       </FormControl>
-      <IconButton size='small' onClick={handleIncrement}>
+      <IconButton size='small' onClick={handleIncrement} disabled={item.count >= MAX_ORDER_COUNT}>
         <Add />
       </IconButton>
     </div>

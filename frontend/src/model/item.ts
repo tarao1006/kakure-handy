@@ -1,5 +1,7 @@
 const FOOD_CATEGORY_ID = 1;
 const DRINK_CATEGORY_ID = 2;
+export const MIN_ORDER_COUNT = 0;
+export const MAX_ORDER_COUNT = 20;
 
 export class Item {
   id: number;
