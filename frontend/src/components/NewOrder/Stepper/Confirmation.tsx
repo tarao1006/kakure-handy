@@ -1,9 +1,5 @@
 import * as React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import {
-  FormControl,
-  FormLabel,
-} from '@material-ui/core';
+import { FormControl, FormLabel } from '@material-ui/core';
 import { Table, Item } from '../../../model';
 
 interface ConfirmationProps {
@@ -17,22 +13,38 @@ export const Confirmation: React.FC<ConfirmationProps> = ({ table, items, increm
 
   return (
     <FormControl component="fieldset">
-    <FormLabel component="legend">注文を確定してください。</FormLabel>
-    <div>テーブル</div><div>{table.roomName}</div>
-    <div>メニュー</div>
-    {
-      items.map(item => (
+      <FormLabel component="legend">
+        注文を確定してください。
+      </FormLabel>
+      <div>
+        テーブル
+      </div>
+      <div>
+        {table.roomName}
+      </div>
+      <div>
+        メニュー
+      </div>
+      {
+        items.map(item => (
           <div key={item.id}>
-          <div>
-            <div>{item.name}</div>
-            <div>{item.count}</div>
+            <div>
+              <div>
+                {item.name}
+              </div>
+              <div>
+                {item.count}
+              </div>
+            </div>
+            <button onClick={() => increment(item.id)}>
+              increment
+            </button>
+            <button onClick={() => decrement(item.id)}>
+              decrement
+            </button>
           </div>
-            <button onClick={() => increment(item.id)}>increment</button>
-            <button onClick={() => decrement(item.id)}>decrement</button>
-          </div>
-        )
-      )
-    }
+        ))
+      }
     </FormControl>
   )
 }
