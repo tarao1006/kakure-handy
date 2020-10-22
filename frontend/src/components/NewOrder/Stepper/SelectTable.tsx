@@ -12,21 +12,22 @@ import { Table } from '../../../model';
 interface SelectTableProps {
   tables: Table[];
   handleSet: (table: Table) => void;
-  defaultValue?: Table;
+  targetTable: Table | undefined;
 }
 
-export const SelectTable: React.FC<SelectTableProps> = ({ tables, handleSet, defaultValue }) => {
+export const SelectTable: React.FC<SelectTableProps> = ({ tables, handleSet, targetTable }) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState<number>(0);
+  const [value, setValue] = React.useState<Table | undefined>(targetTable);
 
   React.useEffect(() => {
-    if (defaultValue) setValue(defaultValue.id);
-  }, []);
+    setValue(targetTable);
+  }, [targetTable]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const id = Number.parseInt(e.target.value);
-    setValue(id);
-    handleSet(tables.find(table => table.id === id));
+    const table = tables.find(table => table.id === id);
+    setValue(table);
+    handleSet(table);
   };
 
   return (
@@ -34,7 +35,7 @@ export const SelectTable: React.FC<SelectTableProps> = ({ tables, handleSet, def
       <FormLabel component="legend">
         部屋を選択してください。
       </FormLabel>
-      <RadioGroup value={value} onChange={handleChange} className={classes.content}>
+      <RadioGroup value={value === undefined ? 0 : value.id} onChange={handleChange} className={classes.content}>
         {
           tables.map(table => (
             <FormControlLabel

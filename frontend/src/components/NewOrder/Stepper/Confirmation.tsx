@@ -3,10 +3,10 @@ import { FormControl, FormLabel } from '@material-ui/core';
 import { Table, Item } from '../../../model';
 
 interface ConfirmationProps {
-  table: Table,
-  items: Item[],
-  increment: (id: number) => void
-  decrement: (id: number) => void
+  table: Table;
+  items: Item[];
+  increment: (id: number) => void;
+  decrement: (id: number) => void;
 }
 
 export const Confirmation: React.FC<ConfirmationProps> = ({ table, items, increment, decrement }) => {

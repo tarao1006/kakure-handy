@@ -7,10 +7,7 @@ import {
   ListItemText,
   ListItemIcon,
 } from '@material-ui/core';
-import {
-  ExpandLess,
-  ExpandMore,
-} from '@material-ui/icons';
+import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import FoldedListItem from './FoldedListItem';
 import { Item } from '../../../model';
 
@@ -54,7 +51,7 @@ const FoldedList: React.FC<FoldedListProps> = ({ Icon, category, items, values, 
         </ListItemText>
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
-      <Collapse in={true} unmountOnExit>
+      <Collapse in={open} unmountOnExit>
         <List component="div" disablePadding>
           {
             items.map(item => <Content key={item.id} item={item} values={values} handleChange={handleChange} />)

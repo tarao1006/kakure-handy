@@ -1,14 +1,9 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../auth';
-import NewOrderStepper from './Stepper';
-import {
-  Item,
-  Table,
-  convertToItems,
-  convertToTables,
-} from '../../model';
 import Loading from '../Loading';
+import NewOrderStepper from './Stepper';
+import { Item, Table, convertToItems, convertToTables } from '../../model';
 import { getTables } from '../../api/table';
 import { getItems } from '../../api/item';
 import { createOrder } from '../../api/order';

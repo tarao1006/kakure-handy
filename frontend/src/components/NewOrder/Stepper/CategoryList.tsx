@@ -10,6 +10,8 @@ import { Item } from '../../../model'
 import drink from '@dataset/categoriesDrink.json';
 import food from '@dataset/categoriesFood.json';
 
+// items: All items
+// values: Selected items
 interface CategoryListProps {
   items: Item[];
   values?: Item[];

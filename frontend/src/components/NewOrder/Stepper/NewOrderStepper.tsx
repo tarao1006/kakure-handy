@@ -7,7 +7,7 @@ import {
   StepLabel,
   Stepper,
 } from '@material-ui/core';
-import { Item, Table } from '../../../model'
+import { Item, Table } from '../../../model';
 import { SelectItem } from './SelectItem';
 import { SelectTable } from './SelectTable';
 import { Confirmation } from './Confirmation';
@@ -58,13 +58,13 @@ const NewOrderStepper: React.FC<StepperProps> = ({
   const getStepContent = (step: number) => {
     switch (step) {
       case 0:
-        return <SelectTable tables={tables} handleSet={handleSetTable} defaultValue={targetTable} />
+        return <SelectTable tables={tables} handleSet={handleSetTable} targetTable={targetTable} />
       case 1:
-        return <SelectItem items={items} handleSet={handleSetItem} defaultItems={targetItems} />
+        return <SelectItem items={items} handleSet={handleSetItem} targetItems={targetItems} />
       case 2:
         return <Confirmation table={targetTable} items={targetItems} increment={handleIncrement} decrement={handleDecrement} />
       default:
-        return 'Unknown step'
+        return <></>
     }
   };
 
