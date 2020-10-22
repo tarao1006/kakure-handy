@@ -11,12 +11,9 @@ interface SelectItemProps {
   activeCategory: number;
   setActiveCategory: (categoryId: number) => void;
   items: Item[];
-  handleSet: (item: Item) => void;
-  increment: (id: number) => void;
-  decrement: (id: number) => void;
 }
 
-export const SelectItem: React.FC<SelectItemProps> = ({ activeCategory, setActiveCategory, items, handleSet, increment, decrement }) => {
+export const SelectItem: React.FC<SelectItemProps> = ({ activeCategory, setActiveCategory, items }) => {
   const classes = useStyles();
 
   return (
@@ -26,9 +23,6 @@ export const SelectItem: React.FC<SelectItemProps> = ({ activeCategory, setActiv
           activeCategory={activeCategory}
           setActiveCategory={setActiveCategory}
           items={items}
-          handleSet={handleSet}
-          increment={increment}
-          decrement={decrement}
         />
     </FormControl>
   )

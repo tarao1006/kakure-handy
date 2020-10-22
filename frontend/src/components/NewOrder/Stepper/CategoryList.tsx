@@ -10,16 +10,11 @@ import { Item } from '../../../model'
 import drink from '@dataset/categoriesDrink.json';
 import food from '@dataset/categoriesFood.json';
 
-// items: All items
-// values: Selected items
 interface CategoryListProps {
   items: Item[];
-  handleSet: (item: Item) => void;
-  increment: (id: number) => void;
-  decrement: (id: number) => void;
 }
 
-export const DrinkList: React.FC<CategoryListProps> = ({ items, handleSet, increment, decrement }) => {
+export const DrinkList: React.FC<CategoryListProps> = ({ items }) => {
   const classes = useStyles();
 
   return (
@@ -32,9 +27,6 @@ export const DrinkList: React.FC<CategoryListProps> = ({ items, handleSet, incre
               key={index}
               category={category}
               items={items.filter(item => item.subcategoryId === category.id)}
-              handleSet={handleSet}
-              increment={increment}
-              decrement={decrement}
             />
           ))
         }
@@ -43,7 +35,7 @@ export const DrinkList: React.FC<CategoryListProps> = ({ items, handleSet, incre
   )
 }
 
-export const FoodList: React.FC<CategoryListProps> = ({ items, handleSet, increment, decrement }) => {
+export const FoodList: React.FC<CategoryListProps> = ({ items }) => {
   const classes = useStyles();
 
   return (
@@ -56,9 +48,6 @@ export const FoodList: React.FC<CategoryListProps> = ({ items, handleSet, increm
               Icon={InboxIcon}
               category={category}
               items={items.filter(item => item.subcategoryId === category.id)}
-              handleSet={handleSet}
-              increment={increment}
-              decrement={decrement}
             />
           ))
         }

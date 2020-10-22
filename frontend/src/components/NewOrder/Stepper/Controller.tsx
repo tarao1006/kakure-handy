@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
 import { Item, MIN_ORDER_COUNT, MAX_ORDER_COUNT } from '../../../model';
+import useItems from '../../../hooks/useItems';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,18 +46,16 @@ const NumberSelectList = ({ value, handleChange }) => {
 
 interface FoldedListItemProps {
   item: Item;
-  handleSet?: (item: Item) => void;
-  increment?: (id: number) => void;
-  decrement?: (id: number) => void;
 }
 
-const Controller: React.FC<FoldedListItemProps> = ({ item, handleSet, increment, decrement }) => {
+const Controller: React.FC<FoldedListItemProps> = ({ item }) => {
   const classes = useStyles();
+  const { add, increment, decrement } = useItems();
 
   const handleChange = (e: React.ChangeEvent<{ value: number }>) => {
     let newItem = new Item(item.id, item.categoryId, item.subcategoryId, item.name, item.price);
     newItem.count = e.target.value;
-    handleSet(newItem);
+    add(newItem);
   }
 
   const handleIncrement = () => {

@@ -14,12 +14,9 @@ interface FoldedListProps {
   Icon: any;
   category: { id: number, name: string };
   items: Item[];
-  handleSet: (item: Item) => void;
-  increment: (id: number) => void;
-  decrement: (id: number) => void;
 }
 
-const FoldedList: React.FC<FoldedListProps> = ({ Icon, category, items, handleSet, increment, decrement }) => {
+const FoldedList: React.FC<FoldedListProps> = ({ Icon, category, items }) => {
   const [open, setOpen] = React.useState<boolean>(false);
 
   const handleClick = () => {
@@ -44,9 +41,6 @@ const FoldedList: React.FC<FoldedListProps> = ({ Icon, category, items, handleSe
               <FoldedListItem
                 key={item.id}
                 item={item}
-                handleSet={handleSet}
-                increment={increment}
-                decrement={decrement}
               />
             ))
           }

@@ -20,24 +20,16 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface FoldedListItemProps {
   item: Item;
-  handleSet: (item: Item) => void;
-  increment: (id: number) => void;
-  decrement: (id: number) => void;
 }
 
-const FoldedListItem: React.FC<FoldedListItemProps> = ({ item, handleSet, increment, decrement }) => {
+const FoldedListItem: React.FC<FoldedListItemProps> = ({ item }) => {
   const classes = useStyles();
 
   return (
     <ListItem key={item.id} className={classes.itemRoot}>
       <div>{`${item.name}`}</div>
       <div style={{textAlign: 'right'}}>{`${item.price}円`}</div>
-      <Controller
-        item={item}
-        handleSet={handleSet}
-        increment={increment}
-        decrement={decrement}
-      />
+      <Controller item={item} />
     </ListItem>
   )
 }
