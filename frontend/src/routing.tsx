@@ -4,7 +4,9 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import { AuthProvider, AuthContext } from './auth';
+import { store } from './hooks/useItems';
 import Header from './components/Header';
 import Loading from './components/Loading';
 import Top from './components/Top';
@@ -60,39 +62,41 @@ const Routing = () => {
 
   return (
     <Router>
-      <AuthProvider>
-        <Header />
-        <Route
-          path="/"
-          exact
-          component={Top}
-        />
-        <RedirectRoute
-          path='/tables'
-          exact
-          Child={Tables}
-        />
-        <RedirectRoute
-          path='/new-order'
-          Child={NewOrder}
-        />
-        <RedirectRoute
-          path='/table/:id'
-          exact
-          Child={Table}
-        />
-        <Route
-          path='/forget-password'
-          exact
-          component={ForgetPassword}
-        />
-        <Route
-          path='/mail-sent'
-          exact
-          component={MailSent}
-        />
-        <LogInRoute />
-      </AuthProvider>
+      <Provider store={store}>
+        <AuthProvider>
+          <Header />
+          <Route
+            path="/"
+            exact
+            component={Top}
+          />
+          <RedirectRoute
+            path='/tables'
+            exact
+            Child={Tables}
+          />
+          <RedirectRoute
+            path='/new-order'
+            Child={NewOrder}
+          />
+          <RedirectRoute
+            path='/table/:id'
+            exact
+            Child={Table}
+          />
+          <Route
+            path='/forget-password'
+            exact
+            component={ForgetPassword}
+          />
+          <Route
+            path='/mail-sent'
+            exact
+            component={MailSent}
+          />
+          <LogInRoute />
+        </AuthProvider>
+      </Provider>
     </Router>
   )
 }

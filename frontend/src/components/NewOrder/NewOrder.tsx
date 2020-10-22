@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../auth';
 import Loading from '../Loading';
 import NewOrderStepper from './Stepper';
+import useItems from '../../hooks/useItems';
 import { Item, Table, convertToItems, convertToTables, MIN_ORDER_COUNT, MAX_ORDER_COUNT } from '../../model';
 import { getTables } from '../../api/table';
 import { getItems } from '../../api/item';
@@ -13,12 +14,13 @@ export const NewOrder = () => {
   const history = useHistory();
   const [token, setToken] = React.useState<string>("");
   const [tables, setTables] = React.useState<Table[]>([]);
-  const [items, setItems] = React.useState<Item[]>([]);
+  // const [items, setItems] = React.useState<Item[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [activeStep, setActiveStep] = React.useState<number>(0);
+  const [activeStep, setActiveStep] = React.useState<number>(1);
   const [activeCategory, setActiveCategory] = React.useState<number>(0);
   const [targetTable, setTargetTable] = React.useState<Table | undefined>(undefined);
-  const [targetItems, setTargetItems] = React.useState<Item[]>([]);
+  // const [targetItems, setTargetItems] = React.useState<Item[]>([]);
+  const { items, targetItems, initialize, add, increment, decrement } = useItems();
 
   React.useEffect(() => {
     let cleanedUp = false;
@@ -29,7 +31,7 @@ export const NewOrder = () => {
         const newItems = convertToItems(await getItems(newToken));
         setToken(newToken);
         setTables(newTables);
-        setItems(newItems);
+        initialize(newItems);
       }
     }
     fetch();
@@ -59,37 +61,40 @@ export const NewOrder = () => {
   }
 
   const handleSetItem = (newItem: Item): void => {
-    let newItems = [...items];
-    const itemIdx = newItems.findIndex(element => element.id === newItem.id);
-    newItems[itemIdx] = newItem;
-    setItems(newItems);
+    add(newItem);
+    // let newItems = [...items];
+    // const itemIdx = newItems.findIndex(element => element.id === newItem.id);
+    // newItems[itemIdx] = newItem;
+    // setItems(newItems);
 
-    let newTargetItems = [...targetItems];
-    const targetItemIdx = newTargetItems.findIndex(element => element.id === newItem.id);
-    if (targetItemIdx === -1) {
-      newTargetItems.push(newItem);
-    } else {
-      newTargetItems[targetItemIdx] = newItem;
-    }
-    setTargetItems(newTargetItems);
+    // let newTargetItems = [...targetItems];
+    // const targetItemIdx = newTargetItems.findIndex(element => element.id === newItem.id);
+    // if (targetItemIdx === -1) {
+    //   newTargetItems.push(newItem);
+    // } else {
+    //   newTargetItems[targetItemIdx] = newItem;
+    // }
+    // setTargetItems(newTargetItems);
   }
 
   const handleIncrement = (id: number): void => {
-    const newItem = findNewItem(id);
-    if (newItem === undefined) {
-      return;
-    }
-    newItem.count = Math.min(newItem.count + 1, MAX_ORDER_COUNT);
-    handleSetItem(newItem);
+    increment(id);
+    // const newItem = findNewItem(id);
+    // if (newItem === undefined) {
+    //   return;
+    // }
+    // newItem.count = Math.min(newItem.count + 1, MAX_ORDER_COUNT);
+    // handleSetItem(newItem);
   }
 
   const handleDecrement = (id: number): void => {
-    const newItem = findNewItem(id);
-    if (newItem === undefined) {
-      return;
-    }
-    newItem.count = Math.max(newItem.count - 1, MIN_ORDER_COUNT);
-    handleSetItem(newItem);
+    decrement(id);
+    // const newItem = findNewItem(id);
+    // if (newItem === undefined) {
+    //   return;
+    // }
+    // newItem.count = Math.max(newItem.count - 1, MIN_ORDER_COUNT);
+    // handleSetItem(newItem);
   }
 
   const findNewItem = (id: number): Item | undefined => {
