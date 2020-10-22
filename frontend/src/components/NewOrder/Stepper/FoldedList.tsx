@@ -82,7 +82,6 @@ interface FoldedListItemProps {
 
 const FoldedListItem: React.FC<FoldedListItemProps> = ({ item, handleSet, increment, decrement }) => {
   const classes = useStyles();
-  const [count, setCount] = React.useState<number>(item.count);
 
   return (
     <ListItem key={item.id} className={classes.itemRoot}>

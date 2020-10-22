@@ -52,13 +52,11 @@ interface FoldedListItemProps {
 
 const Controller: React.FC<FoldedListItemProps> = ({ item, handleSet, increment, decrement }) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState<Item>(item);
 
   const handleChange = (e: React.ChangeEvent<{ value: unknown }>) => {
+    let newItem = new Item(item.id, item.categoryId, item.subcategoryId, item.name, item.price) as Item;
     const newValue = e.target.value as number;
-    let newItem = Object.assign(item) as Item;
     newItem.count = newValue;
-    setValue(newItem);
     handleSet(newItem);
   }
 
@@ -76,7 +74,7 @@ const Controller: React.FC<FoldedListItemProps> = ({ item, handleSet, increment,
         <Remove />
       </IconButton>
       <FormControl>
-        <NumberSelectList value={value} handleChange={handleChange} />
+        <NumberSelectList value={item.count} handleChange={handleChange} />
       </FormControl>
       <IconButton size='small' onClick={handleIncrement}>
         <Add />

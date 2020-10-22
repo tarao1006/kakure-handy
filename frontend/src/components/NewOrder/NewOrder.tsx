@@ -58,20 +58,31 @@ export const NewOrder = () => {
   }
 
   const handleSetItem = (newItem: Item): void => {
+    let newItems = [...items];
+    const itemIdx = newItems.findIndex(element => element.id === newItem.id);
+    newItems[itemIdx] = newItem;
+    setItems(newItems);
+
     let newTargetItems = [...targetItems];
-    const idx = newTargetItems.findIndex(element => element.id === newItem.id);
-    if (idx === -1) {
+    const targetItemIdx = newTargetItems.findIndex(element => element.id === newItem.id);
+    if (targetItemIdx === -1) {
       newTargetItems.push(newItem);
     } else {
-      newTargetItems[idx] = newItem;
+      newTargetItems[targetItemIdx] = newItem;
     }
     setTargetItems(newTargetItems);
   }
 
   const handleIncrement = (id: number): void => {
-    let newItem = Object.assign({}, [...targetItems].find(element => element.id === id));
-    if (Object.keys(newItem).length === 0) return;
-    newItem.count = newItem.count + 1;
+    const targetItemIdx = targetItems.findIndex(element => element.id === id);
+    let newItem: Item;
+    if (targetItemIdx === -1) {
+      newItem = items.find(item => item.id === id);
+      newItem.count = 1;
+    } else {
+      newItem = targetItems[targetItemIdx];
+      newItem.count = newItem.count + 1;
+    }
     handleSetItem(newItem);
   }
 
