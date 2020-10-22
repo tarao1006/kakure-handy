@@ -4,16 +4,14 @@ import {
   FormLabel,
 } from '@material-ui/core';
 import useStyles from './base';
-import { Item } from '../../../model';
 import SelectCategoryTab from './SelectCategoryTab';
 
 interface SelectItemProps {
   activeCategory: number;
   setActiveCategory: (categoryId: number) => void;
-  items: Item[];
 }
 
-export const SelectItem: React.FC<SelectItemProps> = ({ activeCategory, setActiveCategory, items }) => {
+export const SelectItem: React.FC<SelectItemProps> = ({ activeCategory, setActiveCategory }) => {
   const classes = useStyles();
 
   return (
@@ -22,7 +20,6 @@ export const SelectItem: React.FC<SelectItemProps> = ({ activeCategory, setActiv
         <SelectCategoryTab
           activeCategory={activeCategory}
           setActiveCategory={setActiveCategory}
-          items={items}
         />
     </FormControl>
   )

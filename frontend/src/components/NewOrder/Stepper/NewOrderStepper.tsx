@@ -7,7 +7,8 @@ import {
   StepLabel,
   Stepper,
 } from '@material-ui/core';
-import { Item, Table } from '../../../model';
+import { Table } from '../../../model';
+import useItems from '../../../hooks/useItems';
 import { SelectItem } from './SelectItem';
 import { SelectTable } from './SelectTable';
 import { Confirmation } from './Confirmation';
@@ -28,45 +29,36 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface StepperProps {
   tables: Table[];
-  items: Item[];
   targetTable: Table | undefined;
-  targetItems: Item[];
   handleSetTable: (table: Table) => void;
-  handleSetItem: (item: Item) => void;
-  handleIncrement: (id: number) => void;
-  handleDecrement: (id: number) => void;
   handleOrder: () => void;
-  activeStep: number;
   activeCategory: number;
+  activeStep: number;
   setActiveCategory: (categoryId: number) => void;
   setActiveStep: (step: any) => void;
 }
 
 const NewOrderStepper: React.FC<StepperProps> = ({
   tables,
-  items,
   targetTable,
-  targetItems,
   handleSetTable,
-  handleSetItem,
-  handleIncrement,
-  handleDecrement,
   handleOrder,
-  activeStep,
   activeCategory,
+  activeStep,
   setActiveCategory,
   setActiveStep,
 }) => {
   const classes = useStyles();
+  const { targetItems } = useItems();
 
   const getStepContent = (step: number) => {
     switch (step) {
       case 0:
         return <SelectTable tables={tables} handleSet={handleSetTable} targetTable={targetTable} />
       case 1:
-        return <SelectItem activeCategory={activeCategory} setActiveCategory={setActiveCategory} items={items} />
+        return <SelectItem activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
       case 2:
-        return <Confirmation table={targetTable} items={targetItems} increment={handleIncrement} decrement={handleDecrement} />
+        return <Confirmation table={targetTable} />
       default:
         return <></>
     }

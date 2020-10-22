@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { AuthProvider, AuthContext } from './auth';
-import { store } from './hooks/useItems';
+import { store } from './reducers';
 import Header from './components/Header';
 import Loading from './components/Loading';
 import Top from './components/Top';
