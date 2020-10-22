@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../auth';
 import Loading from '../Loading';
 import NewOrderStepper from './Stepper';
-import { Item, Table, convertToItems, convertToTables } from '../../model';
+import { Item, Table, convertToItems, convertToTables, MIN_ORDER_COUNT, MAX_ORDER_COUNT } from '../../model';
 import { getTables } from '../../api/table';
 import { getItems } from '../../api/item';
 import { createOrder } from '../../api/order';
@@ -74,23 +74,36 @@ export const NewOrder = () => {
   }
 
   const handleIncrement = (id: number): void => {
-    const targetItemIdx = targetItems.findIndex(element => element.id === id);
-    let newItem: Item;
-    if (targetItemIdx === -1) {
-      newItem = items.find(item => item.id === id);
-      newItem.count = 1;
-    } else {
-      newItem = targetItems[targetItemIdx];
-      newItem.count = newItem.count + 1;
+    const newItem = findNewItem(id);
+    if (newItem === undefined) {
+      return;
     }
+    newItem.count = Math.min(newItem.count + 1, MAX_ORDER_COUNT);
     handleSetItem(newItem);
   }
 
   const handleDecrement = (id: number): void => {
-    let newItem = Object.assign({}, [...targetItems].find(element => element.id === id));
-    if (Object.keys(newItem).length === 0) return;
-    newItem.count = Math.max(newItem.count - 1, 0);
+    const newItem = findNewItem(id);
+    if (newItem === undefined) {
+      return;
+    }
+    newItem.count = Math.max(newItem.count - 1, MIN_ORDER_COUNT);
     handleSetItem(newItem);
+  }
+
+  const findNewItem = (id: number): Item | undefined => {
+    const targetItemIdx = targetItems.findIndex(element => element.id === id);
+    let newItem: Item;
+    if (targetItemIdx === -1) {
+      const item = items.find(item => item.id === id);
+      if (item === undefined) {
+        return undefined;
+      }
+      newItem = Object.assign({}, item);
+    } else {
+      newItem = Object.assign({}, targetItems[targetItemIdx]);
+    }
+    return newItem;
   }
 
   return (
