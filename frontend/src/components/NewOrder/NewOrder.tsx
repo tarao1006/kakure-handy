@@ -6,9 +6,7 @@ import NewOrderStepper from './Stepper';
 import useItems from '../../hooks/useItems';
 import useTables from '../../hooks/useTables';
 import { convertToItems, convertToTables } from '../../model';
-import { getTables } from '../../api/table';
-import { getItems } from '../../api/item';
-import { createOrder } from '../../api/order';
+import { getTables, getItems, createOrder } from '../../api';
 
 export const NewOrder = () => {
   const { currentUser } = React.useContext(AuthContext);
