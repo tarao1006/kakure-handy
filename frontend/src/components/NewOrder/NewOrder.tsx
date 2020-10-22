@@ -62,7 +62,7 @@ export const NewOrder = () => {
     setTargetTable(table);
   }
 
-  const handleSetItems = (newItem: Item): void => {
+  const handleSetItem = (newItem: Item): void => {
     let newTargetItems = [...targetItems];
     const idx = newTargetItems.findIndex(element => element.id === newItem.id);
     if (idx === -1) {
@@ -77,14 +77,14 @@ export const NewOrder = () => {
     let newItem = Object.assign({}, [...targetItems].find(element => element.id === id));
     if (Object.keys(newItem).length === 0) return;
     newItem.count = newItem.count + 1;
-    handleSetItems(newItem);
+    handleSetItem(newItem);
   }
 
   const handleDecrement = (id: number): void => {
     let newItem = Object.assign({}, [...targetItems].find(element => element.id === id));
     if (Object.keys(newItem).length === 0) return;
     newItem.count = Math.max(newItem.count - 1, 0);
-    handleSetItems(newItem);
+    handleSetItem(newItem);
   }
 
   return (
@@ -97,7 +97,7 @@ export const NewOrder = () => {
         targetTable={targetTable}
         targetItems={targetItems}
         handleSetTable={handleSetTable}
-        handleSetItems={handleSetItems}
+        handleSetItem={handleSetItem}
         handleOrder={handleOrder}
         handleIncrement={handleIncrement}
         handleDecrement={handleDecrement}

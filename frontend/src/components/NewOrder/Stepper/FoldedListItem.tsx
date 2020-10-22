@@ -1,15 +1,13 @@
 import * as React from 'react';
-import { createStyles, makeStyles, Theme} from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import {
-  Select,
-  MenuItem,
+  FormControl,
   IconButton,
-  FormControl
+  MenuItem,
+  Select,
 } from '@material-ui/core';
-import {
-  Add,
-  Remove
-} from '@material-ui/icons';
+import { Add, Remove } from '@material-ui/icons';
+import { Item } from '../../../model';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,30 +28,28 @@ for (let i = 0; i <= 15; ++i) {
 }
 
 interface FoldedListItemProps {
-  id: number;
-  name: string;
-  defaultValue?: number;
-  onChange?: (id: number, name: string, value: number) => void;
+  item: Item;
+  onChange?: (item: Item) => void;
 }
 
-const FoldedListItem: React.FC<FoldedListItemProps> = ({ id, name, defaultValue, onChange }) => {
+const FoldedListItem: React.FC<FoldedListItemProps> = ({ item, onChange }) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState<number>(0);
-
-  React.useEffect(() => {
-    setValue(defaultValue);
-  }, [defaultValue]);
+  const [value, setValue] = React.useState<number>(item.count);
 
   const handleChange = (e: React.ChangeEvent<{ value: unknown }>) => {
     const newValue = e.target.value as number;
     setValue(newValue);
-    onChange(id, name, newValue)
+    let newItem = Object.assign(item) as Item;
+    newItem.count = newValue;
+    onChange(newItem);
   }
 
   const handleIncrement = () => {
     const newValue = value + 1;
     setValue(newValue);
-    onChange(id, name, newValue);
+    let newItem = Object.assign(item) as Item;
+    newItem.count = newValue;
+    onChange(newItem);
   }
 
   const handleDecrement = () => {
@@ -62,7 +58,9 @@ const FoldedListItem: React.FC<FoldedListItemProps> = ({ id, name, defaultValue,
     }
     const newValue = value - 1;
     setValue(newValue);
-    onChange(id, name, newValue)
+    let newItem = Object.assign(item) as Item;
+    newItem.count = newValue;
+    onChange(newItem)
   }
 
   return (

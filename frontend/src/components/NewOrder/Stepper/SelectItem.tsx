@@ -10,48 +10,48 @@ import { DrinkList, FoodList } from './CategoryList';
 
 interface SelectItemProps {
   items: Item[],
-  handleSet: (items: {id: number, name: string, count: number}[]) => void
-  defaultCheckedList?: {id: number, name: string, count: number}[]
+  handleSet: (item: Item) => void
+  defaultItems?: Item[]
 }
 
-export const SelectItem: React.FC<SelectItemProps> = ({ items, handleSet, defaultCheckedList = [] }) => {
+export const SelectItem: React.FC<SelectItemProps> = ({ items, handleSet, defaultItems = [] }) => {
   const classes = useStyles();
-  const [values, setValues] = React.useState<{id: number, name: string, count: number}[]>([]);
+  const [values, setValues] = React.useState<Item[]>([]);
 
   React.useEffect(() => {
-    setValues(defaultCheckedList);
-  }, [defaultCheckedList])
+    setValues(defaultItems);
+  }, [defaultItems])
 
-  const handleChange = (id: number, name: string, count: number) => {
-    const exist = values.find(value => value.id === id);
+  const handleChange = (item: Item) => {
+    const exist = values.find(value => value.id === item.id);
 
-    if (!exist && count !== 0) {
-      const newValues = [...values, {id: id, name: name, count: count}]
+    if (!exist && item.count !== 0) {
+      const newValues = [...values, {id: item.id, name: name, count: item.count}]
 
       setValues(newValues);
-      handleSet(newValues);
+      // handleSet(newValues);
       return;
     }
 
-    if (exist && count === 0) {
-      let newValues = values.filter(value => value.id !== id);
+    if (exist && item.count === 0) {
+      let newValues = values.filter(value => value.id !== item.id);
 
       setValues(newValues);
-      handleSet(newValues);
+      // handleSet(newValues);
       return;
     }
 
-    if (exist && count !== 0) {
+    if (exist && item.count !== 0) {
       let newValues = [...values];
       newValues.forEach(value => {
-        if (value.id === id) {
-          value.count = count;
+        if (value.id === item.id) {
+          value.count = item.count;
         }
         return value;
       });
 
       setValues(newValues);
-      handleSet(newValues);
+      // handleSet(newValues);
       return;
     }
 

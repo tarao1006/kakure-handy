@@ -12,8 +12,8 @@ import food from '@dataset/categoriesFood.json';
 
 interface CategoryListProps {
   items: Item[];
-  values?: {id: number, name: string, count: number}[];
-  handleChange: (id: number, name: string, count: number) => void;
+  values?: Item[];
+  handleChange: (item: Item) => void;
 }
 
 export const DrinkList: React.FC<CategoryListProps> = ({ items, values, handleChange }) => {

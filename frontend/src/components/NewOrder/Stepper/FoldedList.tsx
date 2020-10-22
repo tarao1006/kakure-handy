@@ -32,8 +32,8 @@ interface FoldedListProps {
   Icon: any;
   category: { id: number, name: string };
   items: Item[];
-  values?: {id: number, name: string, count: number}[];
-  handleChange: (id: number, name: string, count: number) => void;
+  values?: Item[];
+  handleChange: (item: Item) => void;
 }
 
 const FoldedList: React.FC<FoldedListProps> = ({ Icon, category, items, values, handleChange }) => {
@@ -69,8 +69,8 @@ export default FoldedList;
 
 interface ContentProps {
   item: Item;
-  values?: {id: number, name: string, count: number}[];
-  handleChange: (id: number, name: string, count: number) => void;
+  values?: Item[];
+  handleChange: (item: Item) => void;
 }
 
 const Content: React.FC<ContentProps> = ({ item, values, handleChange }) => {
@@ -92,9 +92,7 @@ const Content: React.FC<ContentProps> = ({ item, values, handleChange }) => {
       <div>{`${item.name}`}</div>
       <div style={{textAlign: 'right'}}>{`${item.price}円`}</div>
       <FoldedListItem
-        id={item.id}
-        name={item.name}
-        defaultValue={count}
+        item={item}
         onChange={handleChange}
       />
   </ListItem>
