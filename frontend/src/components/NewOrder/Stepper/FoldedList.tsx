@@ -37,12 +37,7 @@ const FoldedList: React.FC<FoldedListProps> = ({ Icon, category, items }) => {
       <Collapse in={open} unmountOnExit>
         <List component="div" disablePadding>
           {
-            items.map(item => (
-              <FoldedListItem
-                key={item.id}
-                item={item}
-              />
-            ))
+            items.map(item => <FoldedListItem key={item.id} item={item} />)
           }
         </List>
       </Collapse>

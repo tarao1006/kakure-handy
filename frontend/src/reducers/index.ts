@@ -1,4 +1,4 @@
-export { INITIALIZE_TABLE, UPDATE } from './tables';
+export { INITIALIZE_TABLE, UPDATE_TABLE, RESET_TABLE } from './tables';
 export { INITIALIZE_ITEM, ADD, INCREMENT, DECREMENT} from './items';
 import { createStore, combineReducers } from 'redux';
 import { items, ItemState} from './items';

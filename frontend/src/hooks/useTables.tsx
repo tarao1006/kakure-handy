@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { CombinedState, INITIALIZE_TABLE, UPDATE } from '../reducers';
+import { CombinedState, INITIALIZE_TABLE, UPDATE_TABLE, RESET_TABLE } from '../reducers';
 import { Table } from '../model';
 
 const useTables = () => {
@@ -17,12 +17,18 @@ const useTables = () => {
 
   const updateTable = (table: Table) => {
     dispatch({
-      type: UPDATE,
+      type: UPDATE_TABLE,
       table
     });
   };
 
-  return { tables, targetTable, initializeTable, updateTable }
+  const resetTable = () => {
+    dispatch({
+      type: RESET_TABLE
+    })
+  }
+
+  return { tables, targetTable, initializeTable, updateTable, resetTable }
 }
 
 export default useTables;

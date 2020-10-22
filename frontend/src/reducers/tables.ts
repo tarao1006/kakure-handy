@@ -1,7 +1,8 @@
 import { Table } from '../model';
 
 export const INITIALIZE_TABLE = 'INITIALIZE_TABLE';
-export const UPDATE = 'UPDATE';
+export const UPDATE_TABLE = 'UPDATE_TABLE';
+export const RESET_TABLE = 'RESET_TABLE';
 
 export interface TableState {
   tables: Table[];
@@ -21,10 +22,15 @@ export const tables = (state = initialState, action: any) => {
         tables: action.tables,
         targetTable: undefined
       };
-    case UPDATE:
+    case UPDATE_TABLE:
       return {
         ...state,
         targetTable: action.table
+      }
+    case RESET_TABLE:
+      return {
+        ...state,
+        targetTable: undefined
       }
     default:
       return state;

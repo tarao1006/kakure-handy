@@ -6,16 +6,13 @@ import {
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import FoldedList from './FoldedList';
 import useStyles from './base';
-import { Item } from '../../../model'
 import drink from '@dataset/categoriesDrink.json';
 import food from '@dataset/categoriesFood.json';
+import useItems from '../../../hooks/useItems';
 
-interface CategoryListProps {
-  items: Item[];
-}
-
-export const DrinkList: React.FC<CategoryListProps> = ({ items }) => {
+export const DrinkList: React.FC<{}> = () => {
   const classes = useStyles();
+  const { items } = useItems();
 
   return (
     <FormGroup className={classes.content}>
@@ -26,7 +23,7 @@ export const DrinkList: React.FC<CategoryListProps> = ({ items }) => {
               Icon={InboxIcon}
               key={index}
               category={category}
-              items={items.filter(item => item.subcategoryId === category.id)}
+              items={items.filter(item => item.isDrink()).filter(item => item.subcategoryId === category.id)}
             />
           ))
         }
@@ -35,8 +32,9 @@ export const DrinkList: React.FC<CategoryListProps> = ({ items }) => {
   )
 }
 
-export const FoodList: React.FC<CategoryListProps> = ({ items }) => {
+export const FoodList: React.FC<{}> = () => {
   const classes = useStyles();
+  const { items } = useItems();
 
   return (
     <FormGroup className={classes.content}>
@@ -47,7 +45,7 @@ export const FoodList: React.FC<CategoryListProps> = ({ items }) => {
               key={index}
               Icon={InboxIcon}
               category={category}
-              items={items.filter(item => item.subcategoryId === category.id)}
+              items={items.filter(item => item.isFood()).filter(item => item.subcategoryId === category.id)}
             />
           ))
         }

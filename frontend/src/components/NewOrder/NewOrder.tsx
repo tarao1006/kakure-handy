@@ -18,7 +18,7 @@ export const NewOrder = () => {
   const [activeStep, setActiveStep] = React.useState<number>(0);
   const [activeCategory, setActiveCategory] = React.useState<number>(0);
   const { items, targetItems, initializeItem } = useItems();
-  const { tables, targetTable, initializeTable } = useTables();
+  const { tables, targetTable, initializeTable, resetTable } = useTables();
 
   React.useEffect(() => {
     let cleanedUp = false;
@@ -54,6 +54,7 @@ export const NewOrder = () => {
     if (currentUser) {
       const order = await createOrder(token, targetTable.id, targetItems);
       history.push('/');
+      resetTable();
     }
   }
 
