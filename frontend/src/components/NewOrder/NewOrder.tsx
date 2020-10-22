@@ -12,7 +12,7 @@ export const NewOrder = () => {
   const { currentUser } = React.useContext(AuthContext);
   const history = useHistory();
   const [token, setToken] = React.useState<string>("");
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [activeStep, setActiveStep] = React.useState<number>(0);
   const [activeCategory, setActiveCategory] = React.useState<number>(0);
   const { items, targetItems, initializeItem } = useItems();
@@ -39,9 +39,8 @@ export const NewOrder = () => {
 
   React.useEffect(() => {
     if (tables === undefined || items === undefined) {
-      return;
-    }
-    if (tables.length === 0 || items.length === 0) {
+      setIsLoading(true);
+    } else if (tables.length === 0 || items.length === 0) {
       setIsLoading(true);
     } else {
       setIsLoading(false);

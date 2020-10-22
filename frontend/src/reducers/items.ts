@@ -27,7 +27,11 @@ export const items = (state = initialState, action: any) => {
     if (targetItemIdx === -1) {
       targetItems.push(item);
     } else {
-      targetItems[targetItemIdx] = item;
+      if (item.count === 0) {
+        targetItems = targetItems.filter(targetItem => targetItem.id !== item.id);
+      } else {
+        targetItems[targetItemIdx] = item;
+      }
     }
 
     return { items, targetItems }
