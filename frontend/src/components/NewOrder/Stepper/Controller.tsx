@@ -5,6 +5,7 @@ import {
   IconButton,
   MenuItem,
   Select,
+  TextField
 } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
 import { Item, MIN_ORDER_COUNT, MAX_ORDER_COUNT } from '../../../model';
@@ -32,15 +33,23 @@ const NumberSelectList = ({ value, handleChange }) => {
   const classes = useStyles();
 
   return (
-    <Select value={value} onChange={handleChange}>
+    <TextField
+      select
+      value={value}
+      onChange={handleChange}
+      className={classes.menuItem}
+      SelectProps={{
+        native: true,
+      }}
+    >
       {
         numList.map(num => (
-          <MenuItem key={num} value={num} className={classes.menuItem}>
+          <option key={num} value={num} className={classes.menuItem}>
             {num}
-          </MenuItem>
+          </option>
         ))
       }
-    </Select>
+    </TextField>
   )
 }
 

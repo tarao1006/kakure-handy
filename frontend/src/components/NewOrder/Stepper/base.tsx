@@ -4,15 +4,10 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: '100%',
-      paddingLeft: theme.spacing(1),
     },
     tabRoot: {
       flexGrow: 1,
       backgroundColor: theme.palette.background.paper,
-    },
-    content: {
-      width: '100%',
-      // paddingLeft: theme.spacing(2),
     },
     scrollArea: {
       width: '100%',

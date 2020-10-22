@@ -30,7 +30,7 @@ const SelectCategoryTab: React.FC<SelectCategoryTabProps> = ({ activeCategory, s
 
   return (
     <div>
-      <Tabs value={activeCategory} onChange={handleChange}>
+      <Tabs value={activeCategory} onChange={handleChange} indicatorColor="primary" textColor="primary">
         <Tab label="ドリンク" />
         <Tab label="フード" />
       </Tabs>

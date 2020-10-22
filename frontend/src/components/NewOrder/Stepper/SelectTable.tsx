@@ -6,12 +6,10 @@ import {
   Radio,
   FormControlLabel,
 } from '@material-ui/core';
-import useStyles from './base';
 import { Table } from '../../../model';
 import useTables from '../../../hooks/useTables';
 
 export const SelectTable: React.FC<{}> = () => {
-  const classes = useStyles();
   const { tables, targetTable, updateTable } = useTables();
   const [value, setValue] = React.useState<Table | undefined>(targetTable);
 
@@ -27,11 +25,11 @@ export const SelectTable: React.FC<{}> = () => {
   };
 
   return (
-    <FormControl component="fieldset" className={classes.root}>
+    <FormControl component="fieldset">
       <FormLabel component="legend">
         部屋を選択してください。
       </FormLabel>
-      <RadioGroup value={value === undefined ? 0 : value.id} onChange={handleChange} className={classes.content}>
+      <RadioGroup value={value === undefined ? 0 : value.id} onChange={handleChange}>
         {
           tables.map(table => (
             <FormControlLabel

@@ -8,12 +8,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     itemRoot: {
       display: 'grid',
-      gridTemplateColumns: '55% 15% 1fr',
+      gridTemplateColumns: '70% 1fr',
       justifyContent: 'space-between',
-    },
-    input: {
-      width: '5ch',
-      padding: 0,
     },
   })
 );
@@ -27,8 +23,9 @@ const FoldedListItem: React.FC<FoldedListItemProps> = ({ item }) => {
 
   return (
     <ListItem key={item.id} className={classes.itemRoot}>
-      <div>{`${item.name}`}</div>
-      <div style={{textAlign: 'right'}}>{`${item.price}円`}</div>
+      <div>
+        {`${item.name}`}
+      </div>
       <Controller item={item} />
     </ListItem>
   )

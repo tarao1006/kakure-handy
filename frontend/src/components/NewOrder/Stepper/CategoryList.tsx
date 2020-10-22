@@ -15,7 +15,7 @@ export const DrinkList: React.FC<{}> = () => {
   const { items } = useItems();
 
   return (
-    <FormGroup className={classes.content}>
+    <FormGroup>
       <List className={classes.scrollArea}>
         {
           drink.map((category, index) => (
@@ -37,7 +37,7 @@ export const FoodList: React.FC<{}> = () => {
   const { items } = useItems();
 
   return (
-    <FormGroup className={classes.content}>
+    <FormGroup>
       <List className={classes.scrollArea}>
         {
           food.map((category, index) => (

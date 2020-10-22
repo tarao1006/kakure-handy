@@ -15,7 +15,7 @@ export const NewOrder = () => {
   const history = useHistory();
   const [token, setToken] = React.useState<string>("");
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [activeStep, setActiveStep] = React.useState<number>(0);
+  const [activeStep, setActiveStep] = React.useState<number>(1);
   const [activeCategory, setActiveCategory] = React.useState<number>(0);
   const { items, targetItems, initializeItem } = useItems();
   const { tables, targetTable, initializeTable, resetTable } = useTables();
