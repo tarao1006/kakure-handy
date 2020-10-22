@@ -3,10 +3,10 @@ import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../auth';
 import NewOrderStepper from './Stepper';
 import {
-  Table,
   Item,
-  convertToTables,
+  Table,
   convertToItems,
+  convertToTables,
 } from '../../model';
 import Loading from '../Loading';
 import { getTables } from '../../api/table';
@@ -58,11 +58,11 @@ export const NewOrder = () => {
     }
   }
 
-  const handleSetTable = (table: Table) => {
+  const handleSetTable = (table: Table): void => {
     setTargetTable(table);
   }
 
-  const handleSetItems = (newItem: Item) => {
+  const handleSetItems = (newItem: Item): void => {
     let newTargetItems = [...targetItems];
     const idx = newTargetItems.findIndex(element => element.id === newItem.id);
     if (idx === -1) {
@@ -73,18 +73,18 @@ export const NewOrder = () => {
     setTargetItems(newTargetItems);
   }
 
-  const handleIncrement = (id: number) => {
-    let newTargetItems = [...targetItems];
-    const idx = newTargetItems.findIndex(element => element.id === id);
-    newTargetItems[idx].count = newTargetItems[idx].count + 1;
-    setTargetItems(newTargetItems);
+  const handleIncrement = (id: number): void => {
+    let newItem = Object.assign({}, [...targetItems].find(element => element.id === id));
+    if (Object.keys(newItem).length === 0) return;
+    newItem.count = newItem.count + 1;
+    handleSetItems(newItem);
   }
 
-  const handleDecrement = (id: number) => {
-    let newTargetItems = [...targetItems];
-    const idx = newTargetItems.findIndex(element => element.id === id);
-    newTargetItems[idx].count = Math.max(newTargetItems[idx].count - 1, 0);
-    setTargetItems(newTargetItems);
+  const handleDecrement = (id: number): void => {
+    let newItem = Object.assign({}, [...targetItems].find(element => element.id === id));
+    if (Object.keys(newItem).length === 0) return;
+    newItem.count = Math.max(newItem.count - 1, 0);
+    handleSetItems(newItem);
   }
 
   return (
