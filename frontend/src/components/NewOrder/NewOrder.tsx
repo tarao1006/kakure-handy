@@ -60,31 +60,30 @@ export const NewOrder = () => {
 
   const handleSetTable = (table: Table) => {
     setTargetTable(table);
-    // setActiveStep(activeStep + 1);
   }
 
-  const handleSetItems = (item: Item) => {
+  const handleSetItems = (newItem: Item) => {
+    let newTargetItems = [...targetItems];
+    const idx = newTargetItems.findIndex(element => element.id === newItem.id);
+    if (idx === -1) {
+      newTargetItems.push(newItem);
+    } else {
+      newTargetItems[idx] = newItem;
+    }
+    setTargetItems(newTargetItems);
   }
 
   const handleIncrement = (id: number) => {
     let newTargetItems = [...targetItems];
-    newTargetItems.forEach(item => {
-      if (id === item.id) {
-        item.count++;
-      }
-      return item;
-    });
+    const idx = newTargetItems.findIndex(element => element.id === id);
+    newTargetItems[idx].count = newTargetItems[idx].count + 1;
     setTargetItems(newTargetItems);
   }
 
   const handleDecrement = (id: number) => {
     let newTargetItems = [...targetItems];
-    newTargetItems.forEach(item => {
-      if (id === item.id) {
-        item.count = Math.max(0, item.count - 1);
-      }
-      return item;
-    });
+    const idx = newTargetItems.findIndex(element => element.id === id);
+    newTargetItems[idx].count = Math.max(newTargetItems[idx].count - 1, 0);
     setTargetItems(newTargetItems);
   }
 
