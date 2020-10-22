@@ -52,6 +52,7 @@ export const NewOrder = () => {
 
   const handleOrder = async () => {
     if (currentUser) {
+      setIsLoading(true);
       const order = await createOrder(token, targetTable.id, targetItems);
       history.push('/');
       resetTable();

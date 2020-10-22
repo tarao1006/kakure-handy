@@ -19,8 +19,8 @@ export const tables = (state = initialState, action: any) => {
   switch (action.type) {
     case INITIALIZE_TABLE:
       return {
+        ...state,
         tables: action.tables,
-        targetTable: undefined
       };
     case UPDATE_TABLE:
       return {
