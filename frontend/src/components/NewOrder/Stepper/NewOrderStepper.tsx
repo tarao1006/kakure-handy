@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import { Item, Table } from '../../../model'
 import { SelectItem } from './SelectItem';
-import { SelectTable } from './selectTable';
+import { SelectTable } from './SelectTable';
 import { Confirmation } from './Confirmation';
 
 const useStyles = makeStyles((theme: Theme) =>
