@@ -8,7 +8,7 @@ import {
   ListItemIcon,
 } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
-import FoldedListItem from './FoldedListItem';
+import Controller from './Controller';
 import { Item } from '../../../model';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -29,11 +29,11 @@ interface FoldedListProps {
   Icon: any;
   category: { id: number, name: string };
   items: Item[];
-  values?: Item[];
+  targetItems?: Item[];
   handleChange: (item: Item) => void;
 }
 
-const FoldedList: React.FC<FoldedListProps> = ({ Icon, category, items, values, handleChange }) => {
+const FoldedList: React.FC<FoldedListProps> = ({ Icon, category, items, targetItems, handleChange }) => {
   const [open, setOpen] = React.useState<boolean>(false);
 
   const handleClick = () => {
@@ -41,7 +41,7 @@ const FoldedList: React.FC<FoldedListProps> = ({ Icon, category, items, values, 
   }
 
   return (
-    <div>
+    <>
       <ListItem button onClick={handleClick}>
         <ListItemIcon>
           <Icon />
@@ -54,44 +54,44 @@ const FoldedList: React.FC<FoldedListProps> = ({ Icon, category, items, values, 
       <Collapse in={open} unmountOnExit>
         <List component="div" disablePadding>
           {
-            items.map(item => <Content key={item.id} item={item} values={values} handleChange={handleChange} />)
+            items.map(item => <FoldedListItem key={item.id} item={item} targetItems={targetItems} handleChange={handleChange} />)
           }
         </List>
       </Collapse>
-    </div>
+    </>
   )
 }
 
 export default FoldedList;
 
-interface ContentProps {
+interface FoldedListItemProps {
   item: Item;
-  values?: Item[];
+  targetItems?: Item[];
   handleChange: (item: Item) => void;
 }
 
-const Content: React.FC<ContentProps> = ({ item, values, handleChange }) => {
+const FoldedListItem: React.FC<FoldedListItemProps> = ({ item, targetItems, handleChange }) => {
   const classes = useStyles();
   const [count, setCount] = React.useState<number>(0);
 
   React.useEffect(() => {
-    if (!values) {
+    if (!targetItems) {
       return;
     }
-    const value = values.find(i => i.id === item.id);
+    const value = targetItems.find(i => i.id === item.id);
     if (value) {
       setCount(value.count)
     }
-  }, [values]);
+  }, [targetItems]);
 
   return (
     <ListItem key={item.id} className={classes.itemRoot}>
       <div>{`${item.name}`}</div>
       <div style={{textAlign: 'right'}}>{`${item.price}円`}</div>
-      <FoldedListItem
+      <Controller
         item={item}
         onChange={handleChange}
       />
-  </ListItem>
+    </ListItem>
   )
 }

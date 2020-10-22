@@ -30,7 +30,7 @@ interface StepperProps {
   tables: Table[];
   items: Item[];
   targetTable: Table | undefined;
-  targetItems: Item[] | undefined;
+  targetItems: Item[];
   handleSetTable: (table: Table) => void;
   handleSetItem: (item: Item) => void;
   handleIncrement: (id: number) => void;
@@ -73,7 +73,7 @@ const NewOrderStepper: React.FC<StepperProps> = ({
       case 0:
         return targetTable === undefined
       case 1:
-        return targetItems === undefined
+        return targetItems.length === 0
       case 2:
         return false
       default:

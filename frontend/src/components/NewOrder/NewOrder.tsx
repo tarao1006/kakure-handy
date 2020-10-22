@@ -15,9 +15,9 @@ export const NewOrder = () => {
   const [tables, setTables] = React.useState<Table[]>([]);
   const [items, setItems] = React.useState<Item[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [activeStep, setActiveStep] = React.useState<number>(0);
+  const [activeStep, setActiveStep] = React.useState<number>(1);
   const [targetTable, setTargetTable] = React.useState<Table | undefined>(undefined);
-  const [targetItems, setTargetItems] = React.useState<Item[] | undefined>(undefined);
+  const [targetItems, setTargetItems] = React.useState<Item[]>([]);
 
   React.useEffect(() => {
     let cleanedUp = false;
