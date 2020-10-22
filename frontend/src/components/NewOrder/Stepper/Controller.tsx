@@ -3,8 +3,6 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import {
   FormControl,
   IconButton,
-  MenuItem,
-  Select,
   TextField
 } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
@@ -18,9 +16,6 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'row',
       alignItems: 'space-between',
     },
-    menuItem: {
-      textAlign: 'center',
-    }
   })
 );
 
@@ -30,21 +25,19 @@ for (let i = 0; i <= MAX_ORDER_COUNT; ++i) {
 }
 
 const NumberSelectList = ({ value, handleChange }) => {
-  const classes = useStyles();
 
   return (
     <TextField
       select
       value={value}
       onChange={handleChange}
-      className={classes.menuItem}
       SelectProps={{
         native: true,
       }}
     >
       {
         numList.map(num => (
-          <option key={num} value={num} className={classes.menuItem}>
+          <option key={num} value={num}>
             {num}
           </option>
         ))
@@ -61,9 +54,9 @@ const Controller: React.FC<FoldedListItemProps> = ({ item }) => {
   const classes = useStyles();
   const { add, increment, decrement } = useItems();
 
-  const handleChange = (e: React.ChangeEvent<{ value: number }>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let newItem = new Item(item.id, item.categoryId, item.subcategoryId, item.name, item.price);
-    newItem.count = e.target.value;
+    newItem.count = Number.parseInt(e.target.value);
     add(newItem);
   }
 

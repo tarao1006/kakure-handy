@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     itemRoot: {
       display: 'grid',
-      gridTemplateColumns: '70% 1fr',
+      gridTemplateColumns: '65% 1fr',
       justifyContent: 'space-between',
     },
   })
