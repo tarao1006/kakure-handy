@@ -53,7 +53,7 @@ const NewOrderStepper: React.FC<StepperProps> = ({
       case 1:
         return <SelectItem activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
       case 2:
-        return <Confirmation table={targetTable} />
+        return <Confirmation />
       default:
         return <></>
     }

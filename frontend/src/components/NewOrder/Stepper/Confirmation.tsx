@@ -1,49 +1,39 @@
 import * as React from 'react';
-import { FormControl, FormLabel } from '@material-ui/core';
-import { Table } from '../../../model';
+import {
+  FormControl,
+  FormLabel,
+  List,
+  Typography
+} from '@material-ui/core';
+import FoldedListItem from './FoldedListItem';
 import useItems from '../../../hooks/useItems';
+import useTables from '../../../hooks/useTables';
+import useStyles from './base';
 
-interface ConfirmationProps {
-  table: Table;
-}
-
-export const Confirmation: React.FC<ConfirmationProps> = ({ table }) => {
-  const { targetItems, increment, decrement } = useItems();
+export const Confirmation: React.FC<{}> = () => {
+  const { targetItems } = useItems();
+  const { targetTable } = useTables();
+  const classes = useStyles();
 
   return (
-    <FormControl component="fieldset">
+    <FormControl component="fieldset" className={classes.root}>
       <FormLabel component="legend">
         注文を確定してください。
       </FormLabel>
       <div>
         テーブル
       </div>
-      <div>
-        {table.roomName}
-      </div>
+      <Typography component='h1' variant='h5' style={{textAlign: 'center'}}>
+        {targetTable.roomName}
+      </Typography>
       <div>
         メニュー
       </div>
-      {
-        targetItems.map(item => (
-          <div key={item.id}>
-            <div>
-              <div>
-                {item.name}
-              </div>
-              <div>
-                {item.count}
-              </div>
-            </div>
-            <button onClick={() => increment(item.id)}>
-              increment
-            </button>
-            <button onClick={() => decrement(item.id)}>
-              decrement
-            </button>
-          </div>
-        ))
-      }
+      <List>
+        {
+          targetItems.map(item => <FoldedListItem key={item.id} item={item} />)
+        }
+      </List>
     </FormControl>
   )
 }

@@ -14,8 +14,8 @@ export const NewOrder = () => {
   const { currentUser } = React.useContext(AuthContext);
   const history = useHistory();
   const [token, setToken] = React.useState<string>("");
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [activeStep, setActiveStep] = React.useState<number>(1);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [activeStep, setActiveStep] = React.useState<number>(0);
   const [activeCategory, setActiveCategory] = React.useState<number>(0);
   const { items, targetItems, initializeItem } = useItems();
   const { tables, targetTable, initializeTable, resetTable } = useTables();
