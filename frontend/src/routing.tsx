@@ -16,6 +16,7 @@ import Table from './components/Table';
 import LogIn from './components/LogIn';
 import ForgetPassword from './components/ForgetPassword';
 import MailSent from './components/MailSent';
+import OrderSuccess from './components/NewOrder/OrderSuccess';
 
 interface RedirectRouteProps {
   path: string
@@ -93,6 +94,11 @@ const Routing = () => {
             path='/mail-sent'
             exact
             component={MailSent}
+          />
+          <Route
+            path='/order-success'
+            exact
+            component={OrderSuccess}
           />
           <LogInRoute />
         </AuthProvider>

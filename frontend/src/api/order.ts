@@ -18,5 +18,5 @@ export const createOrder = async (idToken: string, tableId: number, items: Item[
     })
   });
 
-  return base.ToJson(res);
+  return res.status;
 }
