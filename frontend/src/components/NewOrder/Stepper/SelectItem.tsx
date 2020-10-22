@@ -10,10 +10,11 @@ import SelectCategoryTab from './SelectCategoryTab';
 interface SelectItemProps {
   items: Item[];
   handleSet: (item: Item) => void;
-  targetItems: Item[];
+  increment: (id: number) => void;
+  decrement: (id: number) => void;
 }
 
-export const SelectItem: React.FC<SelectItemProps> = ({ items, handleSet, targetItems }) => {
+export const SelectItem: React.FC<SelectItemProps> = ({ items, handleSet, increment, decrement }) => {
   const classes = useStyles();
 
   return (
@@ -21,8 +22,9 @@ export const SelectItem: React.FC<SelectItemProps> = ({ items, handleSet, target
       <FormLabel component="legend">注文するメニューを選択してください。</FormLabel>
         <SelectCategoryTab
           items={items}
-          targetItems={targetItems}
-          onChange={handleSet}
+          handleSet={handleSet}
+          increment={increment}
+          decrement={decrement}
         />
     </FormControl>
   )

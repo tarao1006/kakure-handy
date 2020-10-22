@@ -60,7 +60,7 @@ const NewOrderStepper: React.FC<StepperProps> = ({
       case 0:
         return <SelectTable tables={tables} handleSet={handleSetTable} targetTable={targetTable} />
       case 1:
-        return <SelectItem items={items} handleSet={handleSetItem} targetItems={targetItems} />
+        return <SelectItem items={items} handleSet={handleSetItem} increment={handleIncrement} decrement={handleDecrement}/>
       case 2:
         return <Confirmation table={targetTable} items={targetItems} increment={handleIncrement} decrement={handleDecrement} />
       default:

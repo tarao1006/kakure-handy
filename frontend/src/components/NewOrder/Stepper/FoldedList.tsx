@@ -29,11 +29,12 @@ interface FoldedListProps {
   Icon: any;
   category: { id: number, name: string };
   items: Item[];
-  targetItems?: Item[];
-  handleChange: (item: Item) => void;
+  handleSet: (item: Item) => void;
+  increment: (id: number) => void;
+  decrement: (id: number) => void;
 }
 
-const FoldedList: React.FC<FoldedListProps> = ({ Icon, category, items, targetItems, handleChange }) => {
+const FoldedList: React.FC<FoldedListProps> = ({ Icon, category, items, handleSet, increment, decrement }) => {
   const [open, setOpen] = React.useState<boolean>(false);
 
   const handleClick = () => {
@@ -54,7 +55,15 @@ const FoldedList: React.FC<FoldedListProps> = ({ Icon, category, items, targetIt
       <Collapse in={open} unmountOnExit>
         <List component="div" disablePadding>
           {
-            items.map(item => <FoldedListItem key={item.id} item={item} targetItems={targetItems} handleChange={handleChange} />)
+            items.map(item => (
+              <FoldedListItem
+                key={item.id}
+                item={item}
+                handleSet={handleSet}
+                increment={increment}
+                decrement={decrement}
+              />
+            ))
           }
         </List>
       </Collapse>
@@ -66,23 +75,14 @@ export default FoldedList;
 
 interface FoldedListItemProps {
   item: Item;
-  targetItems?: Item[];
-  handleChange: (item: Item) => void;
+  handleSet: (item: Item) => void;
+  increment: (id: number) => void;
+  decrement: (id: number) => void;
 }
 
-const FoldedListItem: React.FC<FoldedListItemProps> = ({ item, targetItems, handleChange }) => {
+const FoldedListItem: React.FC<FoldedListItemProps> = ({ item, handleSet, increment, decrement }) => {
   const classes = useStyles();
-  const [count, setCount] = React.useState<number>(0);
-
-  React.useEffect(() => {
-    if (!targetItems) {
-      return;
-    }
-    const value = targetItems.find(i => i.id === item.id);
-    if (value) {
-      setCount(value.count)
-    }
-  }, [targetItems]);
+  const [count, setCount] = React.useState<number>(item.count);
 
   return (
     <ListItem key={item.id} className={classes.itemRoot}>
@@ -90,7 +90,9 @@ const FoldedListItem: React.FC<FoldedListItemProps> = ({ item, targetItems, hand
       <div style={{textAlign: 'right'}}>{`${item.price}円`}</div>
       <Controller
         item={item}
-        onChange={handleChange}
+        handleSet={handleSet}
+        increment={increment}
+        decrement={decrement}
       />
     </ListItem>
   )

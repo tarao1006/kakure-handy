@@ -27,40 +27,47 @@ for (let i = 0; i <= 15; ++i) {
   numList.push(i);
 }
 
-interface FoldedListItemProps {
-  item: Item;
-  onChange?: (item: Item) => void;
+const NumberSelectList = ({ value, handleChange }) => {
+  const classes = useStyles();
+
+  return (
+    <Select value={value} onChange={handleChange}>
+      {
+        numList.map(num => (
+          <MenuItem key={num} value={num} className={classes.menuItem}>
+            {num}
+          </MenuItem>
+        ))
+      }
+    </Select>
+  )
 }
 
-const Controller: React.FC<FoldedListItemProps> = ({ item, onChange }) => {
+interface FoldedListItemProps {
+  item: Item;
+  handleSet?: (item: Item) => void;
+  increment?: (id: number) => void;
+  decrement?: (id: number) => void;
+}
+
+const Controller: React.FC<FoldedListItemProps> = ({ item, handleSet, increment, decrement }) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState<number>(item.count);
+  const [value, setValue] = React.useState<Item>(item);
 
   const handleChange = (e: React.ChangeEvent<{ value: unknown }>) => {
     const newValue = e.target.value as number;
-    setValue(newValue);
     let newItem = Object.assign(item) as Item;
     newItem.count = newValue;
-    onChange(newItem);
+    setValue(newItem);
+    handleSet(newItem);
   }
 
   const handleIncrement = () => {
-    const newValue = value + 1;
-    setValue(newValue);
-    let newItem = Object.assign(item) as Item;
-    newItem.count = newValue;
-    onChange(newItem);
+    increment(item.id);
   }
 
   const handleDecrement = () => {
-    if (value <= 0) {
-      return;
-    }
-    const newValue = value - 1;
-    setValue(newValue);
-    let newItem = Object.assign(item) as Item;
-    newItem.count = newValue;
-    onChange(newItem)
+    decrement(item.id);
   }
 
   return (
@@ -69,18 +76,7 @@ const Controller: React.FC<FoldedListItemProps> = ({ item, onChange }) => {
         <Remove />
       </IconButton>
       <FormControl>
-        <Select
-          value={value}
-          onChange={handleChange}
-        >
-        {
-          numList.map(num => (
-            <MenuItem key={num} value={num} className={classes.menuItem}>
-              {num}
-            </MenuItem>
-          ))
-        }
-        </Select>
+        <NumberSelectList value={value} handleChange={handleChange} />
       </FormControl>
       <IconButton size='small' onClick={handleIncrement}>
         <Add />

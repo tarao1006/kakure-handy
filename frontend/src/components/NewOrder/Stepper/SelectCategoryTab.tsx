@@ -20,11 +20,12 @@ const TabPanel: React.FC<TabPanelProps> = ({ children, value, index }) => {
 
 interface SelectCategoryTabProps {
   items: Item[];
-  targetItems?: Item[];
-  onChange: (item: Item) => void;
+  handleSet: (item: Item) => void;
+  increment: (id: number) => void;
+  decrement: (id: number) => void;
 }
 
-const SelectCategoryTab: React.FC<SelectCategoryTabProps> = ({ items, targetItems, onChange }) => {
+const SelectCategoryTab: React.FC<SelectCategoryTabProps> = ({ items, handleSet, increment, decrement }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (e: React.ChangeEvent<{}>, newValue: number) => {
@@ -40,15 +41,17 @@ const SelectCategoryTab: React.FC<SelectCategoryTabProps> = ({ items, targetItem
       <TabPanel value={value} index={0}>
         <DrinkList
           items={items.filter(item => item.isDrink())}
-          targetItems={targetItems}
-          handleChange={onChange}
+          handleSet={handleSet}
+          increment={increment}
+          decrement={decrement}
         />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <FoodList
           items={items.filter(item => item.isFood())}
-          targetItems={targetItems}
-          handleChange={onChange}
+          handleSet={handleSet}
+          increment={increment}
+          decrement={decrement}
         />
       </TabPanel>
     </div>

@@ -14,11 +14,12 @@ import food from '@dataset/categoriesFood.json';
 // values: Selected items
 interface CategoryListProps {
   items: Item[];
-  targetItems?: Item[];
-  handleChange: (item: Item) => void;
+  handleSet: (item: Item) => void;
+  increment: (id: number) => void;
+  decrement: (id: number) => void;
 }
 
-export const DrinkList: React.FC<CategoryListProps> = ({ items, targetItems, handleChange }) => {
+export const DrinkList: React.FC<CategoryListProps> = ({ items, handleSet, increment, decrement }) => {
   const classes = useStyles();
 
   return (
@@ -31,8 +32,9 @@ export const DrinkList: React.FC<CategoryListProps> = ({ items, targetItems, han
               key={index}
               category={category}
               items={items.filter(item => item.subcategoryId === category.id)}
-              targetItems={targetItems}
-              handleChange={handleChange}
+              handleSet={handleSet}
+              increment={increment}
+              decrement={decrement}
             />
           ))
         }
@@ -41,7 +43,7 @@ export const DrinkList: React.FC<CategoryListProps> = ({ items, targetItems, han
   )
 }
 
-export const FoodList: React.FC<CategoryListProps> = ({ items, targetItems, handleChange }) => {
+export const FoodList: React.FC<CategoryListProps> = ({ items, handleSet, increment, decrement }) => {
   const classes = useStyles();
 
   return (
@@ -54,8 +56,9 @@ export const FoodList: React.FC<CategoryListProps> = ({ items, targetItems, hand
               Icon={InboxIcon}
               category={category}
               items={items.filter(item => item.subcategoryId === category.id)}
-              targetItems={targetItems}
-              handleChange={handleChange}
+              handleSet={handleSet}
+              increment={increment}
+              decrement={decrement}
             />
           ))
         }
