@@ -8,15 +8,11 @@ import {
 } from '@material-ui/core';
 import useStyles from './base';
 import { Table } from '../../../model';
+import useTables from '../../../hooks/useTables';
 
-interface SelectTableProps {
-  tables: Table[];
-  handleSet: (table: Table) => void;
-  targetTable: Table | undefined;
-}
-
-export const SelectTable: React.FC<SelectTableProps> = ({ tables, handleSet, targetTable }) => {
+export const SelectTable: React.FC<{}> = () => {
   const classes = useStyles();
+  const { tables, targetTable, updateTable } = useTables();
   const [value, setValue] = React.useState<Table | undefined>(targetTable);
 
   React.useEffect(() => {
@@ -27,7 +23,7 @@ export const SelectTable: React.FC<SelectTableProps> = ({ tables, handleSet, tar
     const id = Number.parseInt(e.target.value);
     const table = tables.find(table => table.id === id);
     setValue(table);
-    handleSet(table);
+    updateTable(table);
   };
 
   return (

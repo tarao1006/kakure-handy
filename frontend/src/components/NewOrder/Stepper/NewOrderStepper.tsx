@@ -7,8 +7,8 @@ import {
   StepLabel,
   Stepper,
 } from '@material-ui/core';
-import { Table } from '../../../model';
 import useItems from '../../../hooks/useItems';
+import useTables from '../../../hooks/useTables';
 import { SelectItem } from './SelectItem';
 import { SelectTable } from './SelectTable';
 import { Confirmation } from './Confirmation';
@@ -28,9 +28,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface StepperProps {
-  tables: Table[];
-  targetTable: Table | undefined;
-  handleSetTable: (table: Table) => void;
   handleOrder: () => void;
   activeCategory: number;
   activeStep: number;
@@ -39,9 +36,6 @@ interface StepperProps {
 }
 
 const NewOrderStepper: React.FC<StepperProps> = ({
-  tables,
-  targetTable,
-  handleSetTable,
   handleOrder,
   activeCategory,
   activeStep,
@@ -50,11 +44,12 @@ const NewOrderStepper: React.FC<StepperProps> = ({
 }) => {
   const classes = useStyles();
   const { targetItems } = useItems();
+  const { targetTable } = useTables();
 
   const getStepContent = (step: number) => {
     switch (step) {
       case 0:
-        return <SelectTable tables={tables} handleSet={handleSetTable} targetTable={targetTable} />
+        return <SelectTable />
       case 1:
         return <SelectItem activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
       case 2:

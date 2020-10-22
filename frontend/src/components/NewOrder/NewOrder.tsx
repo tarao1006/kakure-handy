@@ -5,7 +5,7 @@ import Loading from '../Loading';
 import NewOrderStepper from './Stepper';
 import useItems from '../../hooks/useItems';
 import useTables from '../../hooks/useTables';
-import { Table, convertToItems, convertToTables } from '../../model';
+import { convertToItems, convertToTables } from '../../model';
 import { getTables } from '../../api/table';
 import { getItems } from '../../api/item';
 import { createOrder } from '../../api/order';
@@ -18,7 +18,7 @@ export const NewOrder = () => {
   const [activeStep, setActiveStep] = React.useState<number>(0);
   const [activeCategory, setActiveCategory] = React.useState<number>(0);
   const { items, targetItems, initializeItem } = useItems();
-  const { tables, targetTable, initializeTable, updateTable } = useTables();
+  const { tables, targetTable, initializeTable } = useTables();
 
   React.useEffect(() => {
     let cleanedUp = false;
@@ -57,18 +57,11 @@ export const NewOrder = () => {
     }
   }
 
-  const handleSetTable = (table: Table): void => {
-    updateTable(table);
-  }
-
   return (
     isLoading
     ? (<Loading />)
     : (
       <NewOrderStepper
-        tables={tables}
-        targetTable={targetTable}
-        handleSetTable={handleSetTable}
         handleOrder={handleOrder}
         activeStep={activeStep}
         activeCategory={activeCategory}
