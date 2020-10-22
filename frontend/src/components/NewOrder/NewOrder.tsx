@@ -15,7 +15,8 @@ export const NewOrder = () => {
   const [tables, setTables] = React.useState<Table[]>([]);
   const [items, setItems] = React.useState<Item[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [activeStep, setActiveStep] = React.useState<number>(1);
+  const [activeStep, setActiveStep] = React.useState<number>(0);
+  const [activeCategory, setActiveCategory] = React.useState<number>(0);
   const [targetTable, setTargetTable] = React.useState<Table | undefined>(undefined);
   const [targetItems, setTargetItems] = React.useState<Item[]>([]);
 
@@ -121,6 +122,8 @@ export const NewOrder = () => {
         handleIncrement={handleIncrement}
         handleDecrement={handleDecrement}
         activeStep={activeStep}
+        activeCategory={activeCategory}
+        setActiveCategory={setActiveCategory}
         setActiveStep={setActiveStep}
       />
     )

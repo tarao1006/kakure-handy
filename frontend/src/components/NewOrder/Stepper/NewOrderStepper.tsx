@@ -37,6 +37,8 @@ interface StepperProps {
   handleDecrement: (id: number) => void;
   handleOrder: () => void;
   activeStep: number;
+  activeCategory: number;
+  setActiveCategory: (categoryId: number) => void;
   setActiveStep: (step: any) => void;
 }
 
@@ -51,6 +53,8 @@ const NewOrderStepper: React.FC<StepperProps> = ({
   handleDecrement,
   handleOrder,
   activeStep,
+  activeCategory,
+  setActiveCategory,
   setActiveStep,
 }) => {
   const classes = useStyles();
@@ -60,7 +64,7 @@ const NewOrderStepper: React.FC<StepperProps> = ({
       case 0:
         return <SelectTable tables={tables} handleSet={handleSetTable} targetTable={targetTable} />
       case 1:
-        return <SelectItem items={items} handleSet={handleSetItem} increment={handleIncrement} decrement={handleDecrement}/>
+        return <SelectItem activeCategory={activeCategory} setActiveCategory={setActiveCategory} items={items} handleSet={handleSetItem} increment={handleIncrement} decrement={handleDecrement}/>
       case 2:
         return <Confirmation table={targetTable} items={targetItems} increment={handleIncrement} decrement={handleDecrement} />
       default:
