@@ -11,7 +11,7 @@ import { Table } from '../../../model';
 
 interface SelectTableProps {
   tables: Table[];
-  handleSet: (id: number, name: string) => void;
+  handleSet: (table: Table) => void;
   defaultValue?: Table;
 }
 
@@ -26,7 +26,7 @@ export const SelectTable: React.FC<SelectTableProps> = ({ tables, handleSet, def
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const id = Number.parseInt(e.target.value);
     setValue(id);
-    handleSet(id, tables.find(table => table.id === id).roomName);
+    handleSet(tables.find(table => table.id === id));
   };
 
   return (
@@ -40,7 +40,7 @@ export const SelectTable: React.FC<SelectTableProps> = ({ tables, handleSet, def
             <FormControlLabel
               key={table.id}
               value={table.id}
-              control={<Radio color="default" />}
+              control={<Radio color="primary" />}
               label={table.roomName}
             />
           ))

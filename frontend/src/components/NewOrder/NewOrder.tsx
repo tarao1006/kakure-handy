@@ -1,11 +1,7 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../auth';
-import NewOrderStepper, { 
-  SelectItem,
-  SelectTable,
-  Confirmation,
-} from './Stepper';
+import NewOrderStepper from './Stepper';
 import {
   Table,
   Item,
@@ -20,13 +16,13 @@ import { createOrder } from '../../api/order';
 export const NewOrder = () => {
   const { currentUser } = React.useContext(AuthContext);
   const history = useHistory();
-  const [token, setToken] = React.useState<string>();
+  const [token, setToken] = React.useState<string>("");
   const [tables, setTables] = React.useState<Table[]>([]);
   const [items, setItems] = React.useState<Item[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [activeStep, setActiveStep] = React.useState<number>(0);
-  const [targetTable, setTargetTable] = React.useState<{id: number, name: string}>();
-  const [targetItems, setTargetItems] = React.useState<{id: number, name: string, count: number}[]>([]);
+  const [targetTable, setTargetTable] = React.useState<Table | undefined>(undefined);
+  const [targetItems, setTargetItems] = React.useState<Item[] | undefined>(undefined);
 
   React.useEffect(() => {
     let cleanedUp = false;
@@ -62,9 +58,12 @@ export const NewOrder = () => {
     }
   }
 
-  const handleSetTable = (id: number, name: string) => {
-    setTargetTable({ id, name });
+  const handleSetTable = (table: Table) => {
+    setTargetTable(table);
     // setActiveStep(activeStep + 1);
+  }
+
+  const handleSetItems = (item: Item) => {
   }
 
   const handleIncrement = (id: number) => {
@@ -92,32 +91,20 @@ export const NewOrder = () => {
   return (
     isLoading
     ? (<Loading />)
-    :
-    <NewOrderStepper
-      selectTable={
-        {
-          label: "テーブル",
-          component: <SelectTable tables={tables} handleSet={handleSetTable} defaultValue={targetTable} />,
-          disabled: targetTable === undefined,
-        }
-      }
-      selectItem={
-        {
-          label: "注文",
-          component: <SelectItem items={items} handleSet={setTargetItems} defaultCheckedList={targetItems} />,
-          disabled: targetItems === undefined,
-        }
-      }
-      confirmation={
-        {
-          label: "確定",
-          component: <Confirmation table={targetTable} items={targetItems} increment={handleIncrement} decrement={handleDecrement} />,
-          disabled: false,
-        }
-      }
-      handleOrder={handleOrder}
-      activeStep={activeStep}
-      setActiveStep={setActiveStep}
-    />
+    : (
+      <NewOrderStepper
+        tables={tables}
+        items={items}
+        targetTable={targetTable}
+        targetItems={targetItems}
+        handleSetTable={handleSetTable}
+        handleSetItems={handleSetItems}
+        handleOrder={handleOrder}
+        handleIncrement={handleIncrement}
+        handleDecrement={handleDecrement}
+        activeStep={activeStep}
+        setActiveStep={setActiveStep}
+      />
+    )
   )
 }

@@ -1,17 +1,22 @@
 import * as React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import {
+  Container,
   Stepper,
   Step,
   StepLabel,
   Button,
 } from '@material-ui/core';
+import {
+  Item,
+  Table
+} from '../../../model'
+import { SelectItem } from './SelectItem';
+import { SelectTable } from './selectTable';
+import { Confirmation } from './Confirmation';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      width: '100%',
-    },
     buttonWrapper: {
       width: '100%',
       display: 'flex',
@@ -21,39 +26,46 @@ const useStyles = makeStyles((theme: Theme) =>
     button: {
       margin: theme.spacing(1),
     },
-    instructions: {
-      marginTop: theme.spacing(1),
-      marginBottom: theme.spacing(1),
-    },
   }),
 );
 
-interface StepperComponent {
-  label: string;
-  component: JSX.Element;
-  disabled: boolean;
-}
-
 interface StepperProps {
-  selectTable: StepperComponent,
-  selectItem: StepperComponent,
-  confirmation: StepperComponent,
+  tables: Table[];
+  items: Item[];
+  targetTable: Table | undefined;
+  targetItems: Item[] | undefined;
+  handleSetTable: (table: Table) => void;
+  handleSetItems: (item: Item) => void;
   handleOrder: () => void;
+  handleIncrement: (id: number) => void;
+  handleDecrement: (id: number) => void;
   activeStep: number;
   setActiveStep: (step: any) => void;
 }
 
-const NewOrderStepper: React.FC<StepperProps> = ({ selectTable, selectItem, confirmation, handleOrder, activeStep, setActiveStep }) => {
+const NewOrderStepper: React.FC<StepperProps> = ({
+  tables,
+  items,
+  targetTable,
+  targetItems,
+  handleSetTable,
+  handleSetItems,
+  handleOrder,
+  handleIncrement,
+  handleDecrement,
+  activeStep,
+  setActiveStep
+}) => {
   const classes = useStyles();
 
   const getStepContent = (step: number) => {
     switch (step) {
       case 0:
-        return selectTable.component
+        return <SelectTable tables={tables} handleSet={handleSetTable} defaultValue={targetTable} />
       case 1:
-        return selectItem.component
+        return <SelectItem items={items} handleSet={handleSetItems} defaultCheckedList={targetItems} />
       case 2:
-        return confirmation.component
+        return <Confirmation table={targetTable} items={targetItems} increment={handleIncrement} decrement={handleDecrement} />
       default:
         return 'Unknown step'
     }
@@ -81,16 +93,16 @@ const NewOrderStepper: React.FC<StepperProps> = ({ selectTable, selectItem, conf
   };
 
   return (
-    <div className={classes.root}>
-      <Stepper activeStep={activeStep}>
+    <Container component="main" maxWidth="xs">
+      <Stepper activeStep={activeStep} style={{ background: 'transparent' }}>
         <Step>
-          <StepLabel>{selectTable.label}</StepLabel>
+          <StepLabel>テーブル</StepLabel>
         </Step>
         <Step>
-          <StepLabel>{selectItem.label}</StepLabel>
+          <StepLabel>注文</StepLabel>
         </Step>
         <Step>
-          <StepLabel>{confirmation.label}</StepLabel>
+          <StepLabel>確定</StepLabel>
         </Step>
       </Stepper>
       <div>
@@ -127,7 +139,7 @@ const NewOrderStepper: React.FC<StepperProps> = ({ selectTable, selectItem, conf
           )}
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
 

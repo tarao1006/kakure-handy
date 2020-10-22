@@ -66,7 +66,7 @@ const Top = () => {
         <LinkButton to="/login">
           ログイン
         </LinkButton>
-      ) 
+      )
       }
     </Container>
   )
