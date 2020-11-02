@@ -3,11 +3,13 @@ DB_SERVICE:=db
 MIGRATION_SERVICE:=migration
 DOCKER_COMPOSE:=`which docker-compose`
 FLYWAY_CONF:=-url=jdbc:mysql://db:3306/kakure -user=root -password=password
+BACKEND_PORT:=8000
 
 include .firebase.env
 export $(shell sed 's/=.*//' .firebase.env)
 export GOOGLE_APPLICATION_CREDENTIALS:=$(HOME)/.config/gcloud/kakure_handy.json
 export GOOGLE_APPLICATION_CREDENTIALS_STR:=$(shell python3 json_parse.py --file $(GOOGLE_APPLICATION_CREDENTIALS))
+export BACKEND_URL:=http://$(shell ipconfig getifaddr en0):$(BACKEND_PORT)
 
 mysql/client:
 	$(DOCKER_COMPOSE) exec $(DB_SERVICE) mysql -uroot -ppassword $(DB_NAME)

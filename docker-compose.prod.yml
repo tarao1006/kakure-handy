@@ -18,7 +18,7 @@ services:
       args:
         - FIREBASE_API_KEY=${FIREBASE_API_KEY}
         - FIREBASE_AUTH_DOMAIN=${FIREBASE_AUTH_DOMAIN}
-        - BACKEND_URL=http://localhost:8000
+        - BACKEND_URL=${BACKEND_URL}
     container_name: kakure-handy-frontend-production
     volumes:
       - ./docker/frontend/default.conf:/etc/nginx/conf.d/default.conf
