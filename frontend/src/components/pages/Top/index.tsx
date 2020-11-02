@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
-import { AuthContext } from '../../../modules/auth';
-import {
+import { AuthContext } from '../../../contexts/auth';
+import { 
   Button,
   Container,
   Typography

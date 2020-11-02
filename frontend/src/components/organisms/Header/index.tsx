@@ -7,7 +7,8 @@ import {
 import { CssBaseline } from '@material-ui/core';
 import { AppBar, IconButton, Menu, MenuItem, Toolbar } from '@atoms';
 import { useHistory, useLocation } from 'react-router-dom';
-import { AuthContext, logout } from '../../../modules/auth';
+import { AuthContext } from '../../../contexts/auth';
+import { logout } from '../../../modules/auth';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';

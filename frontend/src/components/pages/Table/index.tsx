@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { AuthContext } from '../../../modules/auth';
+import { AuthContext } from '../../../contexts/auth';
 import { getTable } from '../../../api/table'
 import { Table as TableModel, convertToTable } from '../../../model';
 

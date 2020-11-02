@@ -5,7 +5,7 @@ import {
   Redirect
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { AuthProvider, AuthContext } from './modules/auth';
+import { AuthProvider, AuthContext } from './contexts/auth';
 import { store } from './reducers';
 import { Header } from '@organisms';
 import { Loading } from '@molecules';
