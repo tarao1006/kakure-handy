@@ -1,19 +1,17 @@
 import * as React from 'react';
 import {
   createStyles,
-  makeStyles,
-  Theme
+  makeStyles
 } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
-import { AppBar, IconButton, Menu, MenuItem, Toolbar } from '@atoms';
-import { useHistory, useLocation } from 'react-router-dom';
+import { AppBar, IconButton, Toolbar } from '@atoms';
+import { Navigation } from '@molecules';
+import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/auth';
 import { logout } from '../../../modules/auth';
 import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     invisibleSpace: {
       flexGrow: 1,
@@ -29,7 +27,6 @@ export const Header: React.FC<{}> = () => {
   const [auth, setAuth] = React.useState<boolean>(!!currentUser);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const history = useHistory();
-  const location = useLocation();
   const open = Boolean(anchorEl);
 
   React.useEffect(() => {
@@ -72,36 +69,13 @@ export const Header: React.FC<{}> = () => {
             <MenuIcon />
           </IconButton>
           <div className={classes.invisibleSpace} />
-          {auth &&
-            <div>
-              <IconButton
-                edge="end"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-                <ExpandMoreIcon />
-              </IconButton>
-              <Menu
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleLogout}>
-                  ログアウト
-                </MenuItem>
-              </Menu>
-            </div>
-          }
+          {auth && <Navigation
+            open={open}
+            anchorEl={anchorEl}
+            handleMenu={handleMenu}
+            handleClose={handleClose}
+            handleLogout={handleLogout}
+          />}
         </Toolbar>
       </AppBar>
     </>

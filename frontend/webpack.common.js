@@ -21,6 +21,7 @@ module.exports = {
       '@atoms$': path.resolve(__dirname, './src/components/atoms/index.tsx'),
       '@molecules$': path.resolve(__dirname, './src/components/molecules/index.tsx'),
       '@organisms$': path.resolve(__dirname, './src/components/organisms/index.tsx'),
+      '@templates$': path.resolve(__dirname, './src/components/templates/index.tsx'),
       '@pages$': path.resolve(__dirname, './src/components/pages/index.tsx')
     },
   },
