@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
-import { AuthContext } from '../../auth';
+import { AuthContext } from '../../modules/auth';
 import Loading from '../Loading';
 import NewOrderStepper from './Stepper';
 import useItems from '../../hooks/useItems';

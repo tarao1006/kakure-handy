@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { createContext, useEffect, useState } from "react";
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
@@ -15,12 +15,12 @@ interface IAuthContext {
   currentUser: firebaseUser;
 }
 
-const AuthContext = React.createContext<IAuthContext>({ currentUser: undefined });
+const AuthContext = createContext<IAuthContext>({ currentUser: undefined });
 
 const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = React.useState<firebaseUser>(undefined);
+  const [currentUser, setCurrentUser] = useState<firebaseUser>(undefined);
 
-  React.useEffect(() => {
+  useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
       setCurrentUser(user);
     });

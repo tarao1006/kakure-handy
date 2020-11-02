@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { List, ListItem, ListItemText } from '@material-ui/core';
-import { AuthContext } from '../auth';
+import { AuthContext } from '../modules/auth';
 import { getTables } from '../api/table'
 import { Table, convertToTables } from '../model';
 

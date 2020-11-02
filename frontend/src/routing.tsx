@@ -5,7 +5,7 @@ import {
   Redirect
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { AuthProvider, AuthContext } from './auth';
+import { AuthProvider, AuthContext } from './modules/auth';
 import { store } from './reducers';
 import Header from './components/Header';
 import Loading from './components/Loading';

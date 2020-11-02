@@ -16,7 +16,7 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import { login } from '../auth';
+import { login } from '../modules/auth';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import useStyles from '../hooks/useStyles';
 import Loading from './Loading'

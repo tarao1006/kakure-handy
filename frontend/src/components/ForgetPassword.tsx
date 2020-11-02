@@ -18,7 +18,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import useStyles from '../hooks/useStyles';
 import Loading from './Loading'
 import Copyright from './Copyright';
-import { resetEmail } from '../auth';
+import { resetEmail } from '../modules/auth';
 
 const defaultEmailAddress = "user01@example.co";
 
