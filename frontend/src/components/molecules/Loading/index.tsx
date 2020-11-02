@@ -1,5 +1,5 @@
 import React from 'react';
-import { CircularProgress, Grid } from '@atoms';
+import { Grid, CircularProgress } from '@atoms';
 
 export const Loading = (): JSX.Element => {
 

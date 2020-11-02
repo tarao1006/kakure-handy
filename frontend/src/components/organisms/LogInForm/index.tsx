@@ -1,13 +1,9 @@
 import * as React from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Link } from '@material-ui/core';
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Grid,
-  TextField
-} from '@atoms';
+import { Button, Checkbox, FormControlLabel, Grid, TextField } from '@atoms';
+import { useHistory, useLocation } from 'react-router-dom';
+import { login } from '../../../modules/auth';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,31 +17,37 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default useStyles;
-
-
-interface LogInFormProps {
-  email: string;
-  password: string;
-  checked: boolean;
-  setEmail: React.Dispatch<React.SetStateAction<string>>;
-  setPassword: React.Dispatch<React.SetStateAction<string>>;
-  setChecked: React.Dispatch<React.SetStateAction<boolean>>;
-  handleSubmit: (e: React.FormEvent) => void;
-  handleForgetPassword: () => void;
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search);
 }
 
-export const LogInForm: React.FC<LogInFormProps> = ({
-  email,
-  password,
-  checked,
-  setEmail,
-  setPassword,
-  setChecked,
-  handleSubmit,
-  handleForgetPassword
-}): JSX.Element => {
+const defaultEmail = "user01@example.com";
+const defaultPassword = "password"
+
+interface LogInFromProps {
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const LogInForm: React.FC<LogInFromProps> = ({ setIsLoading }): JSX.Element => {
   const classes = useStyles();
+  const [email, setEmail] = React.useState(defaultEmail);
+  const [password, setPassword] = React.useState(defaultPassword);
+  const [checked, setChecked] = React.useState(true);
+  const [isError, setIsError] = React.useState<boolean>(false);
+  const query = useQuery();
+  const history = useHistory();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!isValidEmail(email)) {
+      setIsError(true);
+      return
+    }
+    setIsLoading(true);
+    await login(email, password, checked);
+    history.push(query.get('redirect_to') ?? '/');
+  }
 
   const handleEmail = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -66,34 +68,40 @@ export const LogInForm: React.FC<LogInFormProps> = ({
     setChecked(newChecked);
   }
 
+  const handleForgetPassword = (): void => {
+    history.push('/forget-password');
+  }
+
+  const isValidEmail = (email: string): boolean => {
+    const reg = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
+    return reg.test(email);
+  }
+
   return (
     <form className={classes.form} noValidate onSubmit={handleSubmit}>
       <TextField
-        variant="outlined"
-        margin="normal"
-        required
-        fullWidth
         id="email"
-        label="メールアドレス"
-        name="email"
-        autoComplete="email"
-        autoFocus
-        type="email"
         value={email}
         onChange={handleEmail}
-      />
-      <TextField
+        type="email"
+        label="メールアドレス"
+        helperText={isError ? "正しいメールアドレスを入力してください" : ""}
         variant="outlined"
         margin="normal"
         required
         fullWidth
-        name="password"
-        label="パスワード"
-        type="password"
+        autoFocus
+      />
+      <TextField
         id="password"
-        autoComplete="current-password"
         value={password}
         onChange={handlePassword}
+        type="password"
+        label="パスワード"
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
       />
       <FormControlLabel
         control={<Checkbox checked={checked} color="primary" onChange={handleChecked} />}
