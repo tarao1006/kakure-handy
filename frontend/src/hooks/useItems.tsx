@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { CombinedState, INITIALIZE_ITEM, ADD, INCREMENT, DECREMENT } from '../reducers';
+import { CombinedState, INITIALIZE_ITEM, ADD_ITEM, INCREMENT_ITEM, DECREMENT_ITEM } from '../reducers';
 import { Item } from '../model';
 
 const useItems = () => {
@@ -17,21 +17,21 @@ const useItems = () => {
 
   const add = (item: Item) => {
     dispatch({
-      type: ADD,
+      type: ADD_ITEM,
       item
     });
   };
 
   const increment = (id: number) => {
     dispatch({
-      type: INCREMENT,
+      type: INCREMENT_ITEM,
       id
     });
   };
 
   const decrement = (id: number) => {
     dispatch({
-      type: DECREMENT,
+      type: DECREMENT_ITEM,
       id
     });
   };

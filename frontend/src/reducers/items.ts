@@ -1,9 +1,9 @@
 import { Item, MIN_ORDER_COUNT, MAX_ORDER_COUNT } from '../model';
 
 export const INITIALIZE_ITEM = 'INITIALIZE_ITEM';
-export const ADD = 'ADD';
-export const INCREMENT = 'INCREMENT';
-export const DECREMENT = 'DECREMENT';
+export const ADD_ITEM = 'ADD_ITEM';
+export const INCREMENT_ITEM = 'INCREMENT_ITEM';
+export const DECREMENT_ITEM = 'DECREMENT_ITEM';
 
 export interface ItemState {
   items: Item[];
@@ -67,11 +67,11 @@ export const items = (state = initialState, action: any) => {
         items: action.items,
         targetItems: []
       };
-    case ADD:
+    case ADD_ITEM:
       return handleSetItem(state, action.item);
-    case INCREMENT:
+    case INCREMENT_ITEM:
       return handleIncrement(state, action.id);
-    case DECREMENT:
+    case DECREMENT_ITEM:
       return handleDecrement(state, action.id);
     default:
       return state;
