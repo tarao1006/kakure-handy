@@ -9,9 +9,9 @@ import {
   Typography
 } from '@material-ui/core';
 import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
-import useStyles from '../hooks/useStyles';
+import useStyles from '../../../hooks/useStyles';
 
-const MailSent = () => {
+export const MailSent = () => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -40,5 +40,3 @@ const MailSent = () => {
     </Container>
   )
 }
-
-export default MailSent;

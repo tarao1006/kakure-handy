@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import { ListItem } from '@material-ui/core';
 import Controller from './Controller';
-import { Item } from '../../../model';
+import { Item } from '../../../../model';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

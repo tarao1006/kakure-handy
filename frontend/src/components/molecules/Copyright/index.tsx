@@ -1,14 +1,10 @@
-import * as React from 'react';
-import {
-  Typography
-} from '@material-ui/core';
+import React from 'react';
+import { Typography } from '@atoms';
 
-const Copyright: React.FC = () => {
+export const Copyright = (): JSX.Element => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {`Copyright © Kakure ${new Date().getFullYear()}.`}
     </Typography>
   );
 }
-
-export default Copyright;

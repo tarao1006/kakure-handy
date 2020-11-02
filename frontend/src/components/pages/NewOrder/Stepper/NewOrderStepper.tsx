@@ -7,8 +7,8 @@ import {
   StepLabel,
   Stepper,
 } from '@material-ui/core';
-import useItems from '../../../hooks/useItems';
-import useTables from '../../../hooks/useTables';
+import useItems from '../../../../hooks/useItems';
+import useTables from '../../../../hooks/useTables';
 import { SelectItem } from './SelectItem';
 import { SelectTable } from './SelectTable';
 import { Confirmation } from './Confirmation';

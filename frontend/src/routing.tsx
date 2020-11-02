@@ -7,16 +7,18 @@ import {
 import { Provider } from 'react-redux';
 import { AuthProvider, AuthContext } from './modules/auth';
 import { store } from './reducers';
-import Header from './components/Header';
-import Loading from './components/Loading';
-import Top from './components/Top';
-import Tables from './components/Tables';
-import NewOrder from './components/NewOrder';
-import Table from './components/Table';
-import LogIn from './components/LogIn';
-import ForgetPassword from './components/ForgetPassword';
-import MailSent from './components/MailSent';
-import OrderSuccess from './components/NewOrder/OrderSuccess';
+import { Header } from '@organisms';
+import { Loading } from '@molecules';
+import {
+  ForgetPassword,
+  LogIn,
+  MailSent,
+  NewOrder,
+  OrderSuccess,
+  Table,
+  Tables,
+  Top
+} from '@pages';
 
 interface RedirectRouteProps {
   path: string

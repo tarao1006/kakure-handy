@@ -1,28 +1,29 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import {
+  CssBaseline,
+  Link
+} from '@material-ui/core';
+import {
   Avatar,
   Box,
   Button,
   Container,
-  CssBaseline,
   Grid,
   IconButton,
-  Link,
   Snackbar,
-  TextField,
   Typography,
-} from '@material-ui/core';
+  TextField
+} from '@atoms';
 import MailIcon from '@material-ui/icons/MailOutlined';
 import CloseIcon from '@material-ui/icons/Close';
-import useStyles from '../hooks/useStyles';
-import Loading from './Loading'
-import Copyright from './Copyright';
-import { resetEmail } from '../modules/auth';
+import useStyles from '../../../hooks/useStyles';
+import { Copyright, Loading } from '@molecules';
+import { resetEmail } from '../../../modules/auth';
 
 const defaultEmailAddress = "user01@example.co";
 
-const ForgetPassword = () => {
+export const ForgetPassword = () => {
   const [open, setOpen] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isError, setIsError] = React.useState<boolean>(false);
@@ -73,7 +74,7 @@ const ForgetPassword = () => {
         <Avatar className={classes.avatar}>
           <MailIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography variant="h5" component="h1">
           パスワード再設定メールを送る
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
@@ -139,5 +140,3 @@ const ForgetPassword = () => {
     </Container>)
   );
 }
-
-export default ForgetPassword;

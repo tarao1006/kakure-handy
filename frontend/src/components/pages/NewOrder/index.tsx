@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
-import { AuthContext } from '../../modules/auth';
-import Loading from '../Loading';
+import { AuthContext } from '../../../modules/auth';
+import { Loading } from '@molecules';
 import NewOrderStepper from './Stepper';
-import useItems from '../../hooks/useItems';
-import useTables from '../../hooks/useTables';
-import { convertToItems, convertToTables } from '../../model';
-import { getTables, getItems, createOrder } from '../../api';
+import useItems from '../../../hooks/useItems';
+import useTables from '../../../hooks/useTables';
+import { convertToItems, convertToTables } from '../../../model';
+import { getTables, getItems, createOrder } from '../../../api';
 
 export const NewOrder = () => {
   const { currentUser } = React.useContext(AuthContext);

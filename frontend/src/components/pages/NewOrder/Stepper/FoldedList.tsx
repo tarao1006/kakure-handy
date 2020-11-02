@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import FoldedListItem from './FoldedListItem';
-import { Item } from '../../../model';
+import { Item } from '../../../../model';
 
 interface FoldedListProps {
   Icon: any;

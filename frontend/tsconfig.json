@@ -13,7 +13,11 @@
     ],
     "baseUrl": "./",
     "paths": {
-      "@dataset/*": ["./dataset/*"]
+      "@dataset/*": ["./dataset/*"],
+      "@atoms": ["./src/components/atoms/index.tsx"],
+      "@molecules": ["./src/components/molecules/index.tsx"],
+      "@organisms": ["./src/components/organisms/index.tsx"],
+      "@pages": ["./src/components/pages/index.tsx"]
     },
   },
   "include": [

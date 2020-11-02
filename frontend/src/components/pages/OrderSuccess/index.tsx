@@ -9,9 +9,9 @@ import {
   Typography
 } from '@material-ui/core';
 import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
-import useStyles from '../../hooks/useStyles';
+import useStyles from '../../../hooks/useStyles';
 
-const OrderSuccess = () => {
+export const OrderSuccess = () => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -44,5 +44,3 @@ const OrderSuccess = () => {
     </Container>
   )
 }
-
-export default OrderSuccess;

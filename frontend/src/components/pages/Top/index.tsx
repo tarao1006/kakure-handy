@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
-import { AuthContext } from '../modules/auth';
+import { AuthContext } from '../../../modules/auth';
 import {
   Button,
   Container,
@@ -43,7 +43,7 @@ const LinkButton = ({ to, children }) => {
   )
 }
 
-const Top = () => {
+export const Top = () => {
   const classes = useTopStyles();
   const { currentUser } = React.useContext(AuthContext);
 
@@ -71,5 +71,3 @@ const Top = () => {
     </Container>
   )
 }
-
-export default Top;

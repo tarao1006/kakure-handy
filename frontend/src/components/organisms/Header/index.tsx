@@ -4,18 +4,10 @@ import {
   makeStyles,
   Theme
 } from '@material-ui/core/styles';
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  MenuItem,
-  Menu,
-  Button,
-  Typography,
-  CssBaseline
-} from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core';
+import { AppBar, IconButton, Menu, MenuItem, Toolbar } from '@atoms';
 import { useHistory, useLocation } from 'react-router-dom';
-import { AuthContext, logout } from '../modules/auth';
+import { AuthContext, logout } from '../../../modules/auth';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -30,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const Header: React.FC<{}> = () => {
+export const Header: React.FC<{}> = () => {
   const { currentUser } = React.useContext(AuthContext);
   const classes = useStyles();
   const [auth, setAuth] = React.useState<boolean>(!!currentUser);
@@ -114,5 +106,3 @@ const Header: React.FC<{}> = () => {
     </>
   );
 }
-
-export default Header;

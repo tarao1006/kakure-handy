@@ -16,11 +16,10 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import { login } from '../modules/auth';
+import { login } from '../../../modules/auth';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import useStyles from '../hooks/useStyles';
-import Loading from './Loading'
-import Copyright from './Copyright';
+import useStyles from '../../../hooks/useStyles';
+import { Copyright, Loading } from '@molecules';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -29,7 +28,7 @@ const useQuery = () => {
 const defaultEmailAddress = "user01@example.com";
 const defaultPassword = "password"
 
-const LogIn = () => {
+export const LogIn = () => {
   const [isLoading, setIsLoading] = React.useState(false)
   const [emailAddress, setEmailAddress] = React.useState(defaultEmailAddress);
   const [password, setPassword] = React.useState(defaultPassword);
@@ -130,5 +129,3 @@ const LogIn = () => {
     </Container>)
   );
 }
-
-export default LogIn;

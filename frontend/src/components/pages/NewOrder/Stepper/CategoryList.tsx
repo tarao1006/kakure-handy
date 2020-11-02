@@ -8,7 +8,7 @@ import FoldedList from './FoldedList';
 import useStyles from './base';
 import drink from '@dataset/categoriesDrink.json';
 import food from '@dataset/categoriesFood.json';
-import useItems from '../../../hooks/useItems';
+import useItems from '../../../../hooks/useItems';
 
 export const DrinkList: React.FC<{}> = () => {
   const classes = useStyles();

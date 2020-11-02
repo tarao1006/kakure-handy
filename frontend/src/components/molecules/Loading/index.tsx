@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { CircularProgress, Grid } from '@material-ui/core';
+import React from 'react';
+import { CircularProgress, Grid } from '@atoms';
 
-const Loading = () => {
+export const Loading = (): JSX.Element => {
 
     return (
       <Grid
@@ -17,5 +17,3 @@ const Loading = () => {
       </Grid>
     )
 }
-
-export default Loading;

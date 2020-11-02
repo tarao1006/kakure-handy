@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { List, ListItem, ListItemText } from '@material-ui/core';
-import { AuthContext } from '../modules/auth';
-import { getTables } from '../api/table'
-import { Table, convertToTables } from '../model';
+import { AuthContext } from '../../../modules/auth';
+import { getTables } from '../../../api/table'
+import { Table as TableModel, convertToTables } from '../../../model';
 
 const ListItemLink = (props) => {
   return <ListItem button component="a" {...props} />;
@@ -16,9 +16,9 @@ const convertTimeToHM = (start: Date, end: Date): string => {
   return `${hours}時間 ${minutes}分`
 }
 
-const Tables = () => {
+export const Tables = () => {
   const { currentUser } = React.useContext(AuthContext);
-  const [tables, setTables] = React.useState<Table[]>([]);
+  const [tables, setTables] = React.useState<TableModel[]>([]);
   const [date, setDate] = React.useState<Date>(new Date());
 
   React.useEffect(() => {
@@ -61,5 +61,3 @@ const Tables = () => {
     </List>
   )
 }
-
-export default Tables;

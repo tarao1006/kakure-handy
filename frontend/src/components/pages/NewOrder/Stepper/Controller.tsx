@@ -6,8 +6,8 @@ import {
   TextField
 } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
-import { Item, MIN_ORDER_COUNT, MAX_ORDER_COUNT } from '../../../model';
-import useItems from '../../../hooks/useItems';
+import { Item, MIN_ORDER_COUNT, MAX_ORDER_COUNT } from '../../../../model';
+import useItems from '../../../../hooks/useItems';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
