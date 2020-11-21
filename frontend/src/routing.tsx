@@ -15,7 +15,7 @@ import {
   MailSent,
   NewOrder,
   OrderSuccess,
-  Table,
+  TableDetail,
   Tables,
   Top
 } from '@pages';
@@ -85,7 +85,7 @@ const Routing = () => {
           <RedirectRoute
             path='/table/:id'
             exact
-            Child={Table}
+            Child={TableDetail}
           />
           <Route
             path='/forget-password'

@@ -18,6 +18,7 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
     alias: {
       '@dataset': path.resolve(__dirname, './dataset'),
+      '@api': path.resolve(__dirname, './src/api/index.ts'),
       '@atoms$': path.resolve(__dirname, './src/components/atoms/index.tsx'),
       '@molecules$': path.resolve(__dirname, './src/components/molecules/index.tsx'),
       '@organisms$': path.resolve(__dirname, './src/components/organisms/index.tsx'),
