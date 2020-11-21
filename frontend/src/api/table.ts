@@ -13,7 +13,7 @@ export const getTables = async (idToken: string): Promise<any[]> => {
 }
 
 export const getTable = async (idToken: string, id: string) => {
-  const res = await fetch(`${base.BACKEND_URL}/${id}`, {
+  const res = await fetch(`${base.BACKEND_URL}/table/${id}`, {
     method: "GET",
     headers: new Headers({
       Authorization: `Bearer ${idToken}`
