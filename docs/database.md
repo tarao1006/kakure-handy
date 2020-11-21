@@ -145,17 +145,18 @@
 |cnt|
 
 
-## `table_information`
+## `table_model`
 
-テーブルごとの情報
+`Table` モデル用
 
 |name|
 |:-:|
-|table_id|
+|id|
 |is_ended|
 |room_name|
 |order_cnt|
 |amount|
+|bill_cnt|
 |start_at|
 |end_at|
 
@@ -188,14 +189,3 @@
 |price|
 |quantity|
 |status|
-
-## `table_model`
-
-`Table` モデル用
-
-|name|
-|:-:|
-|id|
-|room_name|
-|is_ended|
-|start_at|

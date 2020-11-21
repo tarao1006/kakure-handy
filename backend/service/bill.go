@@ -18,7 +18,8 @@ func NewBill(db *sqlx.DB) *Bill {
 	return &Bill{db: db}
 }
 
-// Create create new record.
+// Create は新しい会計を作成する。
+// 上書きを許容するため、過去の会計を無効にする。
 func (b *Bill) Create(tableID int64, amount int64) (*model.Bill, error) {
 	var createdID int64
 	bills, err := repository.FindBillsByTableID(b.db, tableID)

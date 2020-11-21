@@ -33,11 +33,11 @@ INSERT INTO order_detail (id, order_id, item_id, quantity, status_id) VALUES (NU
 INSERT INTO cuisine_order (id, table_id, staff_id, created_at) VALUES (6, 2, 1, "2020-08-02 18:00:00");
 INSERT INTO order_detail (id, order_id, item_id, quantity, status_id) VALUES (NULL, 6, 3, 2, 2);
 INSERT INTO order_detail (id, order_id, item_id, quantity, status_id) VALUES (NULL, 6, 4, 1, 2);
-INSERT INTO bill (id, table_id, amount) VALUES (NULL, 1, 7700);
+INSERT INTO bill (id, table_id, amount) VALUES (NULL, 2, 7700);
 UPDATE dinner_table SET end_at = "2020-08-02 19:00:00", is_ended = true WHERE id = 2;
 
 -- 来客中のお客さん
-INSERT INTO dinner_table (id, room_id, start_at) VALUES (3, 3, "2020-08-03 21:00:00");
-INSERT INTO dinner_table (id, room_id, start_at) VALUES (4, 4, "2020-08-03 22:00:00");
+INSERT INTO dinner_table (id, room_id, start_at) VALUES (3, 3, NOW());
+INSERT INTO dinner_table (id, room_id, start_at) VALUES (4, 4, NOW());
 
 SET foreign_key_checks = 1;

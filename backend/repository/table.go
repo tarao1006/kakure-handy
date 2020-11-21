@@ -13,7 +13,7 @@ import (
 func AllTable(db *sqlx.DB) ([]model.Table, error) {
 	tables := make([]tableDTO, 0)
 	if err := db.Select(&tables, `
-		SELECT id, room_name, is_ended, start_at FROM table_model
+		SELECT id, room_name, is_ended, start_at, end_at, amount, bill_cnt FROM table_model
 	`); err != nil {
 		log.Print(err)
 		return nil, err
@@ -27,11 +27,14 @@ func AllTable(db *sqlx.DB) ([]model.Table, error) {
 		}
 
 		res = append(res, model.Table{
-			ID:       table.ID,
-			RoomName: table.RoomName,
-			IsEnded:  table.IsEnded,
-			StartAt:  table.StartAt,
-			Orders:   orders,
+			ID:        table.ID,
+			RoomName:  table.RoomName,
+			IsEnded:   table.IsEnded,
+			StartAt:   table.StartAt,
+			EndAt:     table.EndAt,
+			Amount:    table.Amount,
+			BillCount: table.BillCount,
+			Orders:    orders,
 		})
 	}
 
@@ -42,7 +45,7 @@ func AllTable(db *sqlx.DB) ([]model.Table, error) {
 func FindTableByID(db *sqlx.DB, params *model.TableParam) (*model.Table, error) {
 	table := tableDTO{}
 	if err := db.Get(&table, `
-		SELECT id, room_name, is_ended, start_at FROM table_model WHERE id = ?
+		SELECT id, room_name, is_ended, start_at, end_at, amount, bill_cnt FROM table_model WHERE id = ?
 	`, params.ID); err != nil {
 		log.Print(err)
 		return nil, err
@@ -54,11 +57,14 @@ func FindTableByID(db *sqlx.DB, params *model.TableParam) (*model.Table, error) 
 	}
 
 	res := model.Table{
-		ID:       table.ID,
-		RoomName: table.RoomName,
-		IsEnded:  table.IsEnded,
-		StartAt:  table.StartAt,
-		Orders:   orders,
+		ID:        table.ID,
+		RoomName:  table.RoomName,
+		IsEnded:   table.IsEnded,
+		StartAt:   table.StartAt,
+		EndAt:     table.EndAt,
+		Amount:    table.Amount,
+		BillCount: table.BillCount,
+		Orders:    orders,
 	}
 
 	return &res, nil
@@ -94,8 +100,11 @@ func CreateTable(db *sqlx.Tx, params *model.TableParam) (result sql.Result, err 
 }
 
 type tableDTO struct {
-	ID       int64     `db:"id"`
-	RoomName string    `db:"room_name"`
-	IsEnded  bool      `db:"is_ended"`
-	StartAt  time.Time `db:"start_at"`
+	ID        int64     `db:"id"`
+	RoomName  string    `db:"room_name"`
+	IsEnded   bool      `db:"is_ended"`
+	StartAt   time.Time `db:"start_at"`
+	EndAt     time.Time `db:"end_at"`
+	Amount    int64     `db:"amount"`
+	BillCount int64     `db:"bill_cnt"`
 }

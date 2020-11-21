@@ -65,7 +65,8 @@ func (t *Table) Create(_ http.ResponseWriter, r *http.Request) (int, interface{}
 	return http.StatusCreated, table, nil
 }
 
-// Update receives id and update dinner_table record.
+// Update は既存の dinner_table レコードを更新して、退店処理をする。
+// まだ会計が終了していない場合、エラーとなる。
 func (t *Table) Update(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
 	id, err := httputil.ExtractID(mux.Vars(r), "id")
 	if err != nil {

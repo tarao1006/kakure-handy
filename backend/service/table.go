@@ -61,7 +61,7 @@ func (t *Table) Create(params *model.TableParam) (*model.Table, error) {
 	return res, nil
 }
 
-// End update `end_at` value of dinner_table.
+// End は `end_at` の値を更新する。
 func (t *Table) End(params *model.TableParam) (*model.Table, error) {
 	table, err := repository.FindTableByID(t.db, params)
 	if err != nil {
