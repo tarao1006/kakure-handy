@@ -1,11 +1,31 @@
 import * as React from 'react';
+import { useHistory } from 'react-router';
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import { AuthContext } from '../../../contexts/auth';
 import { getTables } from '../../../api/table'
 import { Table as TableModel, convertToTables } from '../../../model';
 
-const ListItemLink = (props) => {
-  return <ListItem button component="a" {...props} />;
+const ListTableLink = ({table, handleClick}) => {
+  const [date, setDate] = React.useState<Date>(new Date());
+
+  React.useEffect(() => {
+    const subscription = setInterval(() => {
+      setDate(new Date());
+    }, 1000 * 60);
+    return () => {
+      clearInterval(subscription);
+    }
+  }, []);
+
+  const handleLink = () => {
+    handleClick(table.id);
+  }
+
+  return (
+    <ListItem button component="a" onClick={handleLink}>
+      <ListItemText primary={table.roomName} secondary={`${convertTimeToHM(table.startAt, date)}経過`} />
+    </ListItem>
+  )
 }
 
 const convertTimeToHM = (start: Date, end: Date): string => {
@@ -19,7 +39,7 @@ const convertTimeToHM = (start: Date, end: Date): string => {
 export const Tables = () => {
   const { currentUser } = React.useContext(AuthContext);
   const [tables, setTables] = React.useState<TableModel[]>([]);
-  const [date, setDate] = React.useState<Date>(new Date());
+  const history = useHistory();
 
   React.useEffect(() => {
     let cleanedUp = false;
@@ -40,22 +60,15 @@ export const Tables = () => {
     return cleanUp;
   }, [currentUser]);
 
-  React.useEffect(() => {
-    const subscription = setInterval(() => {
-      setDate(new Date());
-    }, 1000 * 60);
-    return () => {
-      clearInterval(subscription);
-    }
-  }, [])
+  const handleClick = (id: number): void => {
+    history.push(`/table/${id}`)
+  };
 
   return (
     <List>
       {
         tables.map(table => (
-          <ListItemLink key={table.id} href={`/table/${table.id}`}>
-            <ListItemText primary={table.roomName} secondary={`${convertTimeToHM(table.startAt, date)}経過`} />
-          </ListItemLink>
+          <ListTableLink key={table.id} table={table} handleClick={handleClick} />
         ))
       }
     </List>
