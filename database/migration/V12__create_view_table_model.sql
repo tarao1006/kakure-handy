@@ -32,7 +32,11 @@ GROUP BY
 CREATE VIEW table_bill_cnt AS (
 SELECT
   dinner_table.id AS table_id,
-  COUNT(bill.id) AS cnt
+  COUNT(bill.id) AS cnt,
+  CASE
+    WHEN MAX(bill.id) IS NULL THEN 0
+    ELSE MAX(bill.id)
+  END AS latest_bill_id
 FROM
   dinner_table
 LEFT OUTER JOIN
@@ -51,6 +55,7 @@ SELECT
   table_order_cnt.cnt AS order_cnt,
   table_order_amount.amount,
   table_bill_cnt.cnt AS bill_cnt,
+  table_bill_cnt.latest_bill_id,
   dinner_table.start_at,
   dinner_table.end_at
 FROM

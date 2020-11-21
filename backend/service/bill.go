@@ -26,9 +26,15 @@ func (b *Bill) Create(tableID int64, amount int64) (*model.Bill, error) {
 	if err != nil {
 		return nil, err
 	}
+	validBills := make([]model.Bill, 0)
+	for _, bill := range bills {
+		if bill.IsValid {
+			validBills = append(validBills, bill)
+		}
+	}
 
 	if err := dbutil.TXHandler(b.db, func(tx *sqlx.Tx) error {
-		for _, bill := range bills {
+		for _, bill := range validBills {
 			_, err := repository.RevokeBill(tx, bill.ID)
 			if err != nil {
 				return err
@@ -55,4 +61,17 @@ func (b *Bill) Create(tableID int64, amount int64) (*model.Bill, error) {
 	}
 
 	return res, nil
+}
+
+func (b *Bill) Delete(billID int64) error {
+	if err := dbutil.TXHandler(b.db, func(tx *sqlx.Tx) error {
+		if _, err := repository.RevokeBill(tx, billID); err != nil {
+			return err
+		}
+		return nil
+	}); err != nil {
+		return err
+	}
+
+	return nil
 }

@@ -11,3 +11,15 @@ export const createBill = async (idToken: string, tableId: string): Promise<any[
 
   return base.ToJson(res);
 }
+
+export const deleteBill = async (idToken: string, tableId: string, billId: string) => {
+  const res = await fetch(`${base.BACKEND_URL}/table/${tableId}/bill/${billId}`, {
+    method: "DELETE",
+    headers: new Headers({
+      Authorization: `Bearer ${idToken}`
+    }),
+    credentials: "same-origin",
+  })
+
+  return base.ToJson(res);
+}

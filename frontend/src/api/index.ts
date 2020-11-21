@@ -1,4 +1,4 @@
-export { createBill } from './bill';
+export { createBill, deleteBill } from './bill';
 export { getItems } from './item';
 export { createOrder } from './order';
-export { getTable, getTables } from './table';
+export { getTable, getTables, exitTable } from './table';

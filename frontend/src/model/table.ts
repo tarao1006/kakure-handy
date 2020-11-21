@@ -3,8 +3,12 @@ import { Order, OrderDTO, convertToOrder } from './order';
 export interface Table {
   id: number
   roomName?: string
-  startAt?: Date
   isEnded?: boolean
+  startAt?: Date
+  endAt?: Date
+  amount?: number
+  billCnt?: number
+  latestBillId?: number
   orders?: Order[]
 }
 
@@ -16,10 +20,11 @@ interface tableDTO {
   end_at: string;
   amount: number,
   bill_cnt: number,
+  latest_bill_id: number,
   orders: OrderDTO[];
 }
 
-export const convertToTable = (table: tableDTO) => {
+export const convertToTable = (table: tableDTO): Table => {
   return {
     id: table.id,
     roomName: table.room_name,
@@ -28,6 +33,7 @@ export const convertToTable = (table: tableDTO) => {
     endAt: new Date(table.end_at),
     amount: table.amount,
     billCnt: table.bill_cnt,
+    latestBillId: table.latest_bill_id,
     orders: table.orders.map(order => convertToOrder(order)),
   }
 }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@atoms';
 import { AuthContext } from '../../../contexts/auth';
-import { getTable, createBill } from '@api';
+import { getTable, exitTable, createBill, deleteBill } from '@api';
 import { Table as TableModel, convertToTable } from '../../../model';
 
 interface TableParams {
@@ -33,9 +33,19 @@ export const TableDetail = () => {
     return cleanUp;
   }, [currentUser])
 
-  const handleBill = async () => {
+  const handleCreateBill = async () => {
     const token = await currentUser.getIdToken();
     createBill(token, id);
+  }
+
+  const handleDeleteBill = async () => {
+    const token = await currentUser.getIdToken();
+    deleteBill(token, id, `${table.latestBillId}`);
+  }
+
+  const handleExit = async () => {
+    const token = await currentUser.getIdToken();
+    exitTable(token, id);
   }
 
   return (
@@ -50,10 +60,10 @@ export const TableDetail = () => {
               <TableCell>
                 名前
               </TableCell>
-              <TableCell>
+              <TableCell align="center">
                 数量
               </TableCell>
-              <TableCell>
+              <TableCell align="center">
                 状態
               </TableCell>
             </TableRow>
@@ -66,10 +76,10 @@ export const TableDetail = () => {
                   <TableCell>
                     {detail.itemName}
                   </TableCell>
-                  <TableCell>
+                  <TableCell align="center">
                     {detail.quantity}
                   </TableCell>
-                  <TableCell>
+                  <TableCell align="center">
                     {detail.status}
                   </TableCell>
                 </TableRow>)
@@ -78,8 +88,14 @@ export const TableDetail = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <button onClick={handleBill}>
+      <button onClick={handleCreateBill} disabled={table.billCnt != 0}>
         会計
+      </button>
+      <button onClick={handleDeleteBill} disabled={table.isEnded}>
+        会計取消
+      </button>
+      <button onClick={handleExit} disabled={table.billCnt === 0 || table.isEnded}>
+        退店
       </button>
     </div>
     : <></>)
