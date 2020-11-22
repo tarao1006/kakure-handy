@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"encoding/json"
 	"errors"
 	"net/http"
 
@@ -37,42 +38,11 @@ func (a *OrderDetail) Update(_ http.ResponseWriter, r *http.Request) (int, inter
 		return http.StatusBadRequest, nil, errors.New("required parameter is missing")
 	}
 
-	params := &model.OrderDetailParam{
-		ID:       orderDetailID,
-		Status:   "served",
-		StatusID: 2,
+	params := &model.OrderDetailParam{}
+	if err := json.NewDecoder(r.Body).Decode(&params); err != nil {
+		return http.StatusBadRequest, nil, err
 	}
-
-	orderDetailService := service.NewOrderDetail(a.db)
-	orderDetail, err := orderDetailService.Update(params)
-	if err != nil {
-		return http.StatusInternalServerError, nil, err
-	}
-
-	return http.StatusOK, orderDetail, nil
-}
-
-// Delete change order status.
-func (a *OrderDetail) Delete(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
-	vars := mux.Vars(r)
-
-	_, err := httputil.ExtractID(vars, "table_id")
-	if err != nil {
-		return http.StatusBadRequest, nil, errors.New("required parameter is missing")
-	}
-
-	// TODO: check if table is ended
-
-	orderDetailID, err := httputil.ExtractID(vars, "order_detail_id")
-	if err != nil {
-		return http.StatusBadRequest, nil, errors.New("required parameter is missing")
-	}
-
-	params := &model.OrderDetailParam{
-		ID:       orderDetailID,
-		Status:   "canceled",
-		StatusID: 3,
-	}
+	params.ID = orderDetailID
 
 	orderDetailService := service.NewOrderDetail(a.db)
 	orderDetail, err := orderDetailService.Update(params)

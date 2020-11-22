@@ -76,7 +76,6 @@ func (s *Server) Route() http.Handler {
 
 	r.Methods(http.MethodPost).Path("/table/{id:[0-9]+}/order").Handler(AppHandler{orderController.Create})
 	r.Methods(http.MethodPatch).Path("/table/{table_id:[0-9]+}/order/{order_detail_id:[0-9]+}").Handler(AppHandler{orderDetailController.Update})
-	r.Methods(http.MethodDelete).Path("/table/{table_id:[0-9]+}/order/{order_detail_id:[0-9]+}").Handler(AppHandler{orderDetailController.Delete})
 
 	r.Methods(http.MethodPost).Path("/table/{id:[0-9]+}/bill").Handler(AppHandler{billController.Create})
 	r.Methods(http.MethodGet).Path("/table/{id:[0-9]+}/bill").Handler(AppHandler{billController.Show})
