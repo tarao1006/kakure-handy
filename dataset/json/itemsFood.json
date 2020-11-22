@@ -1,0 +1,132 @@
+[
+  {
+    "subcategory_id": 11,
+    "name": "旬野菜の彩りサラダ オレンジドレッシング",
+    "price": 850
+  },
+  {
+    "subcategory_id": 11,
+    "name": "水菜とくみあげゆばのサラダ オリジナル和風ドレッシング",
+    "price": 900
+  },
+  {
+    "subcategory_id": 11,
+    "name": "スモークサーモンとアボカドのシーザーサラダ",
+    "price": 950
+  },
+  {
+    "subcategory_id": 12,
+    "name": "鶏そぼろ奴っこ",
+    "price": 600
+  },
+  {
+    "subcategory_id": 12,
+    "name": "くみ上げ湯葉",
+    "price": 650
+  },
+  {
+    "subcategory_id": 12,
+    "name": "鯛のからすみ和え",
+    "price": 800
+  },
+  {
+    "subcategory_id": 12,
+    "name": "ほたるいかの沖漬け",
+    "price": 650
+  },
+  {
+    "subcategory_id": 12,
+    "name": "さばへしこ",
+    "price": 600
+  },
+  {
+    "subcategory_id": 12,
+    "name": "京漬物の盛り合わせ",
+    "price": 650
+  },
+  {
+    "subcategory_id": 12,
+    "name": "チャンジャクリームチーズ",
+    "price": 700
+  },
+  {
+    "subcategory_id": 13,
+    "name": "生麩とベーコンの九条葱バター醤油焼き",
+    "price": 950
+  },
+  {
+    "subcategory_id": 13,
+    "name": "生麩の揚げ出し",
+    "price": 700
+  },
+  {
+    "subcategory_id": 13,
+    "name": "エビのマヨネーズソース",
+    "price": 900
+  },
+  {
+    "subcategory_id": 13,
+    "name": "京赤地鶏の塩焼き",
+    "price": 1200
+  },
+  {
+    "subcategory_id": 13,
+    "name": "鴨肉黒七味焼き",
+    "price": 1500
+  },
+  {
+    "subcategory_id": 13,
+    "name": "和牛レアステーキ",
+    "price": 2400
+  },
+  {
+    "subcategory_id": 14,
+    "name": "ぶぶ漬け 鮭",
+    "price": 600
+  },
+  {
+    "subcategory_id": 14,
+    "name": "ぶぶ漬け 梅",
+    "price": 500
+  },
+  {
+    "subcategory_id": 14,
+    "name": "ぶぶ漬け 明太子",
+    "price": 700
+  },
+  {
+    "subcategory_id": 14,
+    "name": "ぶぶ漬け ちりめん山椒",
+    "price": 650
+  },
+  {
+    "subcategory_id": 14,
+    "name": "京風湯葉あんかけにゅうめん",
+    "price": 800
+  },
+  {
+    "subcategory_id": 14,
+    "name": "あぶり鯖寿司(4カン)",
+    "price": 1200
+  },
+  {
+    "subcategory_id": 14,
+    "name": "赤出汁",
+    "price": 400
+  },
+  {
+    "subcategory_id": 15,
+    "name": "ほうじ茶プリン",
+    "price": 500
+  },
+  {
+    "subcategory_id": 15,
+    "name": "抹茶アイス",
+    "price": 450
+  },
+  {
+    "subcategory_id": 15,
+    "name": "黒ごまアイス",
+    "price": 450
+  }
+]
