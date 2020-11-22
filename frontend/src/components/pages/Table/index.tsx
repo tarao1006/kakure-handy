@@ -3,7 +3,21 @@ import { useParams, useHistory } from 'react-router-dom';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import CheckIcon from '@material-ui/icons/Check';
-import { ListItemIcon, Button, Container, List, ListItem, ListItemText} from '@atoms';
+import ClearIcon from '@material-ui/icons/Clear';
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+import {
+  Button,
+  Container,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell
+} from '@atoms';
 import { AuthContext } from '../../../contexts/auth';
 import { getTable, exitTable, createBill, deleteBill } from '@api';
 import { Table as TableModel, convertToTable } from '../../../model';
@@ -28,6 +42,11 @@ export const TableDetail = () => {
   const { id } = useParams<TableParams>();
   const [table, setTable] = React.useState<TableModel | undefined>();
   const history = useHistory();
+  const icons = {
+    "ordered": <RadioButtonUncheckedIcon />,
+    "served": <CheckIcon color="primary" />,
+    "cancelled": <ClearIcon color="error" />,
+  }
 
   React.useEffect(() => {
     let cleanedUp = false;
@@ -71,12 +90,42 @@ export const TableDetail = () => {
     (table
     ?
     <Container component="main" maxWidth="xs" className={classes.root}>
-      <Button color="inherit" component="a" onClick={handleBack} startIcon={<ArrowBackIcon />}>
+      <Button
+        color="inherit"
+        component="a"
+        onClick={handleBack} startIcon={<ArrowBackIcon />}
+        style={{ backgroundColor: 'transparent' }}
+      >
         一覧に戻る
       </Button>
-      <h1> 部屋: {table.roomName} </h1>
-      <h1> 経過時間: {convertTimeToHM(table.startAt, new Date())} </h1>
-      <h1> 合計: {table.amount} 円 </h1>
+      <Table size="small">
+        <TableBody>
+          <TableRow>
+            <TableCell align="center">
+              部屋
+            </TableCell>
+            <TableCell align="left">
+              {table.roomName}
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell align="center">
+              経過時間
+            </TableCell>
+            <TableCell align="left">
+              {convertTimeToHM(table.startAt, new Date())}
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell align="center">
+              合計
+            </TableCell>
+            <TableCell align="left">
+              {table.amount} 円
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
       <Button color="primary" variant="outlined" onClick={handleCreateBill} disabled={table.validBillExists}>
         会計
       </Button>
@@ -92,13 +141,14 @@ export const TableDetail = () => {
               detail => (
                 <ListItem key={`${order.id}${detail.id}`} button component="a">
                   <ListItemIcon>
-                  {
-                    detail.status === "served" && <CheckIcon color="primary"/>
-                  }
+                  {icons[detail.status]}
                   </ListItemIcon>
-                  <ListItemText style={{whiteSpace: "nowrap"}}>
-                    {detail.itemName}
-                  </ListItemText>
+                  <ListItemText
+                    primary={detail.itemName}
+                    secondary={`${order.createdAt.toLocaleTimeString()} ${detail.quantity}個`}
+                    primaryTypographyProps={{ variant: "body2" }}
+                    style={{whiteSpace: "nowrap"}}
+                  />
                 </ListItem>)
             ))
           }
