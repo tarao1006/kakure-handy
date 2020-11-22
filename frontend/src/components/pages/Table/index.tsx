@@ -1,18 +1,33 @@
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@atoms';
+import { useParams, useHistory } from 'react-router-dom';
+import { createStyles, Theme, makeStyles } from '@material-ui/core/styles'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import CheckIcon from '@material-ui/icons/Check';
+import { ListItemIcon, Button, Container, List, ListItem, ListItemText} from '@atoms';
 import { AuthContext } from '../../../contexts/auth';
 import { getTable, exitTable, createBill, deleteBill } from '@api';
 import { Table as TableModel, convertToTable } from '../../../model';
+import { convertTimeToHM } from '../../../utils';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: "100%",
+      overflowX: "auto",
+    },
+  })
+);
 
 interface TableParams {
   id: string
 }
 
 export const TableDetail = () => {
+  const classes = useStyles();
   const { currentUser } = React.useContext(AuthContext);
   const { id } = useParams<TableParams>();
   const [table, setTable] = React.useState<TableModel | undefined>();
+  const history = useHistory();
 
   React.useEffect(() => {
     let cleanedUp = false;
@@ -48,56 +63,47 @@ export const TableDetail = () => {
     exitTable(token, id);
   }
 
+  const handleBack = () => {
+    history.push('/tables');
+  }
+
   return (
     (table
     ?
-    <div>
-      <h1> {table.id}</h1>
-      <TableContainer>
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell>
-                名前
-              </TableCell>
-              <TableCell align="center">
-                数量
-              </TableCell>
-              <TableCell align="center">
-                状態
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {
-              table.orders.map(order => order.details.map(
-                detail => (
-                <TableRow key={`${order.id}${detail.id}`}>
-                  <TableCell>
-                    {detail.itemName}
-                  </TableCell>
-                  <TableCell align="center">
-                    {detail.quantity}
-                  </TableCell>
-                  <TableCell align="center">
-                    {detail.status}
-                  </TableCell>
-                </TableRow>)
-              ))
-            }
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <button onClick={handleCreateBill} disabled={table.billCnt != 0}>
+    <Container component="main" maxWidth="xs" className={classes.root}>
+      <Button color="inherit" component="a" onClick={handleBack} startIcon={<ArrowBackIcon />}>
+        一覧に戻る
+      </Button>
+      <h1> 部屋: {table.roomName} </h1>
+      <h1> 経過時間: {convertTimeToHM(table.startAt, new Date())} </h1>
+      <h1> 合計: {table.amount} 円 </h1>
+      <Button color="primary" variant="outlined" onClick={handleCreateBill} disabled={table.validBillExists}>
         会計
-      </button>
-      <button onClick={handleDeleteBill} disabled={table.isEnded}>
+      </Button>
+      <Button color="secondary" variant="outlined" onClick={handleDeleteBill} disabled={!table.validBillExists || table.isEnded}>
         会計取消
-      </button>
-      <button onClick={handleExit} disabled={table.billCnt === 0 || table.isEnded}>
+      </Button>
+      <Button color="primary" variant="contained" onClick={handleExit} disabled={!table.validBillExists || table.isEnded}>
         退店
-      </button>
-    </div>
+      </Button>
+      <List className={classes.root}>
+        {
+            table.orders.map(order => order.details.map(
+              detail => (
+                <ListItem key={`${order.id}${detail.id}`} button component="a">
+                  <ListItemIcon>
+                  {
+                    detail.status === "served" && <CheckIcon color="primary"/>
+                  }
+                  </ListItemIcon>
+                  <ListItemText style={{whiteSpace: "nowrap"}}>
+                    {detail.itemName}
+                  </ListItemText>
+                </ListItem>)
+            ))
+          }
+      </List>
+    </Container>
     : <></>)
   )
 }

@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { useHistory } from 'react-router';
-import { List, ListItem, ListItemText } from '@material-ui/core';
+import { Container, List, ListItem, ListItemText } from '@atoms';
 import { AuthContext } from '../../../contexts/auth';
 import { getTables } from '../../../api/table'
 import { Table as TableModel, convertToTables } from '../../../model';
+import { convertTimeToHM } from '../../../utils';
 
 const ListTableLink = ({table, handleClick}) => {
   const [date, setDate] = React.useState<Date>(new Date());
@@ -26,14 +27,6 @@ const ListTableLink = ({table, handleClick}) => {
       <ListItemText primary={table.roomName} secondary={`${convertTimeToHM(table.startAt, date)}経過`} />
     </ListItem>
   )
-}
-
-const convertTimeToHM = (start: Date, end: Date): string => {
-  const allMinutes = (end.getTime() - start.getTime()) / (1000 * 60);
-  const hours = Math.floor(allMinutes / 60);
-  const minutes = Math.floor(allMinutes - 60 * hours);
-
-  return `${hours}時間 ${minutes}分`
 }
 
 export const Tables = () => {
@@ -65,12 +58,14 @@ export const Tables = () => {
   };
 
   return (
-    <List>
-      {
-        tables.map(table => (
-          <ListTableLink key={table.id} table={table} handleClick={handleClick} />
-        ))
-      }
-    </List>
+    <Container component="main" maxWidth="xs">
+      <List>
+        {
+          tables.map(table => (
+            <ListTableLink key={table.id} table={table} handleClick={handleClick} />
+          ))
+        }
+      </List>
+    </Container>
   )
 }

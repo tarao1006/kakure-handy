@@ -29,20 +29,33 @@ GROUP BY
   dinner_table.id
 );
 
-CREATE VIEW table_bill_cnt AS (
+CREATE VIEW table_bill AS (
 SELECT
   dinner_table.id AS table_id,
-  COUNT(bill.id) AS cnt,
   CASE
-    WHEN MAX(bill.id) IS NULL THEN 0
-    ELSE MAX(bill.id)
+    WHEN valid_bill.bill_id is NULL THEN false
+    ELSE true
+  END AS valid_bill_exists,
+  CASE
+    WHEN valid_bill.bill_id is NULL THEN 0
+    ELSE valid_bill.bill_id
   END AS latest_bill_id
 FROM
   dinner_table
 LEFT OUTER JOIN
-  bill
+  (
+    SELECT
+      table_id,
+      MAX(bill.id) AS bill_id
+    FROM
+      bill
+    WHERE
+      bill.is_valid
+    GROUP BY
+      table_id
+  ) AS valid_bill
 ON
-  dinner_table.id = bill.table_id
+  dinner_table.id = valid_bill.table_id
 GROUP BY
   dinner_table.id
 );
@@ -54,8 +67,8 @@ SELECT
   room.name AS room_name,
   table_order_cnt.cnt AS order_cnt,
   table_order_amount.amount,
-  table_bill_cnt.cnt AS bill_cnt,
-  table_bill_cnt.latest_bill_id,
+  table_bill.valid_bill_exists,
+  table_bill.latest_bill_id,
   dinner_table.start_at,
   dinner_table.end_at
 FROM
@@ -72,7 +85,7 @@ INNER JOIN
   table_order_cnt
 USING (table_id)
 INNER JOIN
-  table_bill_cnt
+  table_bill
 USING (table_id)
 GROUP BY
   dinner_table.id

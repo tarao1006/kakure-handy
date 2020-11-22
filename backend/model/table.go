@@ -7,15 +7,15 @@ import (
 
 // Table is a struct of dinner_table.
 type Table struct {
-	ID           int64     `db:"id" json:"id"`
-	RoomName     string    `db:"room_name" json:"room_name"`
-	IsEnded      bool      `db:"is_ended" json:"is_ended"`
-	StartAt      time.Time `db:"start_at" json:"start_at"`
-	EndAt        time.Time `db:"end_at" json:"end_at"`
-	Amount       int64     `db:"amount" json:"amount"`
-	BillCount    int64     `db:"bill_cnt" json:"bill_cnt"`
-	LatestBillID int64     `db:"latest_bill_id" json:"latest_bill_id"`
-	Orders       []Order   `json:"orders"`
+	ID              int64     `db:"id" json:"id"`
+	RoomName        string    `db:"room_name" json:"room_name"`
+	IsEnded         bool      `db:"is_ended" json:"is_ended"`
+	StartAt         time.Time `db:"start_at" json:"start_at"`
+	EndAt           time.Time `db:"end_at" json:"end_at"`
+	Amount          int64     `db:"amount" json:"amount"`
+	ValidBillExists bool      `db:"valid_bill_exists" json:"valid_bill_exists"`
+	LatestBillID    int64     `db:"latest_bill_id" json:"latest_bill_id"`
+	Orders          []Order   `json:"orders"`
 }
 
 // TableParam stores API request body.
