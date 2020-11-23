@@ -27,6 +27,7 @@ import {
   ExpandLess,
   ExpandMore
 } from '@atoms';
+import { Loading } from '@molecules';
 import { AuthContext } from '../../../contexts/auth';
 import { getTable, exitTable, createBill, deleteBill, updateOrder } from '@api';
 import { Table as TableModel, convertToTable, Order, OrderDetail } from '../../../model';
@@ -216,6 +217,7 @@ export const TableDetail = () => {
   const [servedOpen, setServedOpen] = React.useState<boolean>(false);
   const [cancelledOpen, setCancelledOpen] = React.useState<boolean>(false);
   const [disabledDialogButtons, setDisabledDialogButtons] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const history = useHistory();
 
   React.useEffect(() => {
@@ -284,27 +286,33 @@ export const TableDetail = () => {
   }
 
   const handleServed = async (id: number) => {
+    setIsLoading(true);
     setDisabledDialogButtons(true);
     const token = await currentUser.getIdToken();
     await updateOrder(token, table.id, id, 2);
     await updateTable(token);
     setDisabledDialogButtons(false);
+    setIsLoading(false);
   }
 
   const handleCancel = async (id: number) => {
+    setIsLoading(true);
     setDisabledDialogButtons(true);
     const token = await currentUser.getIdToken();
     await updateOrder(token, table.id, id, 3);
     await updateTable(token);
     setDisabledDialogButtons(false);
+    setIsLoading(false);
   }
 
   const handleOrdered = async (id: number) => {
+    setIsLoading(true);
     setDisabledDialogButtons(true);
     const token = await currentUser.getIdToken();
     await updateOrder(token, table.id, id, 1);
     await updateTable(token);
     setDisabledDialogButtons(false);
+    setIsLoading(false);
   }
 
   const handleOpenOrdered = () => {
@@ -323,6 +331,9 @@ export const TableDetail = () => {
     (table
     ?
     <Container component="main" maxWidth="xs" className={classes.root}>
+      {
+        isLoading && <Loading />
+      }
       <Button
         color="inherit"
         component="a"
