@@ -11,7 +11,9 @@ import {
   Container,
   Dialog,
   DialogActions,
+  DialogContent,
   DialogTitle,
+  IconButton,
   List,
   ListItem,
   ListItemIcon,
@@ -21,6 +23,7 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  CloseIcon,
   ExpandLess,
   ExpandMore
 } from '@atoms';
@@ -34,6 +37,13 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       width: "100%",
       overflowX: "auto",
+    },
+    closeButton: {
+      position: 'absolute',
+      right: theme.spacing(1),
+      top: theme.spacing(2),
+      color: theme.palette.grey[500],
+      padding: 0,
     },
     modal: {
       display: 'flex',
@@ -50,7 +60,12 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
       textAlign: 'center',
     },
-    buttons: {
+    operationButton: {
+      marginRight: theme.spacing(2),
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(1),
+    },
+    dialogButtons: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -59,23 +74,30 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface TableParams {
-  id: string
+  tableId: string
 }
 
 interface ModalListItemProps {
+  disabled: boolean;
   detail: OrderDetail;
   handleServed: (id: number) => void;
   handleCancel: (id: number) => void;
   handleOrdered: (id: number) => void;
 }
 
-const ModalListItem: React.FC<ModalListItemProps> = ({detail, handleServed, handleCancel, handleOrdered}) => {
+const ModalListItem: React.FC<ModalListItemProps> = ({disabled, detail, handleServed, handleCancel, handleOrdered}) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState<boolean>(false);
   const icons = {
     "ordered": <RadioButtonUncheckedIcon />,
     "served": <CheckIcon color="primary" />,
     "cancelled": <ClearIcon color="error" />,
+  }
+
+  const disables = {
+    "ordered": detail.status === "served" || detail.status === "ordered",
+    "served": detail.status === "served" || detail.status === "cancelled",
+    "cancelled": detail.status === "served" || detail.status === "cancelled"
   }
 
   const topics = {
@@ -96,10 +118,11 @@ const ModalListItem: React.FC<ModalListItemProps> = ({detail, handleServed, hand
   const ServedButton = () => {
     const handleClick = () => {
       handleServed(detail.id);
+      handleClose();
     }
 
     return (
-      <Button color="primary" onClick={handleClick}>
+      <Button disabled={disabled || disables["served"]} color="primary" onClick={handleClick}>
         提供済みにする
       </Button>
     )
@@ -108,10 +131,11 @@ const ModalListItem: React.FC<ModalListItemProps> = ({detail, handleServed, hand
   const CancelButton = () => {
     const handleClick = () => {
       handleCancel(detail.id);
+      handleClose();
     }
 
     return (
-      <Button color="primary" onClick={handleClick}>
+      <Button disabled={disabled || disables["cancelled"]} color="primary" onClick={handleClick}>
         キャンセルする
       </Button>
     )
@@ -120,10 +144,11 @@ const ModalListItem: React.FC<ModalListItemProps> = ({detail, handleServed, hand
   const OrderedButton = () => {
     const handleClick = () => {
       handleOrdered(detail.id);
+      handleClose();
     }
 
     return (
-      <Button color="primary" onClick={handleClick}>
+      <Button disabled={disabled || disables["ordered"]} color="primary" onClick={handleClick}>
         注文済みに戻す
       </Button>
     )
@@ -141,25 +166,35 @@ const ModalListItem: React.FC<ModalListItemProps> = ({detail, handleServed, hand
           primaryTypographyProps={{ variant: "body2" }}
         />
       </ListItem>
-      <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>
-        注文編集
-      </DialogTitle>
-        {
-          Object.entries(topics).map(topic => (
-            <div key={topic[0]}>
-              <div className={classes.topic}>
-                <Typography variant="h6">
+      <Dialog
+        fullWidth={true}
+        maxWidth={'xs'}
+        open={open}
+        onClose={handleClose}
+      >
+        <DialogTitle>
+          <Typography>
+            注文編集
+          </Typography>
+          <IconButton onClick={handleClose} className={classes.closeButton}>
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent dividers>
+          {
+            Object.entries(topics).map(topic => (
+              <div key={topic[0]}>
+                <Typography variant="body1">
                   {topic[0]}
                 </Typography>
                 <Typography variant="body1" className={classes.topicValue}>
                   {topic[1]}
                 </Typography>
               </div>
-            </div>
-          ))
-        }
-        <DialogActions className={classes.buttons} disableSpacing={true}>
+            ))
+          }
+        </DialogContent>
+        <DialogActions className={classes.dialogButtons} disableSpacing={true}>
           <ServedButton />
           <CancelButton />
           <OrderedButton />
@@ -172,7 +207,7 @@ const ModalListItem: React.FC<ModalListItemProps> = ({detail, handleServed, hand
 export const TableDetail = () => {
   const classes = useStyles();
   const { currentUser } = React.useContext(AuthContext);
-  const { id } = useParams<TableParams>();
+  const { tableId } = useParams<TableParams>();
   const [table, setTable] = React.useState<TableModel | undefined>();
   const [orderedOrder, setOrderedOrder] = React.useState<OrderDetail[]>([]);
   const [servedOrder, setServedOrder] = React.useState<OrderDetail[]>([]);
@@ -180,6 +215,7 @@ export const TableDetail = () => {
   const [orderedOpen, setOrderedOpen] = React.useState<boolean>(false);
   const [servedOpen, setServedOpen] = React.useState<boolean>(false);
   const [cancelledOpen, setCancelledOpen] = React.useState<boolean>(false);
+  const [disabledDialogButtons, setDisabledDialogButtons] = React.useState<boolean>(false);
   const history = useHistory();
 
   React.useEffect(() => {
@@ -188,29 +224,7 @@ export const TableDetail = () => {
       if (!cleanedUp) {
         if (currentUser) {
           const token = await currentUser.getIdToken();
-          const res = await getTable(token, id);
-          const t = convertToTable(res);
-          setTable(t);
-
-          let ordered: OrderDetail[] = [];
-          let served: OrderDetail[] = [];
-          let cancelled: OrderDetail[] = [];
-          t.orders.forEach(order => order.details.forEach(detail => {
-            if (detail.status === "ordered") {
-              ordered.push(detail);
-            } else if (detail.status === "served") {
-              served.push(detail);
-            } else if (detail.status === "cancelled") {
-              cancelled.push(detail);
-            }
-          }))
-          setOrderedOrder(ordered);
-          setServedOrder(served);
-          setCancelledOrder(cancelled);
-
-          if (ordered.length !== 0) {
-            setOrderedOpen(true);
-          }
+          updateTable(token);
         }
       }
     }
@@ -221,19 +235,48 @@ export const TableDetail = () => {
     return cleanUp;
   }, [currentUser])
 
+  const updateTable = async (token: string) => {
+    const res = await getTable(token, tableId);
+    const t = convertToTable(res);
+    setTable(t);
+
+    let ordered: OrderDetail[] = [];
+    let served: OrderDetail[] = [];
+    let cancelled: OrderDetail[] = [];
+    t.orders.forEach(order => order.details.forEach(detail => {
+      if (detail.status === "ordered") {
+        ordered.push(detail);
+      } else if (detail.status === "served") {
+        served.push(detail);
+      } else if (detail.status === "cancelled") {
+        cancelled.push(detail);
+      }
+    }))
+    setOrderedOrder(ordered);
+    setServedOrder(served);
+    setCancelledOrder(cancelled);
+
+    if (ordered.length !== 0) {
+      setOrderedOpen(true);
+    }
+  }
+
   const handleCreateBill = async () => {
     const token = await currentUser.getIdToken();
-    createBill(token, id);
+    await createBill(token, tableId);
+    await updateTable(token);
   }
 
   const handleDeleteBill = async () => {
     const token = await currentUser.getIdToken();
-    deleteBill(token, id, `${table.latestBillId}`);
+    await deleteBill(token, tableId, `${table.latestBillId}`);
+    await updateTable(token);
   }
 
   const handleExit = async () => {
     const token = await currentUser.getIdToken();
-    exitTable(token, id);
+    await exitTable(token, tableId);
+    await updateTable(token);
   }
 
   const handleBack = () => {
@@ -241,18 +284,27 @@ export const TableDetail = () => {
   }
 
   const handleServed = async (id: number) => {
+    setDisabledDialogButtons(true);
     const token = await currentUser.getIdToken();
-    updateOrder(token, table.id, id, 2);
+    await updateOrder(token, table.id, id, 2);
+    await updateTable(token);
+    setDisabledDialogButtons(false);
   }
 
   const handleCancel = async (id: number) => {
+    setDisabledDialogButtons(true);
     const token = await currentUser.getIdToken();
-    updateOrder(token, table.id, id, 3);
+    await updateOrder(token, table.id, id, 3);
+    await updateTable(token);
+    setDisabledDialogButtons(false);
   }
 
   const handleOrdered = async (id: number) => {
+    setDisabledDialogButtons(true);
     const token = await currentUser.getIdToken();
-    updateOrder(token, table.id, id, 1);
+    await updateOrder(token, table.id, id, 1);
+    await updateTable(token);
+    setDisabledDialogButtons(false);
   }
 
   const handleOpenOrdered = () => {
@@ -308,13 +360,31 @@ export const TableDetail = () => {
           </TableRow>
         </TableBody>
       </Table>
-      <Button color="primary" variant="outlined" onClick={handleCreateBill} disabled={table.validBillExists}>
+      <Button
+        color="primary"
+        variant="outlined"
+        onClick={handleCreateBill}
+        disabled={table.validBillExists}
+        className={classes.operationButton}
+      >
         会計
       </Button>
-      <Button color="secondary" variant="outlined" onClick={handleDeleteBill} disabled={!table.validBillExists || table.isEnded}>
+      <Button
+        color="secondary"
+        variant="outlined"
+        onClick={handleDeleteBill}
+        disabled={!table.validBillExists || table.isEnded}
+        className={classes.operationButton}
+      >
         会計取消
       </Button>
-      <Button color="primary" variant="contained" onClick={handleExit} disabled={!table.validBillExists || table.isEnded}>
+      <Button
+        color="primary" 
+        variant="contained"
+        onClick={handleExit}
+        disabled={!table.validBillExists || table.isEnded}
+        className={classes.operationButton}
+      >
         退店
       </Button>
       <List>
@@ -330,6 +400,7 @@ export const TableDetail = () => {
               orderedOrder.map(
                 detail => (
                   <ModalListItem
+                    disabled={disabledDialogButtons}
                     key={`${detail.id}`}
                     detail={detail}
                     handleServed={handleServed}
@@ -353,6 +424,7 @@ export const TableDetail = () => {
               servedOrder.map(
                 detail => (
                   <ModalListItem
+                    disabled={disabledDialogButtons}
                     key={`${detail.id}`}
                     detail={detail}
                     handleServed={handleServed}
@@ -376,6 +448,7 @@ export const TableDetail = () => {
               cancelledOrder.map(
                 detail => (
                   <ModalListItem
+                    disabled={disabledDialogButtons}
                     key={`${detail.id}`}
                     detail={detail}
                     handleServed={handleServed}

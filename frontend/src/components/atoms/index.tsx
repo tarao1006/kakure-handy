@@ -8,6 +8,7 @@ export { default as Collapse } from '@material-ui/core/Collapse';
 export { default as Container } from '@material-ui/core/Container';
 export { default as Checkbox } from '@material-ui/core/Checkbox';
 export { default as Dialog } from '@material-ui/core/Dialog';
+export { default as DialogContent } from '@material-ui/core/DialogContent';
 export { default as DialogActions } from '@material-ui/core/DialogActions';
 export { default as DialogTitle } from '@material-ui/core/DialogTitle';
 export { default as FormControlLabel } from '@material-ui/core/FormControlLabel';
@@ -32,6 +33,7 @@ export { default as Toolbar } from '@material-ui/core/Toolbar';
 export { default as TextField, TextFieldProps } from '@material-ui/core/TextField';
 export { default as Typography } from '@material-ui/core/Typography';
 
+export { default as CloseIcon } from '@material-ui/icons/Close';
 export { default as ExpandLess } from '@material-ui/icons/ExpandLess';
 export { default as ExpandMore } from '@material-ui/icons/ExpandMore';
 export { default as LockOutlinedIcon } from '@material-ui/icons/LockOpenOutlined';

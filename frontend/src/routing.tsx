@@ -83,7 +83,7 @@ const Routing = () => {
             Child={NewOrder}
           />
           <RedirectRoute
-            path='/table/:id'
+            path='/table/:tableId'
             exact
             Child={TableDetail}
           />
