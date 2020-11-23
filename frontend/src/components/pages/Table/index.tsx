@@ -22,7 +22,7 @@ import {
   TableCell
 } from '@atoms';
 import { AuthContext } from '../../../contexts/auth';
-import { getTable, exitTable, createBill, deleteBill, updateOrder, cancelOrder } from '@api';
+import { getTable, exitTable, createBill, deleteBill, updateOrder } from '@api';
 import { Table as TableModel, convertToTable, Order, OrderDetail } from '../../../model';
 import { convertTimeToHM } from '../../../utils';
 
@@ -74,6 +74,13 @@ const ModalListItem: React.FC<ModalListItemProps> = ({order, detail, handleServe
     "ordered": <RadioButtonUncheckedIcon />,
     "served": <CheckIcon color="primary" />,
     "cancelled": <ClearIcon color="error" />,
+  }
+
+  const topics = {
+    "名前": detail.itemName,
+    "注文時刻": order.createdAt.toLocaleTimeString(),
+    "個数": detail.quantity,
+    "状態": detail.status,
   }
 
   const handleOpen = () => {
@@ -130,45 +137,26 @@ const ModalListItem: React.FC<ModalListItemProps> = ({order, detail, handleServe
           primary={detail.itemName}
           secondary={`${order.createdAt.toLocaleTimeString()} ${detail.quantity}個`}
           primaryTypographyProps={{ variant: "body2" }}
-          style={{whiteSpace: "nowrap"}}
         />
       </ListItem>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>
-          注文編集
-        </DialogTitle>
-        <div className={classes.topic}>
-          <Typography variant="h6">
-            名前
-          </Typography>
-          <Typography variant="body1" className={classes.topicValue}>
-            {detail.itemName}
-          </Typography>
-        </div>
-        <div className={classes.topic}>
-          <Typography variant="h6">
-            注文時刻
-          </Typography>
-          <Typography variant="body1" className={classes.topicValue}>
-            {order.createdAt.toLocaleTimeString()}
-          </Typography>
-        </div>
-        <div className={classes.topic}>
-          <Typography variant="h6">
-            個数
-          </Typography>
-          <Typography variant="body1" className={classes.topicValue}>
-            {detail.quantity}
-          </Typography>
-        </div>
-        <div className={classes.topic}>
-          <Typography variant="h6">
-            状態
-          </Typography>
-          <Typography variant="body1" className={classes.topicValue}>
-            {detail.status}
-          </Typography>
-        </div>
+      <DialogTitle>
+        注文編集
+      </DialogTitle>
+        {
+          Object.entries(topics).map(topic => (
+            <div key={topic[0]}>
+              <div className={classes.topic}>
+                <Typography variant="h6">
+                  {topic[0]}
+                </Typography>
+                <Typography variant="body1" className={classes.topicValue}>
+                  {topic[1]}
+                </Typography>
+              </div>
+            </div>
+          ))
+        }
         <DialogActions className={classes.buttons} disableSpacing={true}>
           <ServedButton />
           <CancelButton />
@@ -184,6 +172,9 @@ export const TableDetail = () => {
   const { currentUser } = React.useContext(AuthContext);
   const { id } = useParams<TableParams>();
   const [table, setTable] = React.useState<TableModel | undefined>();
+  const [orderedOrder, setOrderedOrder] = React.useState<OrderDetail[]>();
+  const [servedOrder, setServedOrder] = React.useState<OrderDetail[]>();
+  const [cancelledOrder, setCancelledOrder] = React.useState<OrderDetail[]>();
   const history = useHistory();
 
   React.useEffect(() => {
@@ -248,6 +239,7 @@ export const TableDetail = () => {
         component="a"
         onClick={handleBack} startIcon={<ArrowBackIcon />}
         style={{ backgroundColor: 'transparent' }}
+        disableRipple={true}
       >
         一覧に戻る
       </Button>
