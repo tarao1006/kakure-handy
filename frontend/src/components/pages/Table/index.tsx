@@ -7,6 +7,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import {
   Button,
+  Collapse,
   Container,
   Dialog,
   DialogActions,
@@ -19,7 +20,9 @@ import {
   Table,
   TableBody,
   TableRow,
-  TableCell
+  TableCell,
+  ExpandLess,
+  ExpandMore
 } from '@atoms';
 import { AuthContext } from '../../../contexts/auth';
 import { getTable, exitTable, createBill, deleteBill, updateOrder } from '@api';
@@ -60,14 +63,13 @@ interface TableParams {
 }
 
 interface ModalListItemProps {
-  order: Order;
   detail: OrderDetail;
   handleServed: (id: number) => void;
   handleCancel: (id: number) => void;
   handleOrdered: (id: number) => void;
 }
 
-const ModalListItem: React.FC<ModalListItemProps> = ({order, detail, handleServed, handleCancel, handleOrdered}) => {
+const ModalListItem: React.FC<ModalListItemProps> = ({detail, handleServed, handleCancel, handleOrdered}) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState<boolean>(false);
   const icons = {
@@ -78,7 +80,7 @@ const ModalListItem: React.FC<ModalListItemProps> = ({order, detail, handleServe
 
   const topics = {
     "名前": detail.itemName,
-    "注文時刻": order.createdAt.toLocaleTimeString(),
+    "注文時刻": detail.createdAt.toLocaleTimeString(),
     "個数": detail.quantity,
     "状態": detail.status,
   }
@@ -135,7 +137,7 @@ const ModalListItem: React.FC<ModalListItemProps> = ({order, detail, handleServe
         </ListItemIcon>
         <ListItemText
           primary={detail.itemName}
-          secondary={`${order.createdAt.toLocaleTimeString()} ${detail.quantity}個`}
+          secondary={`${detail.createdAt.toLocaleTimeString()} ${detail.quantity}個`}
           primaryTypographyProps={{ variant: "body2" }}
         />
       </ListItem>
@@ -172,9 +174,12 @@ export const TableDetail = () => {
   const { currentUser } = React.useContext(AuthContext);
   const { id } = useParams<TableParams>();
   const [table, setTable] = React.useState<TableModel | undefined>();
-  const [orderedOrder, setOrderedOrder] = React.useState<OrderDetail[]>();
-  const [servedOrder, setServedOrder] = React.useState<OrderDetail[]>();
-  const [cancelledOrder, setCancelledOrder] = React.useState<OrderDetail[]>();
+  const [orderedOrder, setOrderedOrder] = React.useState<OrderDetail[]>([]);
+  const [servedOrder, setServedOrder] = React.useState<OrderDetail[]>([]);
+  const [cancelledOrder, setCancelledOrder] = React.useState<OrderDetail[]>([]);
+  const [orderedOpen, setOrderedOpen] = React.useState<boolean>(false);
+  const [servedOpen, setServedOpen] = React.useState<boolean>(false);
+  const [cancelledOpen, setCancelledOpen] = React.useState<boolean>(false);
   const history = useHistory();
 
   React.useEffect(() => {
@@ -183,9 +188,29 @@ export const TableDetail = () => {
       if (!cleanedUp) {
         if (currentUser) {
           const token = await currentUser.getIdToken();
-          let t = await getTable(token, id);
-          t = convertToTable(t);
+          const res = await getTable(token, id);
+          const t = convertToTable(res);
           setTable(t);
+
+          let ordered: OrderDetail[] = [];
+          let served: OrderDetail[] = [];
+          let cancelled: OrderDetail[] = [];
+          t.orders.forEach(order => order.details.forEach(detail => {
+            if (detail.status === "ordered") {
+              ordered.push(detail);
+            } else if (detail.status === "served") {
+              served.push(detail);
+            } else if (detail.status === "cancelled") {
+              cancelled.push(detail);
+            }
+          }))
+          setOrderedOrder(ordered);
+          setServedOrder(served);
+          setCancelledOrder(cancelled);
+
+          if (ordered.length !== 0) {
+            setOrderedOpen(true);
+          }
         }
       }
     }
@@ -228,6 +253,18 @@ export const TableDetail = () => {
   const handleOrdered = async (id: number) => {
     const token = await currentUser.getIdToken();
     updateOrder(token, table.id, id, 1);
+  }
+
+  const handleOpenOrdered = () => {
+    setOrderedOpen(!orderedOpen);
+  }
+
+  const handleOpenServed = () => {
+    setServedOpen(!servedOpen);
+  }
+
+  const handleOpenCancelled = () => {
+    setCancelledOpen(!cancelledOpen);
   }
 
   return (
@@ -280,21 +317,76 @@ export const TableDetail = () => {
       <Button color="primary" variant="contained" onClick={handleExit} disabled={!table.validBillExists || table.isEnded}>
         退店
       </Button>
-      <List className={classes.root}>
-        {
-            table.orders.map(order => order.details.map(
-              detail => (
-                <ModalListItem
-                  key={`${order.id}${detail.id}`}
-                  order={order}
-                  detail={detail}
-                  handleServed={handleServed}
-                  handleCancel={handleCancel}
-                  handleOrdered={handleOrdered}
-                />
+      <List>
+        <ListItem button onClick={handleOpenOrdered}>
+          <ListItemText>
+            未提供 ({orderedOrder.length} 件)
+          </ListItemText>
+          {orderedOpen ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={orderedOpen} unmountOnExit>
+          <List className={classes.root}>
+            {
+              orderedOrder.map(
+                detail => (
+                  <ModalListItem
+                    key={`${detail.id}`}
+                    detail={detail}
+                    handleServed={handleServed}
+                    handleCancel={handleCancel}
+                    handleOrdered={handleOrdered}
+                  />
+                )
               )
-            ))
-          }
+            }
+          </List>
+        </Collapse>
+        <ListItem button onClick={handleOpenServed}>
+          <ListItemText>
+            提供済 ({servedOrder.length} 件)
+          </ListItemText>
+          {servedOpen ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={servedOpen} unmountOnExit>
+          <List className={classes.root} disablePadding>
+          {
+              servedOrder.map(
+                detail => (
+                  <ModalListItem
+                    key={`${detail.id}`}
+                    detail={detail}
+                    handleServed={handleServed}
+                    handleCancel={handleCancel}
+                    handleOrdered={handleOrdered}
+                  />
+                )
+              )
+            }
+          </List>
+        </Collapse>
+        <ListItem button onClick={handleOpenCancelled}>
+          <ListItemText>
+            キャンセル ({cancelledOrder.length} 件)
+          </ListItemText>
+          {cancelledOpen ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={cancelledOpen} unmountOnExit>
+          <List className={classes.root} disablePadding>
+          {
+              cancelledOrder.map(
+                detail => (
+                  <ModalListItem
+                    key={`${detail.id}`}
+                    detail={detail}
+                    handleServed={handleServed}
+                    handleCancel={handleCancel}
+                    handleOrdered={handleOrdered}
+                  />
+                )
+              )
+            }
+          </List>
+        </Collapse>
       </List>
     </Container>
     : <></>)

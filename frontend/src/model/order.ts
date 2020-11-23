@@ -5,6 +5,7 @@ export interface OrderDetail {
   price: number;
   quantity: number;
   status: string;
+  createdAt: Date;
 }
 
 export interface Order {
@@ -32,7 +33,7 @@ export interface OrderDTO {
   details: OrderDetailDTO[];
 }
 
-export const convertToOrderDetail = (object: OrderDetailDTO) => {
+export const convertToOrderDetail = (object: OrderDetailDTO, date: Date): OrderDetail => {
   return {
     id: object.id,
     orderId: object.order_id,
@@ -40,15 +41,16 @@ export const convertToOrderDetail = (object: OrderDetailDTO) => {
     price: object.price,
     quantity: object.quantity,
     status: object.status,
+    createdAt: date,
   }
 }
 
-export const convertToOrder = (object: OrderDTO) => {
+export const convertToOrder = (object: OrderDTO): Order => {
   return {
     id: object.id,
     tableId: object.table_id,
     staffId: object.staff_id,
     createdAt: new Date(object.created_at),
-    details: object.details.map(detail => convertToOrderDetail(detail)),
+    details: object.details.map(detail => convertToOrderDetail(detail, new Date(object.created_at))),
   }
 }

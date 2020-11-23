@@ -4,6 +4,7 @@ export { default as Badge } from '@material-ui/core/Badge';
 export { default as Box } from '@material-ui/core/Box';
 export { default as Button } from '@material-ui/core/Button';
 export { default as CircularProgress } from '@material-ui/core/CircularProgress';
+export { default as Collapse } from '@material-ui/core/Collapse';
 export { default as Container } from '@material-ui/core/Container';
 export { default as Checkbox } from '@material-ui/core/Checkbox';
 export { default as Dialog } from '@material-ui/core/Dialog';
@@ -31,4 +32,6 @@ export { default as Toolbar } from '@material-ui/core/Toolbar';
 export { default as TextField, TextFieldProps } from '@material-ui/core/TextField';
 export { default as Typography } from '@material-ui/core/Typography';
 
+export { default as ExpandLess } from '@material-ui/icons/ExpandLess';
+export { default as ExpandMore } from '@material-ui/icons/ExpandMore';
 export { default as LockOutlinedIcon } from '@material-ui/icons/LockOpenOutlined';
