@@ -8,7 +8,14 @@ SELECT
 FROM
   dinner_table
 LEFT OUTER JOIN
-  table_order
+  (
+    SELECT
+      *
+    FROM
+     table_order
+    WHERE
+      status IN ("ordered", "served")
+  ) AS table_order
 ON
   dinner_table.id = table_order.table_id
 GROUP BY
