@@ -8,17 +8,14 @@ import (
 	"github.com/tarao1006/kakure-handy/repository"
 )
 
-// Table is a struct to manipulate database.
 type Table struct {
 	db *sqlx.DB
 }
 
-// NewTable create new Table.
 func NewTable(db *sqlx.DB) *Table {
 	return &Table{db: db}
 }
 
-// Create create new record.
 func (t *Table) Create(params *model.TableParam) (*model.Table, error) {
 	tables, err := repository.AllTable(t.db)
 	if err != nil {
@@ -31,8 +28,8 @@ func (t *Table) Create(params *model.TableParam) (*model.Table, error) {
 			return nil, err
 		}
 
-		if (table.RoomName == room.Name) && !table.IsEnded {
-			return nil, model.RoomUnavailableError{RoomName: table.RoomName}
+		if (table.Room.Name == room.Name) && !table.IsEnded {
+			return nil, model.RoomUnavailableError{RoomName: table.Room.Name}
 		}
 	}
 
@@ -53,7 +50,7 @@ func (t *Table) Create(params *model.TableParam) (*model.Table, error) {
 		return nil, errors.Wrap(err, "failed table insert transaction")
 	}
 
-	res, err := repository.FindTableByID(t.db, params)
+	res, err := repository.FindTableByID(t.db, params.ID)
 	if err != nil {
 		return nil, err
 	}
@@ -61,29 +58,28 @@ func (t *Table) Create(params *model.TableParam) (*model.Table, error) {
 	return res, nil
 }
 
-// End は `end_at` の値を更新する。
-func (t *Table) End(params *model.TableParam) (*model.Table, error) {
-	table, err := repository.FindTableByID(t.db, params)
+func (t *Table) End(ID int64) (*model.Table, error) {
+	table, err := repository.FindTableByID(t.db, ID)
 	if err != nil {
 		return nil, err
 	}
 
 	if table.IsEnded {
-		return nil, model.TableAlreadyEndedError{TableID: params.ID}
+		return nil, model.TableAlreadyEndedError{TableID: ID}
 	}
 
-	bill, err := repository.FindBillByTableID(t.db, params.ID)
+	bill, err := repository.FindBillByTableID(t.db, ID)
 
 	if err != nil {
 		return nil, err
 	}
 
 	if bill == nil {
-		return nil, model.BillDoesNotExistError{TableID: params.ID}
+		return nil, model.BillDoesNotExistError{TableID: ID}
 	}
 
 	if err := dbutil.TXHandler(t.db, func(tx *sqlx.Tx) error {
-		_, err := repository.UpdateTable(tx, params)
+		_, err := repository.EndTable(tx, ID)
 		if err != nil {
 			return err
 		}
@@ -93,7 +89,7 @@ func (t *Table) End(params *model.TableParam) (*model.Table, error) {
 		return nil, errors.Wrap(err, "failed table update transaction")
 	}
 
-	res, err := repository.FindTableByID(t.db, params)
+	res, err := repository.FindTableByID(t.db, ID)
 	if err != nil {
 		return nil, err
 	}

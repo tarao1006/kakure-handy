@@ -72,7 +72,7 @@ func (s *Server) Route() http.Handler {
 	r.Methods(http.MethodGet).Path("/table").Handler(AppHandler{tableController.Index})
 	r.Methods(http.MethodPost).Path("/table").Handler(AppHandler{tableController.Create})
 	r.Methods(http.MethodGet).Path("/table/{id:[0-9]+}").Handler(AppHandler{tableController.Show})
-	r.Methods(http.MethodPut).Path("/table/{id:[0-9]+}/end").Handler(AppHandler{tableController.Update})
+	r.Methods(http.MethodPut).Path("/table/{id:[0-9]+}/end").Handler(AppHandler{tableController.End})
 
 	r.Methods(http.MethodPost).Path("/table/{id:[0-9]+}/order").Handler(AppHandler{orderController.Create})
 	r.Methods(http.MethodPatch).Path("/table/{table_id:[0-9]+}/order/{order_detail_id:[0-9]+}").Handler(AppHandler{orderDetailController.Update})

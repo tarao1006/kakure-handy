@@ -2,6 +2,7 @@ package controller
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -12,17 +13,14 @@ import (
 	"github.com/tarao1006/kakure-handy/service"
 )
 
-// Table manipulates database.
 type Table struct {
 	db *sqlx.DB
 }
 
-// NewTable returns a Table struct.
 func NewTable(db *sqlx.DB) *Table {
 	return &Table{db: db}
 }
 
-// Index returns all tables information.
 func (t *Table) Index(_ http.ResponseWriter, _ *http.Request) (int, interface{}, error) {
 	tables, err := repository.AllTable(t.db)
 	if err != nil {
@@ -32,14 +30,13 @@ func (t *Table) Index(_ http.ResponseWriter, _ *http.Request) (int, interface{},
 	return http.StatusOK, tables, nil
 }
 
-// Show returns a table information.
 func (t *Table) Show(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
-	id, err := httputil.ExtractID(mux.Vars(r), "id")
+	ID, err := httputil.ExtractID(mux.Vars(r), "id")
 	if err != nil {
-		return http.StatusBadRequest, nil, err
+		return http.StatusBadRequest, nil, errors.New("required parameter is missing")
 	}
 
-	table, err := repository.FindTableByID(t.db, &model.TableParam{ID: id})
+	table, err := repository.FindTableByID(t.db, ID)
 	if err != nil {
 		return http.StatusInternalServerError, nil, err
 	}
@@ -47,7 +44,6 @@ func (t *Table) Show(_ http.ResponseWriter, r *http.Request) (int, interface{}, 
 	return http.StatusOK, table, nil
 }
 
-// Create receives room_id from body and create new table.
 func (t *Table) Create(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
 	params := &model.TableParam{}
 	if err := json.NewDecoder(r.Body).Decode(params); err != nil {
@@ -65,16 +61,14 @@ func (t *Table) Create(_ http.ResponseWriter, r *http.Request) (int, interface{}
 	return http.StatusCreated, table, nil
 }
 
-// Update は既存の dinner_table レコードを更新して、退店処理をする。
-// まだ会計が終了していない場合、エラーとなる。
-func (t *Table) Update(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
-	id, err := httputil.ExtractID(mux.Vars(r), "id")
+func (t *Table) End(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
+	ID, err := httputil.ExtractID(mux.Vars(r), "id")
 	if err != nil {
-		return http.StatusBadRequest, nil, err
+		return http.StatusBadRequest, nil, errors.New("required parameter is missing")
 	}
 
 	tableService := service.NewTable(t.db)
-	res, err := tableService.End(&model.TableParam{ID: id})
+	res, err := tableService.End(ID)
 	if e, ok := err.(model.TableAlreadyEndedError); ok {
 		return http.StatusBadRequest, nil, e
 	} else if e, ok := err.(model.BillDoesNotExistError); ok {

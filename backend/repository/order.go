@@ -8,11 +8,11 @@ import (
 	"github.com/tarao1006/kakure-handy/model"
 )
 
-func FindOrdersByTableID(db *sqlx.DB, params *model.OrderParam) ([]model.Order, error) {
+func FindOrdersByTableID(db *sqlx.DB, tableID int64) ([]model.Order, error) {
 	orders := make([]OrderDTO, 0)
 	if err := db.Select(&orders, `
 		SELECT id, table_id, staff_id, created_at, order_detail_id, order_id, item_name, price, quantity, status FROM order_model WHERE table_id = ? ORDER BY id
-	`, params.TableID); err != nil {
+	`, tableID); err != nil {
 		return nil, err
 	}
 
@@ -53,11 +53,11 @@ func FindOrdersByTableID(db *sqlx.DB, params *model.OrderParam) ([]model.Order, 
 	return res, nil
 }
 
-func FindOrderByID(db *sqlx.DB, params *model.OrderParam) (*model.Order, error) {
+func FindOrderByID(db *sqlx.DB, ID int64) (*model.Order, error) {
 	orders := make([]OrderDTO, 0)
 	if err := db.Select(&orders, `
 		SELECT id, table_id, staff_id, created_at, order_detail_id, order_id, item_name, price, quantity, status FROM order_model WHERE id = ?
-	`, params.ID); err != nil {
+	`, ID); err != nil {
 		return nil, err
 	}
 

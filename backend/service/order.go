@@ -21,7 +21,7 @@ func NewOrder(db *sqlx.DB) *Order {
 // Create create new order.
 func (o *Order) Create(params *model.OrderParam) (*model.Order, error) {
 
-	table, err := repository.FindTableByID(o.db, &model.TableParam{ID: params.TableID})
+	table, err := repository.FindTableByID(o.db, params.TableID)
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +54,7 @@ func (o *Order) Create(params *model.OrderParam) (*model.Order, error) {
 		return nil, errors.Wrap(err, "failed order insert transaction")
 	}
 
-	order, err := repository.FindOrderByID(o.db, params)
+	order, err := repository.FindOrderByID(o.db, params.ID)
 	if err != nil {
 		return nil, err
 	}

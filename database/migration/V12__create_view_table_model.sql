@@ -36,6 +36,7 @@ GROUP BY
   dinner_table.id
 );
 
+-- TODO: MAXを使わない方法を考える。
 CREATE VIEW table_bill AS (
 SELECT
   dinner_table.id AS table_id,
@@ -57,6 +58,7 @@ CREATE VIEW table_model AS (
 SELECT
   dinner_table.id AS id,
   dinner_table.is_ended,
+  dinner_table.room_id,
   room.name AS room_name,
   table_order_cnt.cnt AS order_cnt,
   table_order_amount.amount,
