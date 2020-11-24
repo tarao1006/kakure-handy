@@ -60,6 +60,14 @@ export const Header: React.FC<{}> = () => {
     history.push('/login');
   }
 
+  const handleAddTable = () => {}
+
+  const handleAddOrder = () => {
+    history.push('/new-order')
+  }
+
+  const handleNotification = () => {}
+
   return (
     <>
       <CssBaseline />
@@ -75,6 +83,9 @@ export const Header: React.FC<{}> = () => {
             handleMenu={handleMenu}
             handleClose={handleClose}
             handleLogout={handleLogout}
+            handleAddTable={handleAddTable}
+            handleAddOrder={handleAddOrder}
+            handleNotification={handleNotification}
           />}
         </Toolbar>
       </AppBar>
