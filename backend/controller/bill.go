@@ -12,17 +12,17 @@ import (
 	"github.com/tarao1006/kakure-handy/service"
 )
 
-// Bill is a struct to manipulate database.
+// Bill はデータベース操作用の struct でコントローラの役割を担う。
 type Bill struct {
 	db *sqlx.DB
 }
 
-// NewBill create new Bill.
+// NewBill は Bill struct を作成する。
 func NewBill(db *sqlx.DB) *Bill {
 	return &Bill{db: db}
 }
 
-// Show return a Bill
+// Show は会計情報を取得する。
 func (b *Bill) Show(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
 	tableID, err := httputil.ExtractID(mux.Vars(r), "id")
 	if err != nil {
@@ -37,7 +37,7 @@ func (b *Bill) Show(_ http.ResponseWriter, r *http.Request) (int, interface{}, e
 	return http.StatusOK, bill, nil
 }
 
-// Create create new record.
+// Create は会計情報を作成する。
 func (b *Bill) Create(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
 	tableID, err := httputil.ExtractID(mux.Vars(r), "id")
 	if err != nil {
@@ -52,14 +52,18 @@ func (b *Bill) Create(_ http.ResponseWriter, r *http.Request) (int, interface{},
 	billService := service.NewBill(b.db)
 	res, err := billService.Create(tableID, amount)
 	if err != nil {
+		if err.Error() == "invalid table id" {
+			return http.StatusBadRequest, nil, err
+		}
 		return http.StatusInternalServerError, nil, err
 	}
 
 	return http.StatusCreated, res, nil
 }
 
+// Delete は会計情報を削除する。
 func (b *Bill) Delete(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
-	_, err := httputil.ExtractID(mux.Vars(r), "id")
+	tableID, err := httputil.ExtractID(mux.Vars(r), "id")
 	if err != nil {
 		return http.StatusBadRequest, nil, errors.New("required parameter is missing")
 	}
@@ -70,7 +74,10 @@ func (b *Bill) Delete(_ http.ResponseWriter, r *http.Request) (int, interface{},
 	}
 
 	billService := service.NewBill(b.db)
-	if err := billService.Delete(billID); err != nil {
+	if err := billService.Delete(tableID, billID); err != nil {
+		if err.Error() == "invalid table id" {
+			return http.StatusBadRequest, nil, err
+		}
 		return http.StatusInternalServerError, nil, err
 	}
 

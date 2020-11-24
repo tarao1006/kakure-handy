@@ -7,45 +7,30 @@ import (
 	"github.com/tarao1006/kakure-handy/model"
 )
 
-// FindBillByID returns Bill
+// FindBillByID は Bill の ID で検索する。
 func FindBillByID(db *sqlx.DB, ID int64) (*model.Bill, error) {
 	bill := model.Bill{}
 	if err := db.Get(&bill, `
-		SELECT id, table_id, amount, is_valid, created_at FROM bill WHERE id = ?
+		SELECT id, table_id, amount, created_at FROM bill WHERE id = ?
 	`, ID); err != nil {
 		return nil, err
 	}
 	return &bill, nil
 }
 
-// FindBillsByTableID returns Bill
-func FindBillsByTableID(db *sqlx.DB, tableID int64) ([]model.Bill, error) {
-	bills := make([]model.Bill, 0)
-	if err := db.Select(&bills, `
-		SELECT id, table_id, amount, is_valid, created_at FROM bill WHERE table_id = ? AND is_valid = true ORDER BY created_at
-	`, tableID); err != nil {
-		return nil, err
-	}
-	return bills, nil
-}
-
-// FindBillByTableID returns Bill
+// FindBillByTableID は tableID で検索する。
 func FindBillByTableID(db *sqlx.DB, tableID int64) (*model.Bill, error) {
-	bill := make([]model.Bill, 0)
-	if err := db.Select(&bill, `
-		SELECT id, table_id, amount, is_valid, created_at FROM bill WHERE table_id = ? AND is_valid ORDER BY created_at DESC
+	bill := model.Bill{}
+	if err := db.Get(&bill, `
+		SELECT id, table_id, amount, created_at FROM bill WHERE table_id = ?
 	`, tableID); err != nil {
 		return nil, err
 	}
 
-	if len(bill) == 0 {
-		return nil, nil
-	}
-
-	return &bill[0], nil
+	return &bill, nil
 }
 
-// CreateBill creates new bill record.
+// CreateBill は会計情報を作成する。
 func CreateBill(db *sqlx.Tx, tableID int64, amount int64) (result sql.Result, err error) {
 	stmt, err := db.Prepare(`INSERT INTO bill (table_id, amount) VALUES (?, ?)`)
 	if err != nil {
@@ -59,9 +44,9 @@ func CreateBill(db *sqlx.Tx, tableID int64, amount int64) (result sql.Result, er
 	return stmt.Exec(tableID, amount)
 }
 
-// RevokeBill update bill record.
-func RevokeBill(db *sqlx.Tx, id int64) (result sql.Result, err error) {
-	stmt, err := db.Prepare(`UPDATE bill SET is_valid = false WHERE id = ?`)
+// DeleteBill は会計情報を削除する。
+func DeleteBill(db *sqlx.Tx, id int64) (result sql.Result, err error) {
+	stmt, err := db.Prepare(`DELETE FROM bill WHERE id = ?`)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +58,7 @@ func RevokeBill(db *sqlx.Tx, id int64) (result sql.Result, err error) {
 	return stmt.Exec(id)
 }
 
-// GetAmount return amount found by table_id
+// GetAmount は合計金額を返す。
 func GetAmount(db *sqlx.DB, tableID int64) (int64, error) {
 	var amount int64
 	if err := db.Get(&amount, `

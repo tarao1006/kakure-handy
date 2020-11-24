@@ -8,39 +8,28 @@ import (
 	"github.com/tarao1006/kakure-handy/repository"
 )
 
-// Bill is a struct to manipulate database.
+// Bill はデータベースを操作する struct でアプリケーションサービスを担当する。
 type Bill struct {
 	db *sqlx.DB
 }
 
-// NewBill create new Bill.
+// NewBill は Bill struct を作成する。
 func NewBill(db *sqlx.DB) *Bill {
 	return &Bill{db: db}
 }
 
-// Create は新しい会計を作成する。
-// 上書きを許容するため、過去の会計を無効にする。
+// Create は会計情報を作成する。
 func (b *Bill) Create(tableID int64, amount int64) (*model.Bill, error) {
-	var createdID int64
-	bills, err := repository.FindBillsByTableID(b.db, tableID)
+	bill, err := repository.FindBillByTableID(b.db, tableID)
 	if err != nil {
 		return nil, err
 	}
-	validBills := make([]model.Bill, 0)
-	for _, bill := range bills {
-		if bill.IsValid {
-			validBills = append(validBills, bill)
-		}
+	if bill != nil {
+		return nil, errors.New("invalid table id")
 	}
 
+	var createdID int64
 	if err := dbutil.TXHandler(b.db, func(tx *sqlx.Tx) error {
-		for _, bill := range validBills {
-			_, err := repository.RevokeBill(tx, bill.ID)
-			if err != nil {
-				return err
-			}
-		}
-
 		result, err := repository.CreateBill(tx, tableID, amount)
 		if err != nil {
 			return err
@@ -63,9 +52,17 @@ func (b *Bill) Create(tableID int64, amount int64) (*model.Bill, error) {
 	return res, nil
 }
 
-func (b *Bill) Delete(billID int64) error {
+// Delete は会計情報を削除する。
+func (b *Bill) Delete(tableID int64, billID int64) error {
+	if _, err := repository.FindBillByTableID(b.db, tableID); err != nil {
+		if err.Error() == "sql: no rows in result set" {
+			return errors.New("invalid table id")
+		}
+		return err
+	}
+
 	if err := dbutil.TXHandler(b.db, func(tx *sqlx.Tx) error {
-		if _, err := repository.RevokeBill(tx, billID); err != nil {
+		if _, err := repository.DeleteBill(tx, billID); err != nil {
 			return err
 		}
 		return nil
