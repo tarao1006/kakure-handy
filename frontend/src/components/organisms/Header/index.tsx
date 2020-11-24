@@ -60,7 +60,9 @@ export const Header: React.FC<{}> = () => {
     history.push('/login');
   }
 
-  const handleAddTable = () => {}
+  const handleAddTable = () => {
+    history.push('/new-table')
+  }
 
   const handleAddOrder = () => {
     history.push('/new-order')

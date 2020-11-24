@@ -14,6 +14,7 @@ import {
   LogIn,
   MailSent,
   NewOrder,
+  NewTable,
   OrderSuccess,
   TableDetail,
   Tables,
@@ -86,6 +87,10 @@ const Routing = () => {
             path='/table/:tableId'
             exact
             Child={TableDetail}
+          />
+          <RedirectRoute
+            path='/new-table'
+            Child={NewTable}
           />
           <Route
             path='/forget-password'
