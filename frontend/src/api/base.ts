@@ -1,11 +1,10 @@
 export const BACKEND_URL = process.env.BACKEND_URL;
 
-export const ToJson = async (res: Response) => {
-  const js = await res.json();
+export const ToJson = async <T>(res: Response): Promise<T> => {
 
   if (res.ok) {
-    return js;
+    return res.json() as Promise<T>;
   } else {
-    throw new Error(js.message);
+    throw new Error("error");
   }
 }

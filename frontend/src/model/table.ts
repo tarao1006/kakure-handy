@@ -12,7 +12,7 @@ export interface Table {
   orders?: Order[]
 }
 
-interface tableDTO {
+export interface TableDTO {
   id: number;
   room_name: string;
   is_ended: boolean;
@@ -24,7 +24,7 @@ interface tableDTO {
   orders: OrderDTO[];
 }
 
-export const convertToTable = (table: tableDTO): Table => {
+export const convertToTable = (table: TableDTO): Table => {
   return {
     id: table.id,
     roomName: table.room_name,
@@ -38,6 +38,6 @@ export const convertToTable = (table: tableDTO): Table => {
   }
 }
 
-export const convertToTables = (tables: tableDTO[]) => {
+export const convertToTables = (tables: TableDTO[]) => {
   return tables.map(table => convertToTable(table))
 }
