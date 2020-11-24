@@ -25,6 +25,7 @@ import { getTable, exitTable, createBill, deleteBill, updateOrder } from '@api';
 import { Table as TableModel, convertToTable, OrderDetail } from '../../../model';
 import { convertTimeToHM } from '../../../utils';
 import { ModalListItem } from './ModalListItem';
+import { ConfirmationDialog } from './ConfirmationDialog';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -59,6 +60,9 @@ export const TableDetail = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [snackBarOpen, setSnackBarOpen] = React.useState<boolean>(false);
   const [snackBarTopic, setSnackBarTopic] = React.useState<string>('');
+  const [createBillDialogOpen, setCreateBillDialogOpen] = React.useState<boolean>(false);
+  const [deleteBillDialogOpen, setDeleteBillDialogOpen] = React.useState<boolean>(false);
+  const [exitDialogOpen, setExitDialogOpen] = React.useState<boolean>(false);
   const history = useHistory();
 
   React.useEffect(() => {
@@ -110,22 +114,55 @@ export const TableDetail = () => {
     }
   }
 
-  const handleCreateBill = async () => {
-    const token = await currentUser.getIdToken();
-    await createBill(token, tableId);
-    await updateTable(token);
+  const confirmCreateBill = () => {
+    setCreateBillDialogOpen(true);
   }
 
-  const handleDeleteBill = async () => {
-    const token = await currentUser.getIdToken();
-    await deleteBill(token, tableId, `${table.latestBillId}`);
-    await updateTable(token);
+  const confirmDeleteBill = () => {
+    setDeleteBillDialogOpen(true);
   }
 
-  const handleExit = async () => {
-    const token = await currentUser.getIdToken();
-    await exitTable(token, tableId);
-    await updateTable(token);
+  const confirmExit = () => {
+    setExitDialogOpen(true);
+  }
+
+  const handleCreateBill = async (ok: boolean) => {
+    setCreateBillDialogOpen(false);
+
+    if (ok) {
+      const token = await currentUser.getIdToken();
+      await createBill(token, tableId);
+      await updateTable(token);
+
+      setSnackBarOpen(true);
+      setSnackBarTopic('会計');
+    }
+  }
+
+  const handleDeleteBill = async (ok: boolean) => {
+    setDeleteBillDialogOpen(false);
+
+    if (ok) {
+      const token = await currentUser.getIdToken();
+      await deleteBill(token, tableId, `${table.latestBillId}`);
+      await updateTable(token);
+
+      setSnackBarOpen(true);
+      setSnackBarTopic('会計取消');
+    }
+  }
+
+  const handleExit = async (ok: boolean) => {
+    setExitDialogOpen(false);
+
+    if (ok) {
+      const token = await currentUser.getIdToken();
+      await exitTable(token, tableId);
+      await updateTable(token);
+
+      setSnackBarOpen(true);
+      setSnackBarTopic('退店');
+    }
   }
 
   const handleBack = () => {
@@ -200,6 +237,9 @@ export const TableDetail = () => {
         >
           一覧に戻る
         </Button>
+        {
+          isLoading && <Loading />
+        }
         <Table size="small">
           <TableBody>
             <TableRow>
@@ -231,7 +271,7 @@ export const TableDetail = () => {
         <Button
           color="primary"
           variant="outlined"
-          onClick={handleCreateBill}
+          onClick={confirmCreateBill}
           disabled={table.validBillExists}
           className={classes.operationButton}
         >
@@ -240,7 +280,7 @@ export const TableDetail = () => {
         <Button
           color="secondary"
           variant="outlined"
-          onClick={handleDeleteBill}
+          onClick={confirmDeleteBill}
           disabled={!table.validBillExists || table.isEnded}
           className={classes.operationButton}
         >
@@ -249,7 +289,7 @@ export const TableDetail = () => {
         <Button
           color="primary" 
           variant="contained"
-          onClick={handleExit}
+          onClick={confirmExit}
           disabled={!table.validBillExists || table.isEnded}
           className={classes.operationButton}
         >
@@ -329,6 +369,22 @@ export const TableDetail = () => {
             </List>
           </Collapse>
         </List>
+        <ConfirmationDialog
+          open={createBillDialogOpen}
+          onClose={handleCreateBill}
+          topic='会計'
+        />
+        <ConfirmationDialog
+          open={deleteBillDialogOpen}
+          onClose={handleDeleteBill}
+          topic='会計取消'
+        />
+        <ConfirmationDialog
+          open={exitDialogOpen}
+          onClose={handleExit}
+          topic='退店'
+          subTopic='退店処理は取り消せません。'
+        />
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
