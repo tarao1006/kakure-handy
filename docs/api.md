@@ -554,7 +554,7 @@ Get bill information.
 | --- | --- |
 | 200 | |
 
-## DELETE table/:id/bill/:bii_id
+## DELETE table/:id/bill/:bill_id
 ### Summary
 Delete bill.
 
