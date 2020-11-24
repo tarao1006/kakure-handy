@@ -4,11 +4,14 @@ import { createStyles, Theme, makeStyles } from '@material-ui/core/styles'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {
   Button,
+  CloseIcon,
   Collapse,
   Container,
+  IconButton,
   List,
   ListItem,
   ListItemText,
+  Snackbar,
   Table,
   TableBody,
   TableRow,
@@ -54,6 +57,8 @@ export const TableDetail = () => {
   const [cancelledOpen, setCancelledOpen] = React.useState<boolean>(false);
   const [disabledDialogButtons, setDisabledDialogButtons] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
+  const [snackBarOpen, setSnackBarOpen] = React.useState<boolean>(false);
+  const [snackBarTopic, setSnackBarTopic] = React.useState<string>('');
   const history = useHistory();
 
   React.useEffect(() => {
@@ -128,27 +133,33 @@ export const TableDetail = () => {
   }
 
   const handleServed = async (id: number) => {
+    setSnackBarTopic('提供済にする');
     setDisabledDialogButtons(true);
     const token = await currentUser.getIdToken();
     await updateOrder(token, table.id, id, 2);
     await updateTable(token);
     setDisabledDialogButtons(false);
+    handleSnackBarOpen();
   }
 
   const handleCancel = async (id: number) => {
+    setSnackBarTopic('キャンセルする');
     setDisabledDialogButtons(true);
     const token = await currentUser.getIdToken();
     await updateOrder(token, table.id, id, 3);
     await updateTable(token);
     setDisabledDialogButtons(false);
+    handleSnackBarOpen();
   }
 
   const handleOrdered = async (id: number) => {
+    setSnackBarTopic('注文済に戻す');
     setDisabledDialogButtons(true);
     const token = await currentUser.getIdToken();
     await updateOrder(token, table.id, id, 1);
     await updateTable(token);
     setDisabledDialogButtons(false);
+    handleSnackBarOpen();
   }
 
   const handleOpenOrdered = () => {
@@ -161,6 +172,17 @@ export const TableDetail = () => {
 
   const handleOpenCancelled = () => {
     setCancelledOpen(!cancelledOpen);
+  }
+
+  const handleSnackBarOpen = () => {
+    setSnackBarOpen(true);
+  }
+
+  const handleSnackBarClose = (event: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackBarOpen(false);
   }
 
   return (
@@ -307,6 +329,23 @@ export const TableDetail = () => {
             </List>
           </Collapse>
         </List>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          open={snackBarOpen}
+          autoHideDuration={2000}
+          onClose={handleSnackBarClose}
+          message={`${snackBarTopic} 処理を完了しました。`}
+          action={
+            <>
+              <IconButton size="small" aria-label="close" color="inherit" onClick={handleSnackBarClose}>
+                <CloseIcon fontSize="small" />
+              </IconButton>
+            </>
+          }
+        />
       </Container>
     )
   )
