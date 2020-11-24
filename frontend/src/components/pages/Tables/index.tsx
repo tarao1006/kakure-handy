@@ -6,6 +6,7 @@ import { getTables } from '../../../api/table'
 import { Table as TableModel, convertToTables } from '../../../model';
 import { convertTimeToHM } from '../../../utils';
 import { Loading } from '@molecules';
+import { useTablesApi } from '../../../hooks/useTablesApi';
 
 const ListTableLink = ({table, handleClick}) => {
   const [date, setDate] = React.useState<Date>(new Date());
@@ -32,8 +33,7 @@ const ListTableLink = ({table, handleClick}) => {
 
 export const Tables = () => {
   const { currentUser } = React.useContext(AuthContext);
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [tables, setTables] = React.useState<TableModel[]>([]);
+  const [{ data, isLoading, isError }, doFetch] = useTablesApi();
   const history = useHistory();
 
   React.useEffect(() => {
@@ -42,9 +42,7 @@ export const Tables = () => {
       if (!cleanedUp) {
         if (currentUser) {
           const token = await currentUser.getIdToken();
-          const res = await getTables(token);
-          const t = convertToTables(res);
-          setTables(t);
+          doFetch(token);
         }
       }
     }
@@ -54,12 +52,6 @@ export const Tables = () => {
     }
     return cleanUp;
   }, [currentUser]);
-
-  React.useEffect(() => {
-    if (tables.length !== 0) {
-      setIsLoading(false);
-    }
-  });
 
   const handleClick = (id: number): void => {
     history.push(`/table/${id}`)
@@ -72,7 +64,7 @@ export const Tables = () => {
       <Container component="main" maxWidth="xs">
         <List>
           {
-            tables.map(table => (
+            data.map(table => (
               <ListTableLink key={table.id} table={table} handleClick={handleClick} />
             ))
           }
