@@ -44,7 +44,7 @@ export const Tables = () => {
           const token = await currentUser.getIdToken();
           let res = await getTables(token);
           const t = convertToTables(res);
-          setTables(t);
+          setTables(t.filter(table => !table.isEnded));
         }
       }
     }
