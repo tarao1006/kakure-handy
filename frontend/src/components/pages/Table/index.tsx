@@ -100,7 +100,9 @@ export const TableDetail = () => {
     setServedOrder(served);
     setCancelledOrder(cancelled);
 
-    setOrderedOpen(ordered.length !== 0);
+    if (ordered.length !== 0) {
+      setOrderedOpen(true);
+    }
   }
 
   const handleCreateBill = async () => {
