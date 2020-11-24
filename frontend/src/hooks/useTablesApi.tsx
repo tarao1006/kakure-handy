@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer, useState, } from 'react';
 import { Table, convertToTables } from '../model';
 import { getTables } from '@api';
 
@@ -13,7 +13,7 @@ interface Action {
   payload?: Table[];
 }
 
-const tablesFetchReducer = (state: State, action: Action): State => {
+const tablesFetchReducer = (state, action: Action) => {
   switch (action.type) {
     case 'FETCH_INIT':
       return {
