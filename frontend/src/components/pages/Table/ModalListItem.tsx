@@ -49,14 +49,13 @@ interface ModalListItemProps {
   disabled: boolean;
   detail: OrderDetail;
   handleServed: (id: number) => Promise<any>;
-  handleCancel: (id: number) => void;
-  handleOrdered: (id: number) => void;
+  handleCancel: (id: number) => Promise<any>;
+  handleOrdered: (id: number) => Promise<any>;
 }
 
 export const ModalListItem: React.FC<ModalListItemProps> = ({disabled, detail, handleServed, handleCancel, handleOrdered}) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState<boolean>(false);
-  const [isExecuting, setIsExecuting] = React.useState<boolean>(false);
   const icons = {
     "ordered": <RadioButtonUncheckedIcon />,
     "served": <CheckIcon color="primary" />,
@@ -86,9 +85,7 @@ export const ModalListItem: React.FC<ModalListItemProps> = ({disabled, detail, h
 
   const ServedButton = () => {
     const handleClick = async () => {
-      setIsExecuting(true);
       await handleServed(detail.id);
-      handleClose();
     }
 
     return (
@@ -99,9 +96,8 @@ export const ModalListItem: React.FC<ModalListItemProps> = ({disabled, detail, h
   }
 
   const CancelButton = () => {
-    const handleClick = () => {
-      handleCancel(detail.id);
-      handleClose();
+    const handleClick = async () => {
+      await handleCancel(detail.id);
     }
 
     return (
@@ -112,9 +108,8 @@ export const ModalListItem: React.FC<ModalListItemProps> = ({disabled, detail, h
   }
 
   const OrderedButton = () => {
-    const handleClick = () => {
-      handleOrdered(detail.id);
-      handleClose();
+    const handleClick = async () => {
+      await handleOrdered(detail.id);
     }
 
     return (
