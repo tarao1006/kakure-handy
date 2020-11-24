@@ -478,6 +478,7 @@ Change order status.
 ```json
 {
   "status": "served"
+  "status_id": 2
 }
 ```
 
@@ -503,30 +504,6 @@ Change order status.
 | status code | note |
 | --- | --- |
 | 204 | |
-
-## DELETE /table/:table_id/order/:order_detail_id
-### Summary
-Cancel order.
-
-### Response
-<details>
-
-```json
-{
-    "id": 1,
-    "order_id": 1,
-    "item_name": "Maguro",
-    "price": 1000,
-    "quantity": 1,
-    "status": "cancelled"
-}
-```
-
-</details>
-
-| status code | note |
-| --- | --- |
-| 200 | |
 
 ## POST table/:id/bill
 ### Summary
@@ -569,6 +546,23 @@ Get bill information.
     "is_valid": true,
     "created_at": "2020-09-13T20:27:17+09:00"
 }
+```
+
+</details>
+
+| status code | note |
+| --- | --- |
+| 200 | |
+
+## DELETE table/:id/bill/:bill_id
+### Summary
+Delete bill.
+
+### Response
+<details>
+
+```json
+{}
 ```
 
 </details>
