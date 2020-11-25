@@ -6,10 +6,10 @@ import {
 import { CssBaseline } from '@material-ui/core';
 import { AppBar, IconButton, Toolbar } from '@atoms';
 import { Navigation } from '@molecules';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/auth';
 import { logout } from '../../../modules/auth';
-import MenuIcon from '@material-ui/icons/Menu';
+import { MenuIcon, KeyboardArrowLeftIcon } from '@icons';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -27,6 +27,7 @@ export const Header: React.FC<{}> = () => {
   const [auth, setAuth] = React.useState<boolean>(!!currentUser);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const history = useHistory();
+  const location = useLocation();
   const open = Boolean(anchorEl);
 
   React.useEffect(() => {
@@ -43,8 +44,8 @@ export const Header: React.FC<{}> = () => {
     history.push('/');
   }
 
-  const handleMenu = (e: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(e.currentTarget);
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
@@ -75,9 +76,19 @@ export const Header: React.FC<{}> = () => {
       <CssBaseline />
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" color="inherit" onClick={handleClick}>
-            <MenuIcon />
-          </IconButton>
+          {
+            location.pathname === '/'
+            ? (
+              <IconButton edge="start" color="inherit" onClick={handleClick}>
+                <MenuIcon />
+              </IconButton>
+            )
+            : (
+              <IconButton edge="start" color="inherit" onClick={handleClick}>
+                <KeyboardArrowLeftIcon />
+              </IconButton>
+            )
+          }
           <div className={classes.invisibleSpace} />
           {auth && <Navigation
             open={open}

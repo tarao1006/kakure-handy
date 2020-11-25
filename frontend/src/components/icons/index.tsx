@@ -1,0 +1,10 @@
+export { default as AccountCircle} from '@material-ui/icons/AccountCircle';
+export { default as Add } from '@material-ui/icons/Add';
+export { default as CloseIcon } from '@material-ui/icons/Close';
+export { default as ExpandLess } from '@material-ui/icons/ExpandLess';
+export { default as ExpandMore } from '@material-ui/icons/ExpandMore';
+export { default as KeyboardArrowLeftIcon } from '@material-ui/icons/KeyboardArrowLeft';
+export { default as LockOutlinedIcon } from '@material-ui/icons/LockOpenOutlined';
+export { default as MenuIcon } from '@material-ui/icons/Menu';
+export { default as NotificationsIcon } from '@material-ui/icons/Notifications';
+export { default as PostAdd } from '@material-ui/icons/PostAdd';

@@ -1,6 +1,27 @@
 import * as React from 'react';
-import { IconButton, Menu, MenuItem } from '@atoms';
-import { AccountCircle, Add, ExpandMore, NotificationsIcon, PostAdd } from '@atoms';
+import {
+  IconButton,
+  Menu,
+  MenuItem
+} from '@atoms';
+import {
+  AccountCircle,
+  Add,
+  ExpandMore,
+  NotificationsIcon,
+  PostAdd
+} from '@icons';
+
+interface NavigationProps {
+  open: boolean;
+  handleMenu: (event: React.MouseEvent<HTMLElement>) => void;
+  anchorEl: Element;
+  handleClose: () => void;
+  handleLogout: () => void;
+  handleAddTable: () => void;
+  handleAddOrder: () => void;
+  handleNotification: () => void;
+}
 
 export const Navigation = ({
   open,
@@ -11,7 +32,7 @@ export const Navigation = ({
   handleAddTable,
   handleAddOrder,
   handleNotification
-}) => {
+}: NavigationProps): JSX.Element => {
 
   return (
     <div>

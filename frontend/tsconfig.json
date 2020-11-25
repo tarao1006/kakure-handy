@@ -18,6 +18,7 @@
       "@utils": ["./src/utils/index.ts"],
       "@api": ["./src/api/index.ts"],
       "@atoms": ["./src/components/atoms/index.tsx"],
+      "@icons": ["./src/components/icons/index.tsx"],
       "@molecules": ["./src/components/molecules/index.tsx"],
       "@organisms": ["./src/components/organisms/index.tsx"],
       "@templates": ["./src/components/templates/index.tsx"],

@@ -228,15 +228,6 @@ export const TableDetail = () => {
     :
     (
       <Container component="main" maxWidth="xs" className={classes.root}>
-        <Button
-          color="inherit"
-          component="a"
-          onClick={handleBack} startIcon={<ArrowBackIcon />}
-          style={{ backgroundColor: 'transparent' }}
-          disableRipple={true}
-        >
-          一覧に戻る
-        </Button>
         {
           isLoading && <Loading />
         }
