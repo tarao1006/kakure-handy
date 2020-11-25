@@ -16,7 +16,6 @@ type Table struct {
 	Orders  []Order   `json:"orders"`
 }
 
-// DB から読み取る時に使う
 type TableDTO struct {
 	ID       int64     `db:"id"`
 	RoomID   int64     `db:"room_id"`

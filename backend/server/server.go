@@ -63,7 +63,6 @@ func (s *Server) Run(port int) {
 func (s *Server) Route() http.Handler {
 	tableController := controller.NewTable(s.db)
 	orderController := controller.NewOrder(s.db)
-	orderDetailController := controller.NewOrderDetail(s.db)
 	billController := controller.NewBill(s.db)
 	itemController := controller.NewItem(s.db)
 
@@ -75,7 +74,7 @@ func (s *Server) Route() http.Handler {
 	r.Methods(http.MethodPut).Path("/table/{id:[0-9]+}/end").Handler(AppHandler{tableController.End})
 
 	r.Methods(http.MethodPost).Path("/table/{id:[0-9]+}/order").Handler(AppHandler{orderController.Create})
-	r.Methods(http.MethodPatch).Path("/table/{table_id:[0-9]+}/order/{order_detail_id:[0-9]+}").Handler(AppHandler{orderDetailController.Update})
+	r.Methods(http.MethodPatch).Path("/table/{table_id:[0-9]+}/order/{order_id:[0-9]+}").Handler(AppHandler{orderController.Update})
 
 	r.Methods(http.MethodPost).Path("/table/{id:[0-9]+}/bill").Handler(AppHandler{billController.Create})
 	r.Methods(http.MethodGet).Path("/table/{id:[0-9]+}/bill").Handler(AppHandler{billController.Show})

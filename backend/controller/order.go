@@ -12,25 +12,22 @@ import (
 	"github.com/tarao1006/kakure-handy/service"
 )
 
-// Order is a struct to manipulate database.
 type Order struct {
 	db *sqlx.DB
 }
 
-// NewOrder create new Order.
 func NewOrder(db *sqlx.DB) *Order {
 	return &Order{db: db}
 }
 
-// Create create new order.
 func (a *Order) Create(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
 	tableID, err := httputil.ExtractID(mux.Vars(r), "id")
 	if err != nil {
 		return http.StatusBadRequest, nil, errors.New("required parameter is missing")
 	}
 
-	params := &model.OrderParam{}
-	if err := json.NewDecoder(r.Body).Decode(&params); err != nil {
+	rawParams := make([]model.OrderParam, 0)
+	if err := json.NewDecoder(r.Body).Decode(&rawParams); err != nil {
 		return http.StatusBadRequest, nil, err
 	}
 
@@ -38,8 +35,16 @@ func (a *Order) Create(_ http.ResponseWriter, r *http.Request) (int, interface{}
 	if err != nil {
 		return http.StatusBadRequest, nil, err
 	}
-	params.StaffID = user.ID
-	params.TableID = tableID
+
+	params := make([]model.OrderParam, 0)
+	for _, param := range rawParams {
+		params = append(params, model.OrderParam{
+			ItemID:   param.ItemID,
+			Quantity: param.Quantity,
+			StaffID:  user.ID,
+			TableID:  tableID,
+		})
+	}
 	orderService := service.NewOrder(a.db)
 	order, err := orderService.Create(params)
 	if e, ok := err.(model.TableIsEndedError); ok {
@@ -49,4 +54,35 @@ func (a *Order) Create(_ http.ResponseWriter, r *http.Request) (int, interface{}
 	}
 
 	return http.StatusCreated, order, nil
+}
+
+func (a *Order) Update(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
+	vars := mux.Vars(r)
+
+	tableID, err := httputil.ExtractID(vars, "table_id")
+	if err != nil {
+		return http.StatusBadRequest, nil, errors.New("required parameter is missing")
+	}
+
+	// TODO: check if table is ended
+
+	orderID, err := httputil.ExtractID(vars, "order_id")
+	if err != nil {
+		return http.StatusBadRequest, nil, errors.New("required parameter is missing")
+	}
+
+	param := &model.OrderParam{}
+	if err := json.NewDecoder(r.Body).Decode(&param); err != nil {
+		return http.StatusBadRequest, nil, err
+	}
+	param.ID = orderID
+	param.TableID = tableID
+
+	orderService := service.NewOrder(a.db)
+	orderDetail, err := orderService.Update(param)
+	if err != nil {
+		return http.StatusInternalServerError, nil, err
+	}
+
+	return http.StatusOK, orderDetail, nil
 }

@@ -8,45 +8,37 @@ import (
 	"github.com/tarao1006/kakure-handy/repository"
 )
 
-// Order is a struct to manipulate database.
 type Order struct {
 	db *sqlx.DB
 }
 
-// NewOrder create new Order.
 func NewOrder(db *sqlx.DB) *Order {
 	return &Order{db: db}
 }
 
-// Create create new order.
-func (o *Order) Create(params *model.OrderParam) (*model.Order, error) {
-
-	table, err := repository.FindTableByID(o.db, params.TableID)
+func (o *Order) Create(params []model.OrderParam) ([]model.Order, error) {
+	table, err := repository.FindTableByID(o.db, params[0].TableID)
 	if err != nil {
 		return nil, err
 	}
 
 	if table.IsEnded {
-		return nil, model.TableIsEndedError{TableID: params.TableID}
+		return nil, model.TableIsEndedError{TableID: params[0].TableID}
 	}
 
+	IDs := make([]int64, 0)
 	if err := dbutil.TXHandler(o.db, func(tx *sqlx.Tx) error {
-		result, err := repository.CreateOrder(tx, params)
-		if err != nil {
-			return err
-		}
-		id, err := result.LastInsertId()
-		if err != nil {
-			return err
-		}
-
-		params.ID = id
-
-		for _, detail := range params.Details {
-			detail.OrderID = id
-			if _, err := repository.CreateOrderDetail(tx, &detail); err != nil {
+		for _, param := range params {
+			result, err := repository.CreateOrder(tx, &param)
+			if err != nil {
 				return err
 			}
+			id, err := result.LastInsertId()
+			if err != nil {
+				return err
+			}
+
+			IDs = append(IDs, id)
 		}
 
 		return err
@@ -54,7 +46,46 @@ func (o *Order) Create(params *model.OrderParam) (*model.Order, error) {
 		return nil, errors.Wrap(err, "failed order insert transaction")
 	}
 
-	order, err := repository.FindOrderByID(o.db, params.ID)
+	res := make([]model.Order, 0)
+
+	for _, id := range IDs {
+		order, err := repository.FindOrderByID(o.db, id)
+		if err != nil {
+			return nil, err
+		}
+		res = append(res, *order)
+	}
+
+	return res, nil
+}
+
+func (o *Order) Update(param *model.OrderParam) (*model.Order, error) {
+	table, err := repository.FindTableByID(o.db, param.TableID)
+	if err != nil {
+		return nil, err
+	}
+
+	if table.IsEnded {
+		return nil, model.TableIsEndedError{TableID: param.TableID}
+	}
+
+	if err := dbutil.TXHandler(o.db, func(tx *sqlx.Tx) error {
+		result, err := repository.CreateOrder(tx, param)
+		if err != nil {
+			return err
+		}
+		id, err := result.LastInsertId()
+		if err != nil {
+			return err
+		}
+		param.ID = id
+
+		return err
+	}); err != nil {
+		return nil, errors.Wrap(err, "failed order insert transaction")
+	}
+
+	order, err := repository.FindOrderByID(o.db, param.ID)
 	if err != nil {
 		return nil, err
 	}

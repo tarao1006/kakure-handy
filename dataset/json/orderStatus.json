@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "status": "ordered"
+  },
+  {
+    "id": 2,
+    "status": "served"
+  },
+  {
+    "id": 3,
+    "status": "cancelled"
+  }
+]
