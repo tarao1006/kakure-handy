@@ -1,4 +1,4 @@
-import * as base from './base';
+import * as base from '../base';
 import { Bill } from '@model';
 
 export const createBill = async (idToken: string, tableId: string): Promise<Bill> => {

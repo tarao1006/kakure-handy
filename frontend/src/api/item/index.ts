@@ -1,4 +1,4 @@
-import * as base from './base';
+import * as base from '../base';
 import { ItemDTO } from '@model';
 
 export const getItems = async (idToken: string): Promise<ItemDTO[]> => {

@@ -8,17 +8,17 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-const login = async (email: string, password: string, persist: boolean) => {
+const login = async (email: string, password: string, persist: boolean): Promise<firebase.auth.UserCredential> => {
   const persistence = persist ? firebase.auth.Auth.Persistence.LOCAL : firebase.auth.Auth.Persistence.NONE;
   await firebase.auth().setPersistence(persistence);
   return firebase.auth().signInWithEmailAndPassword(email, password);
 }
 
-const logout = () => {
+const logout = (): Promise<void> => {
   return firebase.auth().signOut();
 }
 
-const resetEmail = (email: string) => {
+const resetEmail = (email: string): Promise<void> => {
   return firebase.auth().sendPasswordResetEmail(email, {url: process.env.BACKEND_URL});
 }
 

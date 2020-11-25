@@ -1,4 +1,4 @@
-import * as base from './base';
+import * as base from '../base';
 import { Item, Order } from '@model';
 
 export const createOrder = async (idToken: string, tableId: number, items: Item[]): Promise<Item[]> => {

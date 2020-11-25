@@ -1,5 +1,5 @@
-import * as base from './base';
-import { Table, TableDTO } from '../model';
+import * as base from '../base';
+import { TableDTO } from '@model';
 
 export const getTables = async (idToken: string): Promise<TableDTO[]> => {
   const res = await fetch(`${base.BACKEND_URL}/table`, {
