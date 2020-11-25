@@ -66,6 +66,7 @@ INSERT INTO menu_item (category_id, subcategory_id, name, price) VALUES (1, 14, 
 INSERT INTO menu_item (category_id, subcategory_id, name, price) VALUES (1, 15, "ほうじ茶プリン", 500);
 INSERT INTO menu_item (category_id, subcategory_id, name, price) VALUES (1, 15, "抹茶アイス", 450);
 INSERT INTO menu_item (category_id, subcategory_id, name, price) VALUES (1, 15, "黒ごまアイス", 450);
+INSERT INTO menu_item (category_id, subcategory_id, name, price) VALUES (1, 99, "付き出し", 600);
 
 INSERT INTO menu_item (category_id, subcategory_id, name, price) VALUES (2, 101, "生ビール(キリン一番絞り) <中>", 700);
 INSERT INTO menu_item (category_id, subcategory_id, name, price) VALUES (2, 101, "瓶ビール(クラシックラガー)", 700);

@@ -14,7 +14,7 @@ LEFT OUTER JOIN
     FROM
      table_order
     WHERE
-      status IN ("ordered", "served")
+      status_id IN (1, 2)
   ) AS table_order
 ON
   dinner_table.id = table_order.table_id
@@ -22,10 +22,10 @@ GROUP BY
   dinner_table.id
 );
 
-CREATE VIEW table_order_cnt AS (
+CREATE VIEW table_order_count AS (
 SELECT
   dinner_table.id AS table_id,
-  COUNT(table_order.id) AS cnt
+  COUNT(table_order.order_id) AS order_count
 FROM
   dinner_table
 LEFT OUTER JOIN
@@ -57,14 +57,16 @@ GROUP BY
 CREATE VIEW table_model AS (
 SELECT
   dinner_table.id AS id,
+  dinner_table.person_count,
+  dinner_table.is_reserved,
   dinner_table.is_ended,
-  dinner_table.room_id,
-  room.name AS room_name,
-  table_order_cnt.cnt AS order_cnt,
-  table_order_amount.amount,
-  table_bill.bill_id,
   dinner_table.start_at,
-  dinner_table.end_at
+  dinner_table.end_at,
+  room.id AS room_id,
+  room.name AS room_name,
+  table_order_count.order_count,
+  table_order_amount.amount,
+  table_bill.bill_id
 FROM
   dinner_table
 INNER JOIN
@@ -76,7 +78,7 @@ INNER JOIN
 ON
   dinner_table.id = table_order_amount.table_id
 INNER JOIN
-  table_order_cnt
+  table_order_count
 USING (table_id)
 INNER JOIN
   table_bill
