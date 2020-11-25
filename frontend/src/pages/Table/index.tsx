@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles'
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {
   Button,
   CloseIcon,
