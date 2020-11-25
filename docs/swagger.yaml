@@ -1,0 +1,371 @@
+swagger: "2.0"
+info:
+  description: "kakure-handy"
+  version: "1.0.0"
+  title: "Kakure handy"
+host: "localhost:8000"
+basePath: "/"
+tags:
+- name: "table"
+  description: "Table"
+- name: "bill"
+  description: "Bill"
+- name: "order"
+  description: "Order"
+schemes:
+- "https"
+- "http"
+paths:
+  /table:
+    post:
+      tags:
+      - "table"
+      summary: "Add a new table"
+      description: ""
+      operationId: "addTable"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Table object"
+        required: true
+        schema:
+          type: "object"
+          required:
+            - "room_id"
+            - "person_count"
+          properties:
+            room_id:
+              type: "number"
+              format: "int64"
+            person_count:
+              type: "number"
+              format: "int64"
+      responses:
+        "201":
+          description: "success"
+          schema:
+            $ref: "#/definitions/Table"
+        "400":
+          description: "invalid"
+    get:
+      tags:
+      - "table"
+      summary: "Get all table"
+      description: ""
+      operationId: "getAllTable"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successs"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Table"
+        "400":
+          description: "invalid"
+  /table/{id}:
+    get:
+      tags:
+      - "table"
+      summary: "Find table by id"
+      description: ""
+      operationId: "findTableById"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of table"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "success"
+          schema:
+            $ref: "#/definitions/Table"
+        "400":
+          description: "invalid"
+  /table/{id}/end:
+    put:
+      tags:
+      - "table"
+      summary: "End table"
+      description: ""
+      operationId: "endTable"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id" 
+        in: "path"
+        description: "Table id"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "success"
+        "400":
+          description: "invalid"
+  /table/{id}/bill:
+    post:
+      tags:
+      - "bill"
+      summary: "Create a new bill"
+      description: ""
+      operationId: "createBill"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of table"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "success"
+        "400":
+          description: "invalid"
+    get:
+      tags:
+      - "bill"
+      summary: "Find bill by ID"
+      description: ""
+      operationId: "getBillById"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of table"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "success"
+          schema:
+            $ref: "#/definitions/Bill"
+        "400":
+          description: "invalid"
+    delete:
+      tags:
+      - "bill"
+      summary: "Delete bill"
+      description: ""
+      operationId: "deleteBill"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of table"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "success"
+        "400":
+          description: "invalid"
+  /table/{id}/order:
+    post:
+      tags:
+      - "order"
+      summary: "Create order"
+      description: ""
+      operationId: "createOrder"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of table"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "body"
+        in: "body"
+        schema:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              item_id:
+                type: "number"
+                format: "int64"
+              quantity:
+                type: "number"
+                format: "int64"
+      responses:
+        "201":
+          description: "success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Order"
+        "400":
+          description: "invalid"
+  /table/{tableId}/order/{orderId}:
+    patch:
+      tags:
+      - "order"
+      summary: "Update order"
+      description: ""
+      operationId: "updateOrder"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "tableId"
+        in: "path"
+        description: "ID of table"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "orderId"
+        in: "path"
+        description: "ID of order"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "body"
+        in: "body"
+        schema:
+          type: "object"
+          properties:
+            status_id:
+              type: "integer"
+              format: "int64"
+      responses:
+        "201":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Order"
+        "400":
+          description: "invalid"
+definitions:
+  Bill:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      table_id:
+        type: "integer"
+        format: "int64"
+      amount:
+        type: "integer"
+        format: "int64"
+      created_at:
+        type: "string"
+        format: "date-time"
+  Item:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      category_id:
+        type: "integer"
+        format: "int64"
+      subcategory_id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      price:
+        type: "integer"
+        format: "int64"
+  Order:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      table_id:
+        type: "integer"
+        format: "int64"
+      staff_id:
+        type: "integer"
+        format: "int64"
+      quantity:
+        type: "integer"
+        format: "int64"
+      createdAt:
+        type: "string"
+        format: "date-time"
+      item:
+        $ref: "#/definitions/Item"
+      status:
+        $ref: "#/definitions/Status"
+  Room:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+  Status:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      status:
+        type: "string"
+  Table:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      is_reserved:
+        type: "boolean"
+      is_started:
+        type: "boolean"
+      is_ended:
+        type: "boolean"
+      start_at:
+        type: "string"
+        format: "date-time"
+      end_at:
+        type: "string"
+        format: "date-time"
+      amount:
+        type: "integer"
+        format: "int64"
+      bill_id:
+        type: "integer"
+        format: "int64"
+      room:
+        $ref: "#/definitions/Room"
+      orders:
+        type: "array"
+        items:
+          $ref: "#/definitions/Order"
