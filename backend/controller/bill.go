@@ -8,6 +8,7 @@ import (
 
 	"github.com/jmoiron/sqlx"
 	"github.com/tarao1006/kakure-handy/httputil"
+	"github.com/tarao1006/kakure-handy/model"
 	"github.com/tarao1006/kakure-handy/repository"
 	"github.com/tarao1006/kakure-handy/service"
 )
@@ -69,10 +70,12 @@ func (b *Bill) Delete(_ http.ResponseWriter, r *http.Request) (int, interface{},
 	}
 
 	billService := service.NewBill(b.db)
-	if err := billService.Delete(tableID); err != nil {
-		if err.Error() == "invalid table id" {
-			return http.StatusBadRequest, nil, err
-		}
+	deleteErr := billService.Delete(tableID)
+	if e, ok := deleteErr.(model.TableAlreadyEndedError); ok {
+		return http.StatusBadRequest, nil, e
+	} else if e, ok := deleteErr.(model.BillDoesNotExistError); ok {
+		return http.StatusBadRequest, nil, e
+	} else if deleteErr != nil {
 		return http.StatusInternalServerError, nil, err
 	}
 

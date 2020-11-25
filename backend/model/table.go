@@ -58,7 +58,7 @@ type BillDoesNotExistError struct {
 }
 
 func (e BillDoesNotExistError) Error() string {
-	return "bill does not exist"
+	return fmt.Sprintf("table id %d have not paid a bill yet", e.TableID)
 }
 
 func ConvertToTable(table TableDTO, orders []Order) Table {

@@ -25,7 +25,7 @@ func (b *Bill) Create(tableID int64, amount int64) (*model.Bill, error) {
 		return nil, err
 	}
 	if bill != nil {
-		return nil, errors.New("invalid table id")
+		return nil, model.BillAlreadyExistError{TableID: tableID}
 	}
 
 	var createdID int64
@@ -57,7 +57,7 @@ func (b *Bill) Delete(tableID int64) error {
 	bill, err := repository.FindBillByTableID(b.db, tableID)
 	if err != nil {
 		if err.Error() == "sql: no rows in result set" {
-			return errors.New("invalid table id")
+			return model.BillDoesNotExistError{TableID: tableID}
 		}
 		return err
 	}
@@ -67,7 +67,7 @@ func (b *Bill) Delete(tableID int64) error {
 		return err
 	}
 	if table.IsEnded {
-		return errors.New("invalid table id")
+		return model.TableAlreadyEndedError{TableID: tableID}
 	}
 
 	if err := dbutil.TXHandler(b.db, func(tx *sqlx.Tx) error {
