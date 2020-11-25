@@ -45,9 +45,7 @@ export const createTable = async (idToken: string, roomId: number): Promise<Tabl
       Authorization: `Bearer ${idToken}`
     }),
     credentials: "same-origin",
-    body: JSON.stringify({
-      "room_id": roomId
-    })
+    body: JSON.stringify({"room_id": roomId})
   })
 
   return base.ToJson<TableDTO>(res);
