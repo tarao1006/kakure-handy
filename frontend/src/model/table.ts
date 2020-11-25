@@ -1,7 +1,8 @@
+import { TransferWithinAStation } from '@material-ui/icons';
 import { Order, OrderDTO, convertToOrders } from './order';
 import { Room } from './room';
 
-export interface Table {
+export class Table {
   id: number;
   isReserved: boolean;
   isStarted: boolean;
@@ -11,7 +12,35 @@ export interface Table {
   amount: number;
   billId: number;
   room: Room;
-  orders: Order[]
+  orders: Order[];
+
+  constructor(
+    id: number,
+    isReserved: boolean,
+    isStarted: boolean,
+    isEnded: boolean,
+    startAt: Date,
+    endAt: Date,
+    amount: number,
+    billId: number,
+    room: Room,
+    orders: Order[]
+  ) {
+    this.id = id;
+    this.isReserved = isReserved;
+    this.isStarted = isStarted;
+    this.isEnded = isEnded;
+    this.startAt = startAt;
+    this.endAt = endAt;
+    this.amount = amount;
+    this.billId = billId;
+    this.room = room;
+    this.orders = orders;
+  }
+
+  validBillExists = (): boolean => {
+    return this.billId !== 0;
+  }
 }
 
 export interface TableDTO {
@@ -28,18 +57,18 @@ export interface TableDTO {
 }
 
 export const convertToTable = (table: TableDTO): Table => {
-  return {
-    id: table.id,
-    isReserved: table.is_reserved,
-    isStarted: table.is_started,
-    isEnded: table.is_ended,
-    startAt: new Date(table.start_at),
-    endAt: new Date(table.end_at),
-    amount: table.amount,
-    billId: table.bill_id,
-    room: table.room,
-    orders: convertToOrders(table.orders),
-  }
+  return new Table(
+    table.id,
+    table.is_reserved,
+    table.is_started,
+    table.is_ended,
+    new Date(table.start_at),
+    new Date(table.end_at),
+    table.amount,
+    table.bill_id,
+    table.room,
+    convertToOrders(table.orders),
+  )
 }
 
 export const convertToTables = (tables: TableDTO[]) => {

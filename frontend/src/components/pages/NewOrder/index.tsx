@@ -5,8 +5,8 @@ import { Loading } from '@molecules';
 import NewOrderStepper from './Stepper';
 import useItems from '../../../hooks/useItems';
 import useTables from '../../../hooks/useTables';
-import { convertToItems, convertToTables } from '../../../model';
-import { getTables, getItems, createOrder } from '../../../api';
+import { convertToItems, convertToTables } from '@model';
+import { getTables, getItems, createOrder } from '@api';
 
 export const NewOrder = () => {
   const { currentUser } = React.useContext(AuthContext);
@@ -24,7 +24,8 @@ export const NewOrder = () => {
       if (!cleanedUp && currentUser) {
         const newToken = await currentUser.getIdToken();
         const newTables = convertToTables(await getTables(newToken)).filter(table => !table.isEnded);
-        const newItems = convertToItems(await getItems(newToken));
+        const res = await getItems(newToken);
+        const newItems = convertToItems(res);
         setToken(newToken);
         initializeTable(newTables);
         initializeItem(newItems);
@@ -51,7 +52,7 @@ export const NewOrder = () => {
     if (currentUser) {
       setIsLoading(true);
       const res = await createOrder(token, targetTable.id, targetItems);
-      if (res === 201) {
+      if (res.length !== 0) {
         history.push('/order-success');
         resetTable();
       } else {

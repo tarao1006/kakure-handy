@@ -6,8 +6,14 @@ import { getTables } from '../../../api/table'
 import { Table as TableModel, convertToTables } from '../../../model';
 import { convertTimeToHM } from '../../../utils';
 import { Loading } from '@molecules'
+import { Table } from '@model';
 
-const ListTableLink = ({table, handleClick}) => {
+interface ListTableLinkProps {
+  table: Table;
+  handleClick: (id: number) => void;
+}
+
+const ListTableLink = ({table, handleClick}: ListTableLinkProps): JSX.Element => {
   const [date, setDate] = React.useState<Date>(new Date());
 
   React.useEffect(() => {
@@ -25,7 +31,7 @@ const ListTableLink = ({table, handleClick}) => {
 
   return (
     <ListItem button component="a" onClick={handleLink}>
-      <ListItemText primary={table.roomName} secondary={`${convertTimeToHM(table.startAt, date)}経過`} />
+      <ListItemText primary={table.room.name} secondary={`${convertTimeToHM(table.startAt, date)}経過`} />
     </ListItem>
   )
 }

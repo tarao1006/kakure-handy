@@ -22,7 +22,7 @@ import {
 import { Loading } from '@molecules';
 import { AuthContext } from '../../../contexts/auth';
 import { getTable, exitTable, createBill, deleteBill, updateOrder } from '@api';
-import { Table as TableModel, convertToTable, OrderDetail } from '../../../model';
+import { Table as TableModel, convertToTable, Order } from '@model';
 import { convertTimeToHM } from '../../../utils';
 import { ModalListItem } from './ModalListItem';
 import { ConfirmationDialog } from './ConfirmationDialog';
@@ -50,9 +50,9 @@ export const TableDetail = () => {
   const { currentUser } = React.useContext(AuthContext);
   const { tableId } = useParams<TableParams>();
   const [table, setTable] = React.useState<TableModel | undefined>();
-  const [orderedOrder, setOrderedOrder] = React.useState<OrderDetail[]>([]);
-  const [servedOrder, setServedOrder] = React.useState<OrderDetail[]>([]);
-  const [cancelledOrder, setCancelledOrder] = React.useState<OrderDetail[]>([]);
+  const [orderedOrder, setOrderedOrder] = React.useState<Order[]>([]);
+  const [servedOrder, setServedOrder] = React.useState<Order[]>([]);
+  const [cancelledOrder, setCancelledOrder] = React.useState<Order[]>([]);
   const [orderedOpen, setOrderedOpen] = React.useState<boolean>(false);
   const [servedOpen, setServedOpen] = React.useState<boolean>(false);
   const [cancelledOpen, setCancelledOpen] = React.useState<boolean>(false);
@@ -93,18 +93,18 @@ export const TableDetail = () => {
     const t = convertToTable(res);
     setTable(t);
 
-    let ordered: OrderDetail[] = [];
-    let served: OrderDetail[] = [];
-    let cancelled: OrderDetail[] = [];
-    t.orders.forEach(order => order.details.forEach(detail => {
-      if (detail.status === "ordered") {
-        ordered.push(detail);
-      } else if (detail.status === "served") {
-        served.push(detail);
-      } else if (detail.status === "cancelled") {
-        cancelled.push(detail);
+    let ordered: Order[] = [];
+    let served: Order[] = [];
+    let cancelled: Order[] = [];
+    t.orders.forEach(order => {
+      if (order.status.status === "ordered") {
+        ordered.push(order);
+      } else if (order.status.status === "served") {
+        served.push(order);
+      } else if (order.status.status === "cancelled") {
+        cancelled.push(order);
       }
-    }))
+    })
     setOrderedOrder(ordered);
     setServedOrder(served);
     setCancelledOrder(cancelled);
@@ -144,7 +144,7 @@ export const TableDetail = () => {
 
     if (ok) {
       const token = await currentUser.getIdToken();
-      await deleteBill(token, tableId, `${table.latestBillId}`);
+      await deleteBill(token, tableId, `${table.billId}`);
       await updateTable(token);
 
       setSnackBarOpen(true);
@@ -247,7 +247,7 @@ export const TableDetail = () => {
                 部屋
               </TableCell>
               <TableCell align="left">
-                {table.roomName}
+                {table.room.name}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -272,7 +272,7 @@ export const TableDetail = () => {
           color="primary"
           variant="outlined"
           onClick={confirmCreateBill}
-          disabled={table.validBillExists}
+          disabled={table.validBillExists()}
           className={classes.operationButton}
         >
           会計
@@ -281,7 +281,7 @@ export const TableDetail = () => {
           color="secondary"
           variant="outlined"
           onClick={confirmDeleteBill}
-          disabled={!table.validBillExists || table.isEnded}
+          disabled={!table.validBillExists() || table.isEnded}
           className={classes.operationButton}
         >
           会計取消
@@ -290,7 +290,7 @@ export const TableDetail = () => {
           color="primary" 
           variant="contained"
           onClick={confirmExit}
-          disabled={!table.validBillExists || table.isEnded}
+          disabled={!table.validBillExists() || table.isEnded}
           className={classes.operationButton}
         >
           退店
@@ -306,11 +306,11 @@ export const TableDetail = () => {
             <List className={classes.root}>
               {
                 orderedOrder.map(
-                  detail => (
+                  order => (
                     <ModalListItem
                       disabled={disabledDialogButtons}
-                      key={`${detail.id}`}
-                      detail={detail}
+                      key={`${order.id}`}
+                      order={order}
                       handleServed={handleServed}
                       handleCancel={handleCancel}
                       handleOrdered={handleOrdered}
@@ -330,11 +330,11 @@ export const TableDetail = () => {
             <List className={classes.root} disablePadding>
             {
                 servedOrder.map(
-                  detail => (
+                  order => (
                     <ModalListItem
                       disabled={disabledDialogButtons}
-                      key={`${detail.id}`}
-                      detail={detail}
+                      key={`${order.id}`}
+                      order={order}
                       handleServed={handleServed}
                       handleCancel={handleCancel}
                       handleOrdered={handleOrdered}
@@ -354,11 +354,11 @@ export const TableDetail = () => {
             <List className={classes.root} disablePadding>
             {
                 cancelledOrder.map(
-                  detail => (
+                  order => (
                     <ModalListItem
                       disabled={disabledDialogButtons}
-                      key={`${detail.id}`}
-                      detail={detail}
+                      key={`${order.id}`}
+                      order={order}
                       handleServed={handleServed}
                       handleCancel={handleCancel}
                       handleOrdered={handleOrdered}

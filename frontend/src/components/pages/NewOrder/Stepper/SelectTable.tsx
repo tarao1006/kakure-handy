@@ -36,7 +36,7 @@ export const SelectTable: React.FC<{}> = () => {
               key={table.id}
               value={table.id}
               control={<Radio color="primary" />}
-              label={table.roomName}
+              label={table.room.name}
             />
           ))
         }

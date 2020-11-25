@@ -24,7 +24,7 @@ export const Confirmation: React.FC<{}> = () => {
         テーブル
       </div>
       <Typography component='h1' variant='h5' style={{textAlign: 'center'}}>
-        {targetTable.roomName}
+        {targetTable.room.name}
       </Typography>
       <div>
         メニュー

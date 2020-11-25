@@ -2,7 +2,6 @@ package repository
 
 import (
 	"database/sql"
-	"log"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/tarao1006/kakure-handy/model"
@@ -13,7 +12,6 @@ func AllTable(db *sqlx.DB) ([]model.Table, error) {
 	if err := db.Select(&tables, `
 		SELECT id, is_ended, is_started, room_id, room_name, amount, bill_id, start_at, end_at FROM table_model
 	`); err != nil {
-		log.Print(err)
 		return nil, err
 	}
 
@@ -35,7 +33,6 @@ func FindTableByID(db *sqlx.DB, ID int64) (*model.Table, error) {
 	if err := db.Get(&table, `
 		SELECT id, is_ended, is_started, room_id, room_name, amount, bill_id, start_at, end_at FROM table_model WHERE id = ?
 	`, ID); err != nil {
-		log.Print(err)
 		return nil, err
 	}
 

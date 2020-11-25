@@ -70,6 +70,7 @@ func ConvertToTable(table TableDTO, orders []Order) Table {
 		StartAt:    table.StartAt,
 		EndAt:      table.EndAt,
 		Amount:     table.Amount,
+		BillID:     table.BillID,
 		Room: Room{
 			ID:   table.RoomID,
 			Name: table.RoomName,

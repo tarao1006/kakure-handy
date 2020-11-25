@@ -1,7 +1,7 @@
 import * as base from './base';
-import { Item } from '@model';
+import { ItemDTO } from '@model';
 
-export const getItems = async (idToken: string): Promise<Item[]> => {
+export const getItems = async (idToken: string): Promise<ItemDTO[]> => {
   const res = await fetch(`${base.BACKEND_URL}/item`, {
     method: "GET",
     headers: new Headers({
@@ -10,5 +10,5 @@ export const getItems = async (idToken: string): Promise<Item[]> => {
     credentials: "same-origin",
   });
 
-  return base.ToJson<Item[]>(res);
+  return base.ToJson<ItemDTO[]>(res);
 }

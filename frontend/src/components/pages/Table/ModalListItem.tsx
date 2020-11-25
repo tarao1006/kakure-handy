@@ -16,7 +16,7 @@ import {
   Typography,
   CloseIcon,
 } from '@atoms';
-import { OrderDetail } from '../../../model';
+import { Order } from '@model';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,13 +47,19 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface ModalListItemProps {
   disabled: boolean;
-  detail: OrderDetail;
+  order: Order;
   handleServed: (id: number) => Promise<any>;
   handleCancel: (id: number) => Promise<any>;
   handleOrdered: (id: number) => Promise<any>;
 }
 
-export const ModalListItem: React.FC<ModalListItemProps> = ({disabled, detail, handleServed, handleCancel, handleOrdered}) => {
+export const ModalListItem = ({
+  disabled,
+  order,
+  handleServed,
+  handleCancel,
+  handleOrdered
+}: ModalListItemProps): JSX.Element => {
   const classes = useStyles();
   const [open, setOpen] = React.useState<boolean>(false);
   const icons = {
@@ -63,16 +69,16 @@ export const ModalListItem: React.FC<ModalListItemProps> = ({disabled, detail, h
   }
 
   const disables = {
-    "ordered": detail.status === "served" || detail.status === "ordered",
-    "served": detail.status === "served" || detail.status === "cancelled",
-    "cancelled": detail.status === "served" || detail.status === "cancelled"
+    "ordered": order.status.status === "served" || order.status.status === "ordered",
+    "served": order.status.status === "served" || order.status.status === "cancelled",
+    "cancelled": order.status.status === "served" || order.status.status === "cancelled"
   }
 
   const topics = {
-    "名前": detail.itemName,
-    "注文時刻": detail.createdAt.toLocaleTimeString(),
-    "個数": detail.quantity,
-    "状態": detail.status,
+    "名前": order.item.name,
+    "注文時刻": order.createdAt.toLocaleTimeString(),
+    "個数": order.quantity,
+    "状態": order.status.status,
   }
 
   const handleOpen = () => {
@@ -85,7 +91,7 @@ export const ModalListItem: React.FC<ModalListItemProps> = ({disabled, detail, h
 
   const ServedButton = () => {
     const handleClick = async () => {
-      await handleServed(detail.id);
+      await handleServed(order.id);
     }
 
     return (
@@ -97,7 +103,7 @@ export const ModalListItem: React.FC<ModalListItemProps> = ({disabled, detail, h
 
   const CancelButton = () => {
     const handleClick = async () => {
-      await handleCancel(detail.id);
+      await handleCancel(order.id);
     }
 
     return (
@@ -109,7 +115,7 @@ export const ModalListItem: React.FC<ModalListItemProps> = ({disabled, detail, h
 
   const OrderedButton = () => {
     const handleClick = async () => {
-      await handleOrdered(detail.id);
+      await handleOrdered(order.id);
     }
 
     return (
@@ -123,11 +129,11 @@ export const ModalListItem: React.FC<ModalListItemProps> = ({disabled, detail, h
     <>
       <ListItem button component="a" onClick={handleOpen}>
         <ListItemIcon>
-          {icons[detail.status]}
+          {icons[order.status.status]}
         </ListItemIcon>
         <ListItemText
-          primary={detail.itemName}
-          secondary={`${detail.createdAt.toLocaleTimeString()} ${detail.quantity}個`}
+          primary={order.item.name}
+          secondary={`${order.createdAt.toLocaleTimeString()} ${order.quantity}個`}
           primaryTypographyProps={{ variant: "body2" }}
         />
       </ListItem>

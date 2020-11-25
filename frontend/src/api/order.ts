@@ -13,7 +13,7 @@ export const createOrder = async (idToken: string, tableId: number, items: Item[
       Authorization: `Bearer ${idToken}`
     }),
     credentials: 'same-origin',
-    body: JSON.stringify({details})
+    body: JSON.stringify(details)
   });
 
   return base.ToJson<Item[]>(res);
