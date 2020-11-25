@@ -6,7 +6,6 @@ import (
 	"github.com/tarao1006/kakure-handy/httputil"
 )
 
-// AppHandler has h to handle response.
 type AppHandler struct {
 	h func(http.ResponseWriter, *http.Request) (int, interface{}, error)
 }
@@ -18,5 +17,4 @@ func (a AppHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	httputil.RespondJson(w, status, res)
-	return
 }

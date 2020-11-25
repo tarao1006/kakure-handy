@@ -68,13 +68,8 @@ func (b *Bill) Delete(_ http.ResponseWriter, r *http.Request) (int, interface{},
 		return http.StatusBadRequest, nil, errors.New("required parameter is missing")
 	}
 
-	billID, err := httputil.ExtractID(mux.Vars(r), "bill_id")
-	if err != nil {
-		return http.StatusBadRequest, nil, errors.New("required parameter is missing")
-	}
-
 	billService := service.NewBill(b.db)
-	if err := billService.Delete(tableID, billID); err != nil {
+	if err := billService.Delete(tableID); err != nil {
 		if err.Error() == "invalid table id" {
 			return http.StatusBadRequest, nil, err
 		}

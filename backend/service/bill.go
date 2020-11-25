@@ -21,7 +21,7 @@ func NewBill(db *sqlx.DB) *Bill {
 // Create は会計情報を作成する。
 func (b *Bill) Create(tableID int64, amount int64) (*model.Bill, error) {
 	bill, err := repository.FindBillByTableID(b.db, tableID)
-	if err != nil {
+	if err != nil && err.Error() != "sql: no rows in result set" {
 		return nil, err
 	}
 	if bill != nil {
@@ -53,16 +53,25 @@ func (b *Bill) Create(tableID int64, amount int64) (*model.Bill, error) {
 }
 
 // Delete は会計情報を削除する。
-func (b *Bill) Delete(tableID int64, billID int64) error {
-	if _, err := repository.FindBillByTableID(b.db, tableID); err != nil {
+func (b *Bill) Delete(tableID int64) error {
+	bill, err := repository.FindBillByTableID(b.db, tableID)
+	if err != nil {
 		if err.Error() == "sql: no rows in result set" {
 			return errors.New("invalid table id")
 		}
 		return err
 	}
 
+	table, err := repository.FindTableByID(b.db, tableID)
+	if err != nil {
+		return err
+	}
+	if table.IsEnded {
+		return errors.New("invalid table id")
+	}
+
 	if err := dbutil.TXHandler(b.db, func(tx *sqlx.Tx) error {
-		if _, err := repository.DeleteBill(tx, billID); err != nil {
+		if _, err := repository.DeleteBill(tx, bill.ID); err != nil {
 			return err
 		}
 		return nil

@@ -24,20 +24,7 @@ func AllTable(db *sqlx.DB) ([]model.Table, error) {
 			return nil, err
 		}
 
-		room := model.Room{
-			ID:   table.RoomID,
-			Name: table.RoomName,
-		}
-
-		res = append(res, model.Table{
-			ID:      table.ID,
-			IsEnded: table.IsEnded,
-			StartAt: table.StartAt,
-			EndAt:   table.EndAt,
-			Amount:  table.Amount,
-			Room:    room,
-			Orders:  orders,
-		})
+		res = append(res, model.ConvertToTable(table, orders))
 	}
 
 	return res, nil
@@ -57,21 +44,7 @@ func FindTableByID(db *sqlx.DB, ID int64) (*model.Table, error) {
 		return nil, err
 	}
 
-	room := model.Room{
-		ID:   table.RoomID,
-		Name: table.RoomName,
-	}
-
-	res := model.Table{
-		ID:      table.ID,
-		IsEnded: table.IsEnded,
-		StartAt: table.StartAt,
-		EndAt:   table.EndAt,
-		Amount:  table.Amount,
-		Room:    room,
-		Orders:  orders,
-	}
-
+	res := model.ConvertToTable(table, orders)
 	return &res, nil
 }
 
@@ -91,7 +64,7 @@ func EndTable(db *sqlx.Tx, ID int64) (result sql.Result, err error) {
 
 // CreateTable create new dinner_table record.
 func CreateTable(db *sqlx.Tx, params *model.TableParam) (result sql.Result, err error) {
-	stmt, err := db.Prepare("INSERT INTO dinner_table (room_id) VALUES (?)")
+	stmt, err := db.Prepare("INSERT INTO dinner_table (room_id, person_count) VALUES (?,?)")
 	if err != nil {
 		return nil, err
 	}
@@ -101,5 +74,5 @@ func CreateTable(db *sqlx.Tx, params *model.TableParam) (result sql.Result, err 
 		}
 	}()
 
-	return stmt.Exec(params.RoomID)
+	return stmt.Exec(params.RoomID, params.PersonCount)
 }

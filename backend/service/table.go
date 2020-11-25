@@ -68,14 +68,11 @@ func (t *Table) End(ID int64) (*model.Table, error) {
 		return nil, model.TableAlreadyEndedError{TableID: ID}
 	}
 
-	bill, err := repository.FindBillByTableID(t.db, ID)
-
-	if err != nil {
+	if _, err := repository.FindBillByTableID(t.db, ID); err != nil {
+		if err.Error() == "sql: no rows in result set" {
+			return nil, model.BillDoesNotExistError{TableID: ID}
+		}
 		return nil, err
-	}
-
-	if bill == nil {
-		return nil, model.BillDoesNotExistError{TableID: ID}
 	}
 
 	if err := dbutil.TXHandler(t.db, func(tx *sqlx.Tx) error {
