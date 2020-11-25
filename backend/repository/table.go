@@ -11,7 +11,7 @@ import (
 func AllTable(db *sqlx.DB) ([]model.Table, error) {
 	tables := make([]model.TableDTO, 0)
 	if err := db.Select(&tables, `
-		SELECT id, is_ended, room_id, room_name, amount, bill_id, start_at, end_at FROM table_model
+		SELECT id, is_ended, is_started, room_id, room_name, amount, bill_id, start_at, end_at FROM table_model
 	`); err != nil {
 		log.Print(err)
 		return nil, err
@@ -46,7 +46,7 @@ func AllTable(db *sqlx.DB) ([]model.Table, error) {
 func FindTableByID(db *sqlx.DB, ID int64) (*model.Table, error) {
 	table := model.TableDTO{}
 	if err := db.Get(&table, `
-		SELECT id, room_name, is_ended, start_at, end_at, amount, valid_bill_exists, latest_bill_id FROM table_model WHERE id = ?
+		SELECT id, is_ended, is_started, room_id, room_name, amount, bill_id, start_at, end_at FROM table_model WHERE id = ?
 	`, ID); err != nil {
 		log.Print(err)
 		return nil, err

@@ -6,25 +6,27 @@ import (
 )
 
 type Table struct {
-	ID      int64     `json:"id"`
-	IsEnded bool      `json:"is_ended"`
-	StartAt time.Time `json:"start_at"`
-	EndAt   time.Time `json:"end_at"`
-	Amount  int64     `json:"amount"`
-	BillID  int64     `json:"bill_id"`
-	Room    Room      `json:"room"`
-	Orders  []Order   `json:"orders"`
+	ID        int64     `json:"id"`
+	IsStarted bool      `json:"is_started"`
+	IsEnded   bool      `json:"is_ended"`
+	StartAt   time.Time `json:"start_at"`
+	EndAt     time.Time `json:"end_at"`
+	Amount    int64     `json:"amount"`
+	BillID    int64     `json:"bill_id"`
+	Room      Room      `json:"room"`
+	Orders    []Order   `json:"orders"`
 }
 
 type TableDTO struct {
-	ID       int64     `db:"id"`
-	RoomID   int64     `db:"room_id"`
-	RoomName string    `db:"room_name"`
-	IsEnded  bool      `db:"is_ended"`
-	StartAt  time.Time `db:"start_at"`
-	EndAt    time.Time `db:"end_at"`
-	Amount   int64     `db:"amount"`
-	BillID   int64     `db:"bill_id"`
+	ID        int64     `db:"id"`
+	RoomID    int64     `db:"room_id"`
+	RoomName  string    `db:"room_name"`
+	IsStarted bool      `db:"is_started"`
+	IsEnded   bool      `db:"is_ended"`
+	StartAt   time.Time `db:"start_at"`
+	EndAt     time.Time `db:"end_at"`
+	Amount    int64     `db:"amount"`
+	BillID    int64     `db:"bill_id"`
 }
 
 type TableParam struct {

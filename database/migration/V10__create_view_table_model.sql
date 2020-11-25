@@ -51,6 +51,7 @@ SELECT
   dinner_table.id AS id,
   dinner_table.person_count,
   dinner_table.is_reserved,
+  dinner_table.is_started,
   dinner_table.is_ended,
   dinner_table.start_at,
   dinner_table.end_at,
