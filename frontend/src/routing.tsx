@@ -69,13 +69,8 @@ const Routing = () => {
       <Provider store={store}>
         <AuthProvider>
           <Header />
-          <Route
-            path="/"
-            exact
-            component={Top}
-          />
           <RedirectRoute
-            path='/tables'
+            path='/'
             exact
             Child={Tables}
           />

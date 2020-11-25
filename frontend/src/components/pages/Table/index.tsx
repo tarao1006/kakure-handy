@@ -166,7 +166,7 @@ export const TableDetail = () => {
   }
 
   const handleBack = () => {
-    history.push('/tables');
+    history.push('/');
   }
 
   const handleServed = async (id: number) => {
