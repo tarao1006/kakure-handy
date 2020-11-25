@@ -18,7 +18,7 @@ export class Item {
     this.name = name;
     this.price = price;
     this.count = 0;
-  }
+  };
 
   isFood = (): boolean => {
     return this.categoryId === FOOD_CATEGORY_ID;
@@ -29,7 +29,7 @@ export class Item {
   };
 }
 
-interface itemDTO {
+export interface ItemDTO {
   id: number;
   category_id: number;
   subcategory_id: number;
@@ -37,16 +37,16 @@ interface itemDTO {
   price: number;
 }
 
-export const convertToItem = (object: itemDTO) => {
+export const convertToItem = (item: ItemDTO): Item => {
   return new Item(
-    object.id,
-    object.category_id,
-    object.subcategory_id,
-    object.name,
-    object.price
-  )
+    item.id,
+    item.category_id,
+    item.subcategory_id,
+    item.name,
+    item.price
+  );
 }
 
-export const convertToItems = (objects: itemDTO[]) => {
-  return objects.map(object => convertToItem(object))
+export const convertToItems = (items: ItemDTO[]): Item[] => {
+  return items.map(item => convertToItem(item));
 }

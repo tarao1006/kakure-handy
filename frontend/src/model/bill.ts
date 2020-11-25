@@ -5,14 +5,14 @@ export interface Bill {
   createdAt: Date;
 }
 
-interface billDTO {
+export interface BillDTO {
   id: number;
   table_id: number;
   amount: number;
   created_at: string;
 }
 
-export const convertToBill = (object: billDTO): Bill => {
+export const convertToBill = (object: BillDTO): Bill => {
   return {
     id: object.id,
     tableId: object.table_id,

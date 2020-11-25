@@ -1,48 +1,24 @@
-export interface OrderDetail {
-  id: number;
-  orderId: number;
-  itemName: string;
-  price: number;
-  quantity: number;
-  status: string;
-  createdAt: Date;
-}
+import { Item, ItemDTO, convertToItem } from './item';
+import { Status } from './status';
 
 export interface Order {
   id: number;
   tableId: number;
   staffId: number;
-  createdAt: Date;
-  details: OrderDetail[];
-}
-
-export interface OrderDetailDTO {
-  id: number;
-  order_id: number;
-  item_name: string;
-  price: number;
   quantity: number;
-  status: string;
+  createdAt: Date;
+  item: Item;
+  status: Status;
 }
 
 export interface OrderDTO {
   id: number;
   table_id: number;
   staff_id: number;
+  quantity: number;
   created_at: string;
-  details: OrderDetailDTO[];
-}
-
-export const convertToOrderDetail = (object: OrderDetailDTO, date: Date): OrderDetail => {
-  return {
-    id: object.id,
-    orderId: object.order_id,
-    itemName: object.item_name,
-    price: object.price,
-    quantity: object.quantity,
-    status: object.status,
-    createdAt: date,
-  }
+  item: ItemDTO;
+  status: Status;
 }
 
 export const convertToOrder = (object: OrderDTO): Order => {
@@ -50,7 +26,13 @@ export const convertToOrder = (object: OrderDTO): Order => {
     id: object.id,
     tableId: object.table_id,
     staffId: object.staff_id,
+    quantity: object.quantity,
     createdAt: new Date(object.created_at),
-    details: object.details.map(detail => convertToOrderDetail(detail, new Date(object.created_at))),
+    item: convertToItem(object.item),
+    status: object.status
   }
+}
+
+export const convertToOrders = (orders: OrderDTO[]): Order[] => {
+  return orders.map(order => convertToOrder(order));
 }
