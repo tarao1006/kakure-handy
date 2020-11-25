@@ -26,7 +26,7 @@ func FindOrdersByTableID(db *sqlx.DB, tableID int64) ([]model.Order, error) {
 func FindOrderByID(db *sqlx.DB, ID int64) (*model.Order, error) {
 	order := model.OrderDTO{}
 	if err := db.Get(&order, `
-		SELECT id, table_id, staff_id, created_at, order_detail_id, order_id, item_name, price, quantity, status FROM order_model WHERE id = ?
+		SELECT id, table_id, staff_id, quantity, created_at, item_id, category_id, subcategory_id, item_name, price, status_id, status FROM order_model WHERE id = ?
 	`, ID); err != nil {
 		return nil, err
 	}

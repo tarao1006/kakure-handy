@@ -69,16 +69,25 @@ func (o *Order) Update(param *model.OrderParam) (*model.Order, error) {
 		return nil, model.TableIsEndedError{TableID: param.TableID}
 	}
 
+	oldOrder, err := repository.FindOrderByID(o.db, param.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	if param.StatusID == 1 && (oldOrder.Status.ID == 1 || oldOrder.Status.ID == 2) {
+		return nil, errors.New("invalid operation")
+	} else if param.StatusID == 2 && (oldOrder.Status.ID == 2 || oldOrder.Status.ID == 3) {
+		return nil, errors.New("invalid operation")
+	} else if param.StatusID == 3 && (oldOrder.Status.ID == 2 || oldOrder.Status.ID == 3) {
+		return nil, errors.New("invalid operation")
+	}
+
 	if err := dbutil.TXHandler(o.db, func(tx *sqlx.Tx) error {
-		result, err := repository.CreateOrder(tx, param)
+
+		_, err := repository.UpdateOrder(tx, param.ID, param.StatusID)
 		if err != nil {
 			return err
 		}
-		id, err := result.LastInsertId()
-		if err != nil {
-			return err
-		}
-		param.ID = id
 
 		return err
 	}); err != nil {

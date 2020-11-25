@@ -34,6 +34,7 @@ type OrderParam struct {
 	ID       int64 `json:"id"`
 	TableID  int64
 	StaffID  int64
+	StatusID int64 `json:"status_id"`
 	ItemID   int64 `json:"item_id"`
 	Quantity int64 `json:"quantity"`
 }

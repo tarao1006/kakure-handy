@@ -81,6 +81,9 @@ func (a *Order) Update(_ http.ResponseWriter, r *http.Request) (int, interface{}
 	orderService := service.NewOrder(a.db)
 	orderDetail, err := orderService.Update(param)
 	if err != nil {
+		if err.Error() == "invalid operation" {
+			return http.StatusBadRequest, nil, err
+		}
 		return http.StatusInternalServerError, nil, err
 	}
 
