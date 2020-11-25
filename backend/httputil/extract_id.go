@@ -5,7 +5,6 @@ import (
 	"strconv"
 )
 
-// ExtractID returns ID type of int64 from url path parameter
 func ExtractID(vars map[string]string, key string) (int64, error) {
 	id, ok := vars[key]
 

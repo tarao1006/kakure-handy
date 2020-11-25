@@ -13,17 +13,14 @@ import (
 	"github.com/tarao1006/kakure-handy/service"
 )
 
-// Bill はデータベース操作用の struct でコントローラの役割を担う。
 type Bill struct {
 	db *sqlx.DB
 }
 
-// NewBill は Bill struct を作成する。
 func NewBill(db *sqlx.DB) *Bill {
 	return &Bill{db: db}
 }
 
-// Show は会計情報を取得する。
 func (b *Bill) Show(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
 	tableID, err := httputil.ExtractID(mux.Vars(r), "id")
 	if err != nil {
@@ -38,7 +35,6 @@ func (b *Bill) Show(_ http.ResponseWriter, r *http.Request) (int, interface{}, e
 	return http.StatusOK, bill, nil
 }
 
-// Create は会計情報を作成する。
 func (b *Bill) Create(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
 	tableID, err := httputil.ExtractID(mux.Vars(r), "id")
 	if err != nil {
@@ -62,7 +58,6 @@ func (b *Bill) Create(_ http.ResponseWriter, r *http.Request) (int, interface{},
 	return http.StatusCreated, res, nil
 }
 
-// Delete は会計情報を削除する。
 func (b *Bill) Delete(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
 	tableID, err := httputil.ExtractID(mux.Vars(r), "id")
 	if err != nil {

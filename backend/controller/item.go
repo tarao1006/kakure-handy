@@ -11,17 +11,14 @@ import (
 	"github.com/tarao1006/kakure-handy/service"
 )
 
-// Item is a struct to manipulate database.
 type Item struct {
 	db *sqlx.DB
 }
 
-// NewItem create new Bill.
 func NewItem(db *sqlx.DB) *Item {
 	return &Item{db: db}
 }
 
-// Index returns all items.
 func (i *Item) Index(_ http.ResponseWriter, _ *http.Request) (int, interface{}, error) {
 	items, err := repository.AllItems(i.db)
 	if err != nil {
@@ -31,7 +28,6 @@ func (i *Item) Index(_ http.ResponseWriter, _ *http.Request) (int, interface{}, 
 	return http.StatusOK, items, nil
 }
 
-// Create create new record.
 func (i *Item) Create(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
 	newItem := &model.Item{}
 

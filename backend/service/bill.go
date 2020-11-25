@@ -8,17 +8,14 @@ import (
 	"github.com/tarao1006/kakure-handy/repository"
 )
 
-// Bill はデータベースを操作する struct でアプリケーションサービスを担当する。
 type Bill struct {
 	db *sqlx.DB
 }
 
-// NewBill は Bill struct を作成する。
 func NewBill(db *sqlx.DB) *Bill {
 	return &Bill{db: db}
 }
 
-// Create は会計情報を作成する。
 func (b *Bill) Create(tableID int64, amount int64) (*model.Bill, error) {
 	bill, err := repository.FindBillByTableID(b.db, tableID)
 	if err != nil && err.Error() != "sql: no rows in result set" {
@@ -52,7 +49,6 @@ func (b *Bill) Create(tableID int64, amount int64) (*model.Bill, error) {
 	return res, nil
 }
 
-// Delete は会計情報を削除する。
 func (b *Bill) Delete(tableID int64) error {
 	bill, err := repository.FindBillByTableID(b.db, tableID)
 	if err != nil {

@@ -8,17 +8,14 @@ import (
 	"github.com/tarao1006/kakure-handy/repository"
 )
 
-// Item is a struct to manipulate database.
 type Item struct {
 	db *sqlx.DB
 }
 
-// NewItem create new Bill.
 func NewItem(db *sqlx.DB) *Item {
 	return &Item{db: db}
 }
 
-// Create create new item.
 func (i *Item) Create(item *model.Item) (*model.Item, error) {
 	if err := dbutil.TXHandler(i.db, func(tx *sqlx.Tx) error {
 		result, err := repository.CreateItem(tx, item)

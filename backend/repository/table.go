@@ -59,7 +59,6 @@ func EndTable(db *sqlx.Tx, ID int64) (result sql.Result, err error) {
 	return stmt.Exec(ID)
 }
 
-// CreateTable create new dinner_table record.
 func CreateTable(db *sqlx.Tx, params *model.TableParam) (result sql.Result, err error) {
 	stmt, err := db.Prepare("INSERT INTO dinner_table (room_id, person_count) VALUES (?,?)")
 	if err != nil {

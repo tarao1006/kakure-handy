@@ -17,19 +17,16 @@ import (
 	"github.com/tarao1006/kakure-handy/middleware"
 )
 
-// Server stores datebase information and routing.
 type Server struct {
 	db         *sqlx.DB
 	router     http.Handler
 	authClient *auth.Client
 }
 
-// NewServer returns a Server struct.
 func NewServer() *Server {
 	return &Server{}
 }
 
-// Init opens database connection.
 func (s *Server) Init(datasource string, keypath string) error {
 	authClient, err := firebase.InitAuthClient(keypath)
 	if err != nil {
@@ -47,7 +44,6 @@ func (s *Server) Init(datasource string, keypath string) error {
 	return nil
 }
 
-// Run starts listening.
 func (s *Server) Run(port int) {
 	log.Printf("Listening on port %d", port)
 	err := http.ListenAndServe(
@@ -59,7 +55,6 @@ func (s *Server) Run(port int) {
 	}
 }
 
-// Route returns router after defining endpoints.
 func (s *Server) Route() http.Handler {
 	tableController := controller.NewTable(s.db)
 	orderController := controller.NewOrder(s.db)
