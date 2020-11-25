@@ -10,7 +10,7 @@ export const createBill = async (idToken: string, tableId: string): Promise<Bill
     credentials: "same-origin",
   });
 
-  return base.ToJson(res);
+  return base.ToJson<Bill>(res);
 }
 
 export const deleteBill = async (idToken: string, tableId: string, billId: string): Promise<{}> => {
