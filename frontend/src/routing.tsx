@@ -18,7 +18,6 @@ import {
   OrderSuccess,
   TableDetail,
   Tables,
-  Top
 } from '@pages';
 
 interface RedirectRouteProps {

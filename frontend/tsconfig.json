@@ -21,7 +21,7 @@
       "@molecules": ["./src/components/molecules/index.tsx"],
       "@organisms": ["./src/components/organisms/index.tsx"],
       "@templates": ["./src/components/templates/index.tsx"],
-      "@pages": ["./src/components/pages/index.tsx"]
+      "@pages": ["./src/pages/index.tsx"]
     },
   },
   "include": [

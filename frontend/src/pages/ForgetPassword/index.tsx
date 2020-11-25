@@ -17,9 +17,9 @@ import {
 } from '@atoms';
 import MailIcon from '@material-ui/icons/MailOutlined';
 import CloseIcon from '@material-ui/icons/Close';
-import useStyles from '../../../hooks/useStyles';
+import useStyles from '../../hooks/useStyles';
 import { Copyright, Loading } from '@molecules';
-import { resetEmail } from '../../../modules/auth';
+import { resetEmail } from '../../modules/auth';
 
 const defaultEmailAddress = "user01@example.co";
 

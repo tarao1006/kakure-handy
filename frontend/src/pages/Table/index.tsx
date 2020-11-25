@@ -20,10 +20,10 @@ import {
   ExpandMore
 } from '@atoms';
 import { Loading } from '@molecules';
-import { AuthContext } from '../../../contexts/auth';
+import { AuthContext } from '../../contexts/auth';
 import { getTable, exitTable, createBill, deleteBill, updateOrder } from '@api';
 import { Table as TableModel, convertToTable, Order } from '@model';
-import { convertTimeToHM } from '../../../utils';
+import { convertTimeToHM } from '../../utils';
 import { ModalListItem } from './ModalListItem';
 import { ConfirmationDialog } from './ConfirmationDialog';
 

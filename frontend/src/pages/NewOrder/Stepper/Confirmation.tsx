@@ -6,8 +6,8 @@ import {
   Typography
 } from '@material-ui/core';
 import FoldedListItem from './FoldedListItem';
-import useItems from '../../../../hooks/useItems';
-import useTables from '../../../../hooks/useTables';
+import useItems from '../../../hooks/useItems';
+import useTables from '../../../hooks/useTables';
 import useStyles from './base';
 
 export const Confirmation: React.FC<{}> = () => {

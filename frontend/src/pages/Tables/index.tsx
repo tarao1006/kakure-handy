@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useHistory } from 'react-router';
 import { Container, List, ListItem, ListItemText } from '@atoms';
-import { AuthContext } from '../../../contexts/auth';
-import { getTables } from '../../../api/table'
-import { Table as TableModel, convertToTables } from '../../../model';
-import { convertTimeToHM } from '../../../utils';
+import { AuthContext } from '../../contexts/auth';
+import { getTables } from '../../api/table'
+import { Table as TableModel, convertToTables } from '../../model';
+import { convertTimeToHM } from '../../utils';
 import { Loading } from '@molecules'
 import { Table } from '@model';
 

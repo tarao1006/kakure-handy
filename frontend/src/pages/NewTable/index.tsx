@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import { AuthContext } from '../../../contexts/auth';
+import { AuthContext } from '../../contexts/auth';
 import {
   Button,
   Container,
