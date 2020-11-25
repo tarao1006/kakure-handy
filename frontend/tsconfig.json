@@ -14,6 +14,8 @@
     "baseUrl": "./",
     "paths": {
       "@dataset/*": ["./dataset/*"],
+      "@model": ["./src/model/index.ts"],
+      "@utils": ["./src/utils/index.ts"],
       "@api": ["./src/api/index.ts"],
       "@atoms": ["./src/components/atoms/index.tsx"],
       "@molecules": ["./src/components/molecules/index.tsx"],
