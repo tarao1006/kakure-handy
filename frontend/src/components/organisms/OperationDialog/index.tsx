@@ -1,7 +1,6 @@
 import React from 'react';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles'
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -9,9 +8,8 @@ import {
   IconButton,
   Typography
 } from '@atoms';
-import {
-  CloseIcon,
-} from '@icons';
+import { CloseIcon } from '@icons';
+import { OrderDialogContent, OrderDialogOperationButton } from '@molecules';
 import { Order } from '@model';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -23,24 +21,13 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.grey[500],
       padding: 0,
     },
-    topic: {
-      marginLeft: theme.spacing(2),
-      marginRight: theme.spacing(2),
-      marginBottom: theme.spacing(2),
-    },
-    topicValue: {
-      marginLeft: theme.spacing(2),
-      marginRight: theme.spacing(2),
-      textAlign: 'center',
-    },
     dialogButtons: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-    }
+    },
   })
 );
-
 
 interface OperationDialogProps {
   open: boolean;
@@ -69,49 +56,6 @@ export const OperationDialog = ({
     "cancelled": order.status.status === "served" || order.status.status === "cancelled"
   }
 
-  const topics = {
-    "名前": order.item.name,
-    "注文時刻": order.createdAt.toLocaleTimeString(),
-    "個数": order.quantity,
-    "状態": order.status.status,
-  }
-
-  const ServedButton = () => {
-    const handleClick = async () => {
-      await handleServed(order.id);
-    }
-
-    return (
-      <Button disabled={disabled || disables["served"]} color="primary" onClick={handleClick}>
-        提供済みにする
-      </Button>
-    )
-  }
-
-  const CancelButton = () => {
-    const handleClick = async () => {
-      await handleCancel(order.id);
-    }
-
-    return (
-      <Button disabled={disabled || disables["cancelled"]} color="primary" onClick={handleClick}>
-        キャンセルする
-      </Button>
-    )
-  }
-
-  const OrderedButton = () => {
-    const handleClick = async () => {
-      await handleOrdered(order.id);
-    }
-
-    return (
-      <Button disabled={disabled || disables["ordered"]} color="primary" onClick={handleClick}>
-        注文済みに戻す
-      </Button>
-    )
-  }
-
   return (
     <Dialog
       fullWidth
@@ -128,23 +72,30 @@ export const OperationDialog = ({
         </IconButton>
       </DialogTitle>
       <DialogContent dividers>
-        {
-          Object.entries(topics).map(topic => (
-            <div key={topic[0]}>
-              <Typography variant="body1">
-                {topic[0]}
-              </Typography>
-              <Typography variant="body1" className={classes.topicValue}>
-                {topic[1]}
-              </Typography>
-            </div>
-          ))
-        }
+        <OrderDialogContent topic="名前" value={order.item.name} />
+        <OrderDialogContent topic="注文時刻" value={order.createdAt.toLocaleTimeString()} />
+        <OrderDialogContent topic="個数" value={order.quantity} />
+        <OrderDialogContent topic="状態" value={order.status.status} />
       </DialogContent>
       <DialogActions className={classes.dialogButtons} disableSpacing={true}>
-        <ServedButton />
-        <CancelButton />
-        <OrderedButton />
+        <OrderDialogOperationButton
+          operation="提供済にする"
+          disabled={disabled || disables["served"]}
+          id={order.id}
+          onClick={handleServed}
+        />
+        <OrderDialogOperationButton
+          operation="キャンセルする"
+          disabled={disabled || disables["cancelled"]}
+          id={order.id}
+          onClick={handleCancel}
+        />
+        <OrderDialogOperationButton
+          operation="注文済に戻す"
+          disabled={disabled || disables["ordered"]}
+          id={order.id}
+          onClick={handleOrdered}
+        />
       </DialogActions>
     </Dialog>
   )

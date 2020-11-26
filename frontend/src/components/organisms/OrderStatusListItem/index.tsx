@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
-import {
-  Collapse,
-  List,
-  ListItem,
-  ListItemText,
-} from '@atoms';
-import {
-  ExpandLess,
-  ExpandMore
-} from '@icons';
+import { Collapse, ListItem, ListItemText } from '@atoms';
+import { ExpandLess, ExpandMore } from '@icons';
+import { OrderList } from '@organisms';
 import { Order } from '@model';
-import { OrderListItem } from '@organisms';
 
 interface OrderStatusListItemProps {
   status: string;
@@ -42,22 +34,12 @@ export const OrderStatusListItem = ({
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={open} unmountOnExit>
-          <List>
-            {
-              orders.map(
-                order => (
-                  <OrderListItem
-                    disabled={false}
-                    key={`${order.id}`}
-                    order={order}
-                    handleServed={handleServed}
-                    handleCancel={handleCancel}
-                    handleOrdered={handleOrdered}
-                  />
-                )
-              )
-            }
-          </List>
+          <OrderList
+            orders={orders}
+            handleServed={handleServed}
+            handleCancel={handleCancel}
+            handleOrdered={handleOrdered}
+          />
         </Collapse>
       </>
   )
