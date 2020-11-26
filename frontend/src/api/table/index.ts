@@ -38,7 +38,6 @@ export const exitTable = async (idToken: string, id: string): Promise<TableDTO> 
 }
 
 export const createTable = async (idToken: string, roomId: number): Promise<TableDTO> => {
-  console.log(typeof(roomId));
   const res = await fetch(`${base.BACKEND_URL}/table`, {
     method: "POST",
     headers: new Headers({
