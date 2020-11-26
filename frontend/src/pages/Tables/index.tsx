@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { AuthContext } from '../../contexts/auth';
+import { AuthContext } from '@contexts';
 import { getTables } from '@api'
 import { Loading } from '@molecules'
 import { TablesTemplate } from '@templates';
-import { Table as TableModel, convertToTables } from '@model';
+import { Table, convertToTables } from '@model';
 
 export const Tables = () => {
   const { currentUser } = React.useContext(AuthContext);
-  const [tables, setTables] = React.useState<TableModel[]>([]);
+  const [tables, setTables] = React.useState<Table[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   React.useEffect(() => {

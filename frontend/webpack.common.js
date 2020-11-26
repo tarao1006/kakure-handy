@@ -21,6 +21,7 @@ module.exports = {
       '@model': path.resolve(__dirname, './src/model/index.ts'),
       '@utils': path.resolve(__dirname, './src/utils/index.ts'),
       '@api': path.resolve(__dirname, './src/api/index.ts'),
+      '@contexts': path.resolve(__dirname, './src/contexts/index.tsx'),
       '@atoms$': path.resolve(__dirname, './src/components/atoms/index.tsx'),
       '@molecules$': path.resolve(__dirname, './src/components/molecules/index.tsx'),
       '@icons$': path.resolve(__dirname, './src/components/icons/index.tsx'),

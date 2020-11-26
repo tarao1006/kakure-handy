@@ -18,7 +18,7 @@ import {
   ExpandMore
 } from '@atoms';
 import { Loading } from '@molecules';
-import { AuthContext } from '../../contexts/auth';
+import { AuthContext, LayoutContext} from '@contexts';
 import { getTable, exitTable, createBill, deleteBill, updateOrder } from '@api';
 import { Table as TableModel, convertToTable, Order } from '@model';
 import { convertTimeToHM } from '../../utils';
@@ -46,6 +46,7 @@ interface TableParams {
 export const TableDetail = () => {
   const classes = useStyles();
   const { currentUser } = React.useContext(AuthContext);
+  const { headerTitle, setHeaderTitle } = React.useContext(LayoutContext);
   const { tableId } = useParams<TableParams>();
   const [table, setTable] = React.useState<TableModel | undefined>();
   const [orderedOrder, setOrderedOrder] = React.useState<Order[]>([]);
@@ -80,15 +81,11 @@ export const TableDetail = () => {
     return cleanUp;
   }, [currentUser])
 
-  React.useEffect(() =>{
-    if (table !== undefined) {
-      setIsLoading(false);
-    }
-  })
-
   const updateTable = async (token: string) => {
+    setIsLoading(true);
     const res = await getTable(token, tableId);
     const t = convertToTable(res);
+    setHeaderTitle(t.room.name);
     setTable(t);
 
     let ordered: Order[] = [];
@@ -110,6 +107,7 @@ export const TableDetail = () => {
     if (ordered.length !== 0) {
       setOrderedOpen(true);
     }
+    setIsLoading(false);
   }
 
   const confirmCreateBill = () => {

@@ -7,7 +7,7 @@ import { CssBaseline } from '@material-ui/core';
 import { AppBar, IconButton, Toolbar } from '@atoms';
 import { Navigation } from '@molecules';
 import { useHistory, useLocation } from 'react-router-dom';
-import { AuthContext } from '../../../contexts/auth';
+import { AuthContext, LayoutContext } from '@contexts';
 import { logout } from '../../../modules/auth';
 import { MenuIcon, KeyboardArrowLeftIcon } from '@icons';
 
@@ -21,8 +21,9 @@ const useStyles = makeStyles(() =>
   }),
 );
 
-export const Header: React.FC<{}> = () => {
+export const Header = (): JSX.Element => {
   const { currentUser } = React.useContext(AuthContext);
+  const { headerTitle, setHeaderTitle } = React.useContext(LayoutContext);
   const classes = useStyles();
   const [auth, setAuth] = React.useState<boolean>(!!currentUser);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -41,6 +42,7 @@ export const Header: React.FC<{}> = () => {
   }, [currentUser]);
 
   const handleClick = () => {
+    setHeaderTitle("");
     history.push('/');
   }
 
@@ -86,6 +88,7 @@ export const Header: React.FC<{}> = () => {
             : (
               <IconButton edge="start" color="inherit" onClick={handleClick}>
                 <KeyboardArrowLeftIcon />
+                {headerTitle}
               </IconButton>
             )
           }
