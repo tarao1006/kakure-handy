@@ -10,7 +10,7 @@ import (
 func AllTable(db *sqlx.DB) ([]model.Table, error) {
 	tables := make([]model.TableDTO, 0)
 	if err := db.Select(&tables, `
-		SELECT id, is_ended, is_started, room_id, room_name, amount, bill_id, start_at, end_at FROM table_model
+		SELECT id, is_ended, is_started, room_id, room_name, amount, bill_id, start_at, end_at FROM table_model ORDER BY room_id
 	`); err != nil {
 		return nil, err
 	}
