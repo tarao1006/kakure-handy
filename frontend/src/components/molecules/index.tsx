@@ -2,6 +2,8 @@ export { Copyright } from './Copyright';
 export { LinkListItem } from './LinkListItem';
 export { Loading } from './Loading';
 export { Navigation } from './Navigation';
+export { NewOrderOperationButton } from './NewOrderOperationButton';
+export { NewOrderStepper } from './NewOrderStepper';
 export { NewTableSelect } from './NewTableSelect';
 export { OperationSnackbar } from './OperationSnackbar';
 export { OrderDialogContent } from './OrderDialogContent';

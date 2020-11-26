@@ -27,6 +27,9 @@ export { default as MenuItem } from '@material-ui/core/MenuItem';
 export { default as NativeSelect } from '@material-ui/core/NativeSelect';
 export { default as Select } from '@material-ui/core/Select';
 export { default as Snackbar } from '@material-ui/core/Snackbar';
+export { default as Step } from '@material-ui/core/Step';
+export { default as StepLabel } from '@material-ui/core/StepLabel';
+export { default as Stepper } from '@material-ui/core/Stepper';
 export { default as Table } from '@material-ui/core/Table';
 export { default as TableBody } from '@material-ui/core/TableBody';
 export { default as TableCell } from '@material-ui/core/TableCell';
@@ -37,7 +40,7 @@ export { default as Toolbar } from '@material-ui/core/Toolbar';
 export { default as TextField, TextFieldProps } from '@material-ui/core/TextField';
 export { default as Typography } from '@material-ui/core/Typography';
 
-export  { default as AccountCircle} from '@material-ui/icons/AccountCircle';
+export { default as AccountCircle} from '@material-ui/icons/AccountCircle';
 export { default as Add } from '@material-ui/icons/Add';
 export { default as CloseIcon } from '@material-ui/icons/Close';
 export { default as ExpandLess } from '@material-ui/icons/ExpandLess';
