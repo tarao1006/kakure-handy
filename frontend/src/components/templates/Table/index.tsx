@@ -40,9 +40,6 @@ export const TableTemplate = ({
 
   const exitTable = async () => {
     await handleExitTable();
-    await handleUpdateTable();
-    setTopic('退店');
-    handleSnackBarOpen();
   }
 
   const handleServed = async (id: number) => {
