@@ -21,7 +21,7 @@ import { Loading } from '@molecules';
 import { AuthContext, LayoutContext} from '@contexts';
 import { getTable, exitTable, createBill, deleteBill, updateOrder } from '@api';
 import { Table as TableModel, convertToTable, Order } from '@model';
-import { convertTimeToHM } from '../../utils';
+import { convertTimeToHM } from '@utils';
 import { ModalListItem } from './ModalListItem';
 import { ConfirmationDialog } from './ConfirmationDialog';
 
@@ -75,10 +75,9 @@ export const TableDetail = () => {
       }
     }
     fetch();
-    const cleanUp = () => {
+    return () => {
       cleanedUp = true;
-    }
-    return cleanUp;
+    };
   }, [currentUser])
 
   const updateTable = async (token: string) => {

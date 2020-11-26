@@ -8,7 +8,7 @@ interface ILayoutContext {
   setHeaderTitle: (title: string) => void;
 }
 
-export const LayoutContext = createContext<ILayoutContext>({ headerTitle: "hoge", setHeaderTitle: (title: string) => {} });
+export const LayoutContext = createContext<ILayoutContext>({ headerTitle: "", setHeaderTitle: (title: string) => {} });
 
 export const LayoutProvider = ({ children }) => {
   const [headerTitle, setHeaderTitle] = useState<string>("");

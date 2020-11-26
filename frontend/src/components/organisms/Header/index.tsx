@@ -1,23 +1,23 @@
 import * as React from 'react';
-import {
-  createStyles,
-  makeStyles
-} from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
-import { AppBar, IconButton, Toolbar } from '@atoms';
-import { Navigation } from '@molecules';
 import { useHistory, useLocation } from 'react-router-dom';
-import { AuthContext, LayoutContext } from '@contexts';
-import { logout } from '../../../modules/auth';
+import { AppBar, IconButton, Toolbar, Typography } from '@atoms';
 import { MenuIcon, KeyboardArrowLeftIcon } from '@icons';
+import { Navigation } from '@molecules';
+import { AuthContext, LayoutContext } from '@contexts';
+import { logout } from '@modules';
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     invisibleSpace: {
       flexGrow: 1,
       flexShrink: 1,
       flexBasis: "auto",
     },
+    backButton: {
+      height: 64,
+    }
   }),
 );
 
@@ -59,15 +59,13 @@ export const Header = (): JSX.Element => {
     logout();
   }
 
-  const handleLogin = () => {
-    history.push('/login');
-  }
-
   const handleAddTable = () => {
+    setHeaderTitle("新規部屋");
     history.push('/new-table')
   }
 
   const handleAddOrder = () => {
+    setHeaderTitle("新規注文");
     history.push('/new-order')
   }
 
@@ -78,20 +76,10 @@ export const Header = (): JSX.Element => {
       <CssBaseline />
       <AppBar position="static">
         <Toolbar>
-          {
-            location.pathname === '/'
-            ? (
-              <IconButton edge="start" color="inherit" onClick={handleClick}>
-                <MenuIcon />
-              </IconButton>
-            )
-            : (
-              <IconButton edge="start" color="inherit" onClick={handleClick}>
-                <KeyboardArrowLeftIcon />
-                {headerTitle}
-              </IconButton>
-            )
-          }
+          <IconButton edge="start" color="inherit" disableFocusRipple disableRipple onClick={handleClick}>
+            {location.pathname === '/' ? <MenuIcon /> : <KeyboardArrowLeftIcon />}
+          </IconButton>
+          {headerTitle !== "" && <Typography variant="h6" >{headerTitle}</Typography>}
           <div className={classes.invisibleSpace} />
           {auth && <Navigation
             open={open}
