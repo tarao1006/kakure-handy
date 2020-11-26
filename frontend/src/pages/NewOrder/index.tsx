@@ -32,10 +32,9 @@ export const NewOrder = () => {
       }
     }
     fetch();
-    const cleanUp = () => {
+    return () => {
       cleanedUp = true;
-    }
-    return cleanUp;
+    };
   }, [currentUser]);
 
   React.useEffect(() => {
