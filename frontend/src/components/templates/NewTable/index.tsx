@@ -68,7 +68,7 @@ export const NewTableTemplate = (): JSX.Element => {
 
     const token = await currentUser.getIdToken();
     await createTable(token, tableId);
-    history.push('/tables');
+    history.push('/');
   }
 
   const handleTableIdChange = (event: React.ChangeEvent<{ value: unknown }>) => {
