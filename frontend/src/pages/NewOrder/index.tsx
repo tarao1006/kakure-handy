@@ -15,12 +15,13 @@ export const NewOrder = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [activeStep, setActiveStep] = React.useState<number>(0);
   const [activeCategory, setActiveCategory] = React.useState<number>(0);
-  const { items, targetItems, initializeItem } = useItems();
-  const { tables, targetTable, initializeTable, resetTable } = useTables();
+  const { targetItems, initializeItem } = useItems();
+  const { targetTable, initializeTable, resetTable } = useTables();
 
   React.useEffect(() => {
     let cleanedUp = false;
     const fetch = async () => {
+      setIsLoading(true);
       if (!cleanedUp && currentUser) {
         const newToken = await currentUser.getIdToken();
         const newTables = convertToTables(await getTables(newToken)).filter(table => !table.isEnded);
@@ -30,6 +31,7 @@ export const NewOrder = () => {
         initializeTable(newTables);
         initializeItem(newItems);
       }
+      setIsLoading(false);
     }
     fetch();
     return () => {
@@ -38,14 +40,8 @@ export const NewOrder = () => {
   }, [currentUser]);
 
   React.useEffect(() => {
-    if (tables === undefined || items === undefined) {
-      setIsLoading(true);
-    } else if (tables.length === 0 || items.length === 0) {
-      setIsLoading(true);
-    } else {
-      setIsLoading(false);
-    }
-  }, [tables, items]);
+    console.log(isLoading);
+  })
 
   const handleOrder = async () => {
     if (currentUser) {
@@ -54,8 +50,6 @@ export const NewOrder = () => {
       if (res.length !== 0) {
         history.push('/order-success');
         resetTable();
-      } else {
-        
       }
     }
   }
