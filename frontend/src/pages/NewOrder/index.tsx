@@ -39,10 +39,6 @@ export const NewOrder = () => {
     };
   }, [currentUser]);
 
-  React.useEffect(() => {
-    console.log(isLoading);
-  })
-
   const handleOrder = async () => {
     if (currentUser) {
       setIsLoading(true);
