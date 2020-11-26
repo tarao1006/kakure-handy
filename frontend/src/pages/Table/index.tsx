@@ -4,20 +4,15 @@ import { createStyles, Theme, makeStyles } from '@material-ui/core/styles'
 import {
   Button,
   CloseIcon,
-  Collapse,
   IconButton,
-  List,
-  ListItem,
-  ListItemText,
   Snackbar,
   Table,
   TableBody,
   TableRow,
   TableCell,
-  ExpandLess,
-  ExpandMore
 } from '@atoms';
 import { Loading } from '@molecules';
+import { OrderStatusList } from '@organisms';
 import { AuthContext, LayoutContext} from '@contexts';
 import { getTable, exitTable, createBill, deleteBill, updateOrder } from '@api';
 import { Table as TableModel, convertToTable, Order } from '@model';
@@ -281,80 +276,14 @@ export const TableDetail = () => {
         >
           退店
         </Button>
-        <List>
-          <ListItem button onClick={handleOpenOrdered}>
-            <ListItemText>
-              未提供 ({orderedOrder.length} 件)
-            </ListItemText>
-            {orderedOpen ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={orderedOpen} unmountOnExit>
-            <List className={classes.root}>
-              {
-                orderedOrder.map(
-                  order => (
-                    <ModalListItem
-                      disabled={disabledDialogButtons}
-                      key={`${order.id}`}
-                      order={order}
-                      handleServed={handleServed}
-                      handleCancel={handleCancel}
-                      handleOrdered={handleOrdered}
-                    />
-                  )
-                )
-              }
-            </List>
-          </Collapse>
-          <ListItem button onClick={handleOpenServed}>
-            <ListItemText>
-              提供済 ({servedOrder.length} 件)
-            </ListItemText>
-            {servedOpen ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={servedOpen} unmountOnExit>
-            <List className={classes.root} disablePadding>
-            {
-                servedOrder.map(
-                  order => (
-                    <ModalListItem
-                      disabled={disabledDialogButtons}
-                      key={`${order.id}`}
-                      order={order}
-                      handleServed={handleServed}
-                      handleCancel={handleCancel}
-                      handleOrdered={handleOrdered}
-                    />
-                  )
-                )
-              }
-            </List>
-          </Collapse>
-          <ListItem button onClick={handleOpenCancelled}>
-            <ListItemText>
-              キャンセル ({cancelledOrder.length} 件)
-            </ListItemText>
-            {cancelledOpen ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={cancelledOpen} unmountOnExit>
-            <List className={classes.root} disablePadding>
-            {
-                cancelledOrder.map(
-                  order => (
-                    <ModalListItem
-                      disabled={disabledDialogButtons}
-                      key={`${order.id}`}
-                      order={order}
-                      handleServed={handleServed}
-                      handleCancel={handleCancel}
-                      handleOrdered={handleOrdered}
-                    />
-                  )
-                )
-              }
-            </List>
-          </Collapse>
-        </List>
+
+        <OrderStatusList
+          orders={table.orders}
+          handleServed={handleServed}
+          handleCancel={handleCancel}
+          handleOrdered={handleOrdered}
+        />
+
         <ConfirmationDialog
           open={createBillDialogOpen}
           onClose={handleCreateBill}
