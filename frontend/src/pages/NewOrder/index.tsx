@@ -11,7 +11,6 @@ import { NewOrderTemplate } from '@templates';
 export const NewOrder = () => {
   const { currentUser } = React.useContext(AuthContext);
   const history = useHistory();
-  const [token, setToken] = React.useState<string>("");
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const { targetItems, initializeItem } = useItems();
   const { targetTable, initializeTable, resetTable } = useTables();
@@ -21,11 +20,11 @@ export const NewOrder = () => {
     const fetch = async () => {
       setIsLoading(true);
       if (!cleanedUp && currentUser) {
-        const newToken = await currentUser.getIdToken();
-        const newTables = convertToTables(await getTables(newToken)).filter(table => !table.isEnded);
-        const res = await getItems(newToken);
-        const newItems = convertToItems(res);
-        setToken(newToken);
+        const token = await currentUser.getIdToken();
+        const resTables = await getTables(token);
+        const newTables = convertToTables(resTables).filter(table => !table.isEnded);
+        const resItems = await getItems(token);
+        const newItems = convertToItems(resItems);
         initializeTable(newTables);
         initializeItem(newItems);
       }
@@ -38,13 +37,13 @@ export const NewOrder = () => {
   }, [currentUser]);
 
   const handleOrder = async () => {
-    if (currentUser) {
-      setIsLoading(true);
-      const res = await createOrder(token, targetTable.id, targetItems);
-      if (res.length !== 0) {
-        history.push('/order-success');
-        resetTable();
-      }
+    setIsLoading(true);
+    const token = await currentUser.getIdToken();
+    const res = await createOrder(token, targetTable.id, targetItems);
+    if (res.length !== 0) {
+      setIsLoading(false);
+      history.push('/order-success');
+      resetTable();
     }
   }
 
