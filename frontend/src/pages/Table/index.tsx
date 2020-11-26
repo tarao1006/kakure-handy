@@ -5,7 +5,6 @@ import {
   Button,
   CloseIcon,
   Collapse,
-  Container,
   IconButton,
   List,
   ListItem,
@@ -226,7 +225,7 @@ export const TableDetail = () => {
     ? (<Loading />)
     :
     (
-      <Container component="main" maxWidth="xs" className={classes.root}>
+      <>
         {
           isLoading && <Loading />
         }
@@ -392,7 +391,7 @@ export const TableDetail = () => {
             </>
           }
         />
-      </Container>
+      </>
     )
   )
 }

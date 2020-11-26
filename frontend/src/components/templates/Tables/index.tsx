@@ -16,14 +16,12 @@ export const TablesTemplate = ({ tables }: TablesTemplateProps): JSX.Element => 
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <List>
-        {
-          tables.map(table => (
-            <LinkListItem key={table.id} table={table} handleClick={handleClick} />
-          ))
-        }
-      </List>
-    </Container>
+    <List>
+      {
+        tables.map(table => (
+          <LinkListItem key={table.id} table={table} handleClick={handleClick} />
+        ))
+      }
+    </List>
   )
 }

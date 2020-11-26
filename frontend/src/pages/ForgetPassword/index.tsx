@@ -68,7 +68,7 @@ export const ForgetPassword = () => {
     isLoading
     ? <Loading />
     :
-    (<Container component="main" maxWidth="xs">
+    (<>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -137,6 +137,6 @@ export const ForgetPassword = () => {
       <Box mt={8}>
         <Copyright />
       </Box>
-    </Container>)
+    </>)
   );
 }

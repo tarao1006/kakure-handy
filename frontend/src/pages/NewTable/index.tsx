@@ -45,67 +45,65 @@ export const NewTable = (): JSX.Element => {
   }
 
   return (
-    <Container component="main" maxWidth='xs'>
-      <form noValidate onSubmit={handleSubmit}>
-        <TextField
-          fullWidth
-          select
-          value={tableId}
-          color="primary"
-          onChange={handleTableIdChange}
-          label="部屋"
-          margin="normal"
-          SelectProps={{
-            native: true,
-          }}
-        >
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
-          <option value={6}>6</option>
-          <option value={7}>1, 2</option>
-          <option value={8}>2, 3</option>
-          <option value={9}>1, 2, 3</option>
-          <option value={10}>か</option>
-          <option value={11}>く</option>
-          <option value={12}>れ</option>
-          <option value={13}>か, く</option>
-          <option value={14}>く, れ</option>
-          <option value={15}>か, く, れ</option>
-          <option value={16}>カウンター</option>
-        </TextField>
+    <form noValidate onSubmit={handleSubmit}>
+      <TextField
+        fullWidth
+        select
+        value={tableId}
+        color="primary"
+        onChange={handleTableIdChange}
+        label="部屋"
+        margin="normal"
+        SelectProps={{
+          native: true,
+        }}
+      >
+        <option value={1}>1</option>
+        <option value={2}>2</option>
+        <option value={3}>3</option>
+        <option value={4}>4</option>
+        <option value={5}>5</option>
+        <option value={6}>6</option>
+        <option value={7}>1, 2</option>
+        <option value={8}>2, 3</option>
+        <option value={9}>1, 2, 3</option>
+        <option value={10}>か</option>
+        <option value={11}>く</option>
+        <option value={12}>れ</option>
+        <option value={13}>か, く</option>
+        <option value={14}>く, れ</option>
+        <option value={15}>か, く, れ</option>
+        <option value={16}>カウンター</option>
+      </TextField>
 
-        <TextField
-          fullWidth
-          select
-          value={count}
-          color="primary"
-          onChange={handleCountChange}
-          label="人数"
-          margin="normal"
-          SelectProps={{
-            native: true,
-          }}
-        >
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
-          <option value={6}>6</option>
-        </TextField>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-        >
-          作成
-        </Button>
-      </form>
-    </Container>
+      <TextField
+        fullWidth
+        select
+        value={count}
+        color="primary"
+        onChange={handleCountChange}
+        label="人数"
+        margin="normal"
+        SelectProps={{
+          native: true,
+        }}
+      >
+        <option value={1}>1</option>
+        <option value={2}>2</option>
+        <option value={3}>3</option>
+        <option value={4}>4</option>
+        <option value={5}>5</option>
+        <option value={6}>6</option>
+      </TextField>
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        color="primary"
+        className={classes.submit}
+      >
+        作成
+      </Button>
+    </form>
   )
 }

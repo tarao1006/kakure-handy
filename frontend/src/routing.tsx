@@ -19,6 +19,7 @@ import {
   TableDetail,
   Tables,
 } from '@pages';
+import { Layout } from './laytout';
 
 interface RedirectRouteProps {
   path: string
@@ -67,41 +68,42 @@ const Routing = () => {
     <Router>
       <Provider store={store}>
         <AuthProvider>
-          <Header />
-          <RedirectRoute
-            path='/'
-            exact
-            Child={Tables}
-          />
-          <RedirectRoute
-            path='/new-order'
-            Child={NewOrder}
-          />
-          <RedirectRoute
-            path='/table/:tableId'
-            exact
-            Child={TableDetail}
-          />
-          <RedirectRoute
-            path='/new-table'
-            Child={NewTable}
-          />
-          <Route
-            path='/forget-password'
-            exact
-            component={ForgetPassword}
-          />
-          <Route
-            path='/mail-sent'
-            exact
-            component={MailSent}
-          />
-          <Route
-            path='/order-success'
-            exact
-            component={OrderSuccess}
-          />
-          <LogInRoute />
+          <Layout>
+            <RedirectRoute
+              path='/'
+              exact
+              Child={Tables}
+            />
+            <RedirectRoute
+              path='/new-order'
+              Child={NewOrder}
+            />
+            <RedirectRoute
+              path='/table/:tableId'
+              exact
+              Child={TableDetail}
+            />
+            <RedirectRoute
+              path='/new-table'
+              Child={NewTable}
+            />
+            <Route
+              path='/forget-password'
+              exact
+              component={ForgetPassword}
+            />
+            <Route
+              path='/mail-sent'
+              exact
+              component={MailSent}
+            />
+            <Route
+              path='/order-success'
+              exact
+              component={OrderSuccess}
+            />
+            <LogInRoute />
+          </Layout>
         </AuthProvider>
       </Provider>
     </Router>
