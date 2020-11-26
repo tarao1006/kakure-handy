@@ -6,7 +6,7 @@ import {
   TextField
 } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
-import { Item, MIN_ORDER_COUNT, MAX_ORDER_COUNT } from '../../../model';
+import { Item, MIN_ORDER_COUNT, MAX_ORDER_COUNT } from '@model';
 import useItems from '../../../hooks/useItems';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -50,7 +50,7 @@ interface FoldedListItemProps {
   item: Item;
 }
 
-const Controller: React.FC<FoldedListItemProps> = ({ item }) => {
+export const NewOrderController: React.FC<FoldedListItemProps> = ({ item }) => {
   const classes = useStyles();
   const { add, increment, decrement } = useItems();
 
@@ -83,5 +83,3 @@ const Controller: React.FC<FoldedListItemProps> = ({ item }) => {
 
   )
 }
-
-export default Controller;

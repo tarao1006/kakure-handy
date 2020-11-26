@@ -9,9 +9,7 @@ import {
 } from '@material-ui/core';
 import useItems from '../../../hooks/useItems';
 import useTables from '../../../hooks/useTables';
-import { SelectItem } from './SelectItem';
-import { SelectTable } from './SelectTable';
-import { Confirmation } from './Confirmation';
+import { NewOrderConfirmation, SelectTable, SelectItem } from '@organisms';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,7 +33,7 @@ interface StepperProps {
   setActiveStep: (step: any) => void;
 }
 
-const NewOrderStepper: React.FC<StepperProps> = ({
+export const NewOrderStepper: React.FC<StepperProps> = ({
   handleOrder,
   activeCategory,
   activeStep,
@@ -53,7 +51,7 @@ const NewOrderStepper: React.FC<StepperProps> = ({
       case 1:
         return <SelectItem activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
       case 2:
-        return <Confirmation />
+        return <NewOrderConfirmation />
       default:
         return <></>
     }
@@ -136,5 +134,3 @@ const NewOrderStepper: React.FC<StepperProps> = ({
     </Container>
   );
 }
-
-export default NewOrderStepper;

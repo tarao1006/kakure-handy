@@ -7,7 +7,7 @@ import {
   ListItemIcon,
 } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
-import FoldedListItem from './FoldedListItem';
+import { FoldedListItem } from '@organisms';
 import { Item } from '../../../model';
 
 interface FoldedListProps {
@@ -16,7 +16,7 @@ interface FoldedListProps {
   items: Item[];
 }
 
-const FoldedList: React.FC<FoldedListProps> = ({ Icon, category, items }) => {
+export const FoldedList: React.FC<FoldedListProps> = ({ Icon, category, items }) => {
   const [open, setOpen] = React.useState<boolean>(false);
 
   const handleClick = () => {
@@ -44,5 +44,3 @@ const FoldedList: React.FC<FoldedListProps> = ({ Icon, category, items }) => {
     </>
   )
 }
-
-export default FoldedList;

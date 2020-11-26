@@ -6,7 +6,7 @@ import {
   Radio,
   FormControlLabel,
 } from '@material-ui/core';
-import { Table } from '../../../model';
+import { Table } from '@model';
 import useTables from '../../../hooks/useTables';
 
 export const SelectTable: React.FC<{}> = () => {

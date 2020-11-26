@@ -5,12 +5,31 @@ import {
   List,
   Typography
 } from '@material-ui/core';
-import FoldedListItem from './FoldedListItem';
+import { FoldedListItem } from '@organisms';
 import useItems from '../../../hooks/useItems';
 import useTables from '../../../hooks/useTables';
-import useStyles from './base';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
-export const Confirmation: React.FC<{}> = () => {
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '100%',
+    },
+    tabRoot: {
+      flexGrow: 1,
+      backgroundColor: theme.palette.background.paper,
+    },
+    scrollArea: {
+      width: '100%',
+      maxHeight: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      overflow: 'scroll',
+    },
+  }),
+);
+
+export const NewOrderConfirmation: React.FC<{}> = () => {
   const { targetItems } = useItems();
   const { targetTable } = useTables();
   const classes = useStyles();

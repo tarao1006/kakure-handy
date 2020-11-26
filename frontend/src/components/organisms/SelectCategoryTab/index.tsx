@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Tab, Tabs } from '@material-ui/core';
-import { DrinkList, FoodList } from './CategoryList';
+import { DrinkList, FoodList } from '@organisms';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -22,7 +22,7 @@ interface SelectCategoryTabProps {
   setActiveCategory: (categoryId: number) => void;
 }
 
-const SelectCategoryTab: React.FC<SelectCategoryTabProps> = ({ activeCategory, setActiveCategory }) => {
+export const SelectCategoryTab: React.FC<SelectCategoryTabProps> = ({ activeCategory, setActiveCategory }) => {
 
   const handleChange = (e: React.ChangeEvent<{}>, newValue: number) => {
     setActiveCategory(newValue);
@@ -43,5 +43,3 @@ const SelectCategoryTab: React.FC<SelectCategoryTabProps> = ({ activeCategory, s
     </div>
   );
 }
-
-export default SelectCategoryTab;

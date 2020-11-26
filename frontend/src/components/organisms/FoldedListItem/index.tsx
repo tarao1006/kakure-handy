@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import { ListItem } from '@material-ui/core';
-import Controller from './Controller';
-import { Item } from '../../../model';
+import { NewOrderController } from '@organisms';
+import { Item } from '@model';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,7 +18,7 @@ interface FoldedListItemProps {
   item: Item;
 }
 
-const FoldedListItem: React.FC<FoldedListItemProps> = ({ item }) => {
+export const FoldedListItem: React.FC<FoldedListItemProps> = ({ item }) => {
   const classes = useStyles();
 
   return (
@@ -26,9 +26,7 @@ const FoldedListItem: React.FC<FoldedListItemProps> = ({ item }) => {
       <div>
         {`${item.name}`}
       </div>
-      <Controller item={item} />
+      <NewOrderController item={item} />
     </ListItem>
   )
 }
-
-export default FoldedListItem;

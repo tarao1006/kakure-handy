@@ -4,11 +4,30 @@ import {
   FormGroup,
 } from '@material-ui/core';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import FoldedList from './FoldedList';
-import useStyles from './base';
+import { FoldedList } from '@organisms';
 import drink from '@dataset/categoriesDrink.json';
 import food from '@dataset/categoriesFood.json';
 import useItems from '../../../hooks/useItems';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '100%',
+    },
+    tabRoot: {
+      flexGrow: 1,
+      backgroundColor: theme.palette.background.paper,
+    },
+    scrollArea: {
+      width: '100%',
+      maxHeight: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      overflow: 'scroll',
+    },
+  }),
+);
 
 export const DrinkList: React.FC<{}> = () => {
   const classes = useStyles();
