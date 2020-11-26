@@ -9,7 +9,6 @@ export { LogInForm } from './LogInForm';
 export { MainContainer } from './MainContainer';
 export { NewOrderConfirmation } from './NewOrderConfirmation';
 export { NewOrderController } from './NewOrderController';
-export { NewOrder } from './NewOrder';
 export { NewOrderOperationButtons } from './NewOrderOperationButtons';
 export { OrderList } from './OrderList';
 export { OrderListItem } from './OrderListItem';
