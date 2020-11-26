@@ -4,6 +4,7 @@ import { Order } from '@model';
 import { OrderStatusListItem } from '@organisms';
 
 interface OrderStatusListProps {
+  disabled: boolean;
   orders: Order[];
   handleServed: (id: number) => Promise<void>;
   handleCancel: (id: number) => Promise<void>;
@@ -11,6 +12,7 @@ interface OrderStatusListProps {
 }
 
 export const OrderStatusList = ({
+  disabled,
   orders,
   handleServed,
   handleCancel,
@@ -35,6 +37,7 @@ export const OrderStatusList = ({
   return (
     <List>
       <OrderStatusListItem
+        disabled={disabled}
         status="未提供"
         orders={orderedOrders}
         handleServed={handleServed}
@@ -42,6 +45,7 @@ export const OrderStatusList = ({
         handleOrdered={handleOrdered}
       />
       <OrderStatusListItem
+        disabled={disabled}
         status="提供済"
         orders={servedOrders}
         handleServed={handleServed}
@@ -49,6 +53,7 @@ export const OrderStatusList = ({
         handleOrdered={handleOrdered}
       />
       <OrderStatusListItem
+        disabled={disabled}
         status="キャンセル"
         orders={cancelledOrders}
         handleServed={handleServed}

@@ -5,6 +5,7 @@ import { OrderList } from '@organisms';
 import { Order } from '@model';
 
 interface OrderStatusListItemProps {
+  disabled: boolean;
   status: string;
   orders: Order[];
   handleServed: (id: number) => Promise<void>;
@@ -13,6 +14,7 @@ interface OrderStatusListItemProps {
 }
 
 export const OrderStatusListItem = ({
+  disabled,
   status,
   orders,
   handleServed,
@@ -35,6 +37,7 @@ export const OrderStatusListItem = ({
         </ListItem>
         <Collapse in={open} unmountOnExit>
           <OrderList
+            disabled={disabled}
             orders={orders}
             handleServed={handleServed}
             handleCancel={handleCancel}

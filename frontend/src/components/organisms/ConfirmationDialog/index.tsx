@@ -9,21 +9,26 @@ import {
 
 interface ConfirmationDialogProps {
   open: boolean;
-  onClose: (ok: boolean) => void;
+  onCancel: () => void,
+  onExecute: () => void,
   topic: string;
   subTopic?: string;
 }
 
-export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({open, onClose, topic, subTopic}) => {
-  const handleCancel = () => onClose(false);
-  const handleExecute = () => onClose(true);
+export const ConfirmationDialog = ({
+  open,
+  onCancel,
+  onExecute,
+  topic,
+  subTopic
+}: ConfirmationDialogProps): JSX.Element => {
 
   return (
     <Dialog
       fullWidth={true}
       maxWidth={'xs'}
       open={open}
-      onClose={handleCancel}
+      onClose={onCancel}
     >
       <DialogTitle>
         {topic} を実行しますか？
@@ -36,10 +41,10 @@ export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({open, onC
         )
       }
       <DialogActions>
-        <Button onClick={handleCancel} color="primary">
+        <Button onClick={onCancel} color="primary">
           キャンセル
         </Button>
-        <Button onClick={handleExecute} color="primary">
+        <Button onClick={onExecute} color="primary">
           実行
         </Button>
       </DialogActions>

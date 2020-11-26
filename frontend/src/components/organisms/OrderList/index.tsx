@@ -4,6 +4,7 @@ import { OrderListItem } from '@organisms';
 import { Order } from '@model';
 
 interface OrderListProps {
+  disabled: boolean;
   orders: Order[];
   handleServed: (id: number) => Promise<void>;
   handleCancel: (id: number) => Promise<void>;
@@ -11,6 +12,7 @@ interface OrderListProps {
 }
 
 export const OrderList = ({
+  disabled,
   orders,
   handleServed,
   handleCancel,
@@ -22,7 +24,7 @@ export const OrderList = ({
       {
         orders.map(order => (
           <OrderListItem
-            disabled={false}
+            disabled={disabled}
             key={`${order.id}`}
             order={order}
             handleServed={handleServed}

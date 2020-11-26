@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface OperationDialogProps {
+interface OrderOperationDialogProps {
   open: boolean;
   disabled: boolean;
   order: Order;
@@ -39,7 +39,7 @@ interface OperationDialogProps {
   handleOrdered: (id: number) => Promise<void>;
 }
 
-export const OperationDialog = ({
+export const OrderOperationDialog = ({
   open,
   disabled,
   order,
@@ -47,7 +47,7 @@ export const OperationDialog = ({
   handleServed,
   handleCancel,
   handleOrdered
-}: OperationDialogProps): JSX.Element => {
+}: OrderOperationDialogProps): JSX.Element => {
   const classes = useStyles();
 
   const disables = {

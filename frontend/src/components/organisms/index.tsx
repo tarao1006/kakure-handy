@@ -1,9 +1,12 @@
-export { Header } from './Header';
+export { BillOperationButton } from './BillOperationButton';
+export { ConfirmationDialog } from './ConfirmationDialog';
 export { Footer } from './Footer';
+export { Header } from './Header';
 export { LogInForm } from './LogInForm';
 export { MainContainer } from './MainContainer';
-export { OperationDialog } from './OperationDialog';
 export { OrderList } from './OrderList';
 export { OrderListItem } from './OrderListItem';
+export { OrderOperationDialog } from './OrderOperationDialog';
 export { OrderStatusList } from './OrderStatusList';
 export { OrderStatusListItem } from './OrderStatusListItem';
+export { TableInformation } from './TableInformation';

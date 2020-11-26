@@ -1,63 +1,24 @@
 import * as React from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles'
-import {
-  Button,
-  CloseIcon,
-  IconButton,
-  Snackbar,
-  Table,
-  TableBody,
-  TableRow,
-  TableCell,
-} from '@atoms';
-import { Loading } from '@molecules';
-import { OrderStatusList } from '@organisms';
+import { useParams } from 'react-router-dom';
+import { Loading, OperationSnackbar } from '@molecules';
+import { OrderStatusList, TableInformation, BillOperationButton } from '@organisms';
 import { AuthContext, LayoutContext} from '@contexts';
 import { getTable, exitTable, createBill, deleteBill, updateOrder } from '@api';
-import { Table as TableModel, convertToTable, Order } from '@model';
-import { convertTimeToHM } from '@utils';
-import { ModalListItem } from './ModalListItem';
-import { ConfirmationDialog } from './ConfirmationDialog';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: "100%",
-      overflowX: "auto",
-    },
-    operationButton: {
-      marginRight: theme.spacing(2),
-      marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(1),
-    },
-  })
-);
+import { Table as TableModel, convertToTable } from '@model';
 
 interface TableParams {
   tableId: string
 }
 
 export const TableDetail = () => {
-  const classes = useStyles();
   const { currentUser } = React.useContext(AuthContext);
-  const { headerTitle, setHeaderTitle } = React.useContext(LayoutContext);
+  const { setHeaderTitle } = React.useContext(LayoutContext);
   const { tableId } = useParams<TableParams>();
   const [table, setTable] = React.useState<TableModel | undefined>();
-  const [orderedOrder, setOrderedOrder] = React.useState<Order[]>([]);
-  const [servedOrder, setServedOrder] = React.useState<Order[]>([]);
-  const [cancelledOrder, setCancelledOrder] = React.useState<Order[]>([]);
-  const [orderedOpen, setOrderedOpen] = React.useState<boolean>(false);
-  const [servedOpen, setServedOpen] = React.useState<boolean>(false);
-  const [cancelledOpen, setCancelledOpen] = React.useState<boolean>(false);
-  const [disabledDialogButtons, setDisabledDialogButtons] = React.useState<boolean>(false);
+  const [disabled, setDisabled] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [snackBarOpen, setSnackBarOpen] = React.useState<boolean>(false);
-  const [snackBarTopic, setSnackBarTopic] = React.useState<string>('');
-  const [createBillDialogOpen, setCreateBillDialogOpen] = React.useState<boolean>(false);
-  const [deleteBillDialogOpen, setDeleteBillDialogOpen] = React.useState<boolean>(false);
-  const [exitDialogOpen, setExitDialogOpen] = React.useState<boolean>(false);
-  const history = useHistory();
+  const [open, setOpen] = React.useState<boolean>(false);
+  const [topic, setTopic] = React.useState<string>('');
 
   React.useEffect(() => {
     let cleanedUp = false;
@@ -78,246 +39,109 @@ export const TableDetail = () => {
   const updateTable = async (token: string) => {
     setIsLoading(true);
     const res = await getTable(token, tableId);
-    const t = convertToTable(res);
-    setHeaderTitle(t.room.name);
-    setTable(t);
-
-    let ordered: Order[] = [];
-    let served: Order[] = [];
-    let cancelled: Order[] = [];
-    t.orders.forEach(order => {
-      if (order.status.status === "ordered") {
-        ordered.push(order);
-      } else if (order.status.status === "served") {
-        served.push(order);
-      } else if (order.status.status === "cancelled") {
-        cancelled.push(order);
-      }
-    })
-    setOrderedOrder(ordered);
-    setServedOrder(served);
-    setCancelledOrder(cancelled);
-
-    if (ordered.length !== 0) {
-      setOrderedOpen(true);
-    }
+    const newTable = convertToTable(res);
+    setHeaderTitle(newTable.room.name);
+    setTable(newTable);
     setIsLoading(false);
   }
 
-  const confirmCreateBill = () => {
-    setCreateBillDialogOpen(true);
+  const handleCreateBill = async () => {
+    const token = await currentUser.getIdToken();
+    await createBill(token, tableId);
+    await updateTable(token);
+    setTopic('会計');
+    handleSnackBarOpen();
   }
 
-  const confirmDeleteBill = () => {
-    setDeleteBillDialogOpen(true);
+  const handleDeleteBill = async () => {
+    const token = await currentUser.getIdToken();
+    await deleteBill(token, tableId, `${table.billId}`);
+    await updateTable(token);
+    setTopic('会計取消');
+    handleSnackBarOpen();
   }
 
-  const confirmExit = () => {
-    setExitDialogOpen(true);
-  }
-
-  const handleCreateBill = async (ok: boolean) => {
-    setCreateBillDialogOpen(false);
-
-    if (ok) {
-      const token = await currentUser.getIdToken();
-      await createBill(token, tableId);
-      await updateTable(token);
-
-      setSnackBarOpen(true);
-      setSnackBarTopic('会計');
-    }
-  }
-
-  const handleDeleteBill = async (ok: boolean) => {
-    setDeleteBillDialogOpen(false);
-
-    if (ok) {
-      const token = await currentUser.getIdToken();
-      await deleteBill(token, tableId, `${table.billId}`);
-      await updateTable(token);
-
-      setSnackBarOpen(true);
-      setSnackBarTopic('会計取消');
-    }
-  }
-
-  const handleExit = async (ok: boolean) => {
-    setExitDialogOpen(false);
-
-    if (ok) {
-      const token = await currentUser.getIdToken();
-      await exitTable(token, tableId);
-      await updateTable(token);
-
-      setSnackBarOpen(true);
-      setSnackBarTopic('退店');
-    }
-  }
-
-  const handleBack = () => {
-    history.push('/');
+  const handleExit = async () => {
+    const token = await currentUser.getIdToken();
+    await exitTable(token, tableId);
+    await updateTable(token);
+    setTopic('退店');
+    handleSnackBarOpen();
   }
 
   const handleServed = async (id: number) => {
-    setSnackBarTopic('提供済にする');
-    setDisabledDialogButtons(true);
+    setDisabled(true);
     const token = await currentUser.getIdToken();
     await updateOrder(token, table.id, id, 2);
     await updateTable(token);
-    setDisabledDialogButtons(false);
+    setDisabled(false);
+    setTopic('提供済にする');
     handleSnackBarOpen();
   }
 
   const handleCancel = async (id: number) => {
-    setSnackBarTopic('キャンセルする');
-    setDisabledDialogButtons(true);
+    setDisabled(true);
     const token = await currentUser.getIdToken();
     await updateOrder(token, table.id, id, 3);
     await updateTable(token);
-    setDisabledDialogButtons(false);
+    setDisabled(false);
+    setTopic('キャンセルする');
     handleSnackBarOpen();
   }
 
   const handleOrdered = async (id: number) => {
-    setSnackBarTopic('注文済に戻す');
-    setDisabledDialogButtons(true);
+    setDisabled(true);
     const token = await currentUser.getIdToken();
     await updateOrder(token, table.id, id, 1);
     await updateTable(token);
-    setDisabledDialogButtons(false);
+    setDisabled(false);
+    setTopic('注文済に戻す');
     handleSnackBarOpen();
   }
 
-  const handleOpenOrdered = () => {
-    setOrderedOpen(!orderedOpen);
-  }
-
-  const handleOpenServed = () => {
-    setServedOpen(!servedOpen);
-  }
-
-  const handleOpenCancelled = () => {
-    setCancelledOpen(!cancelledOpen);
-  }
-
   const handleSnackBarOpen = () => {
-    setSnackBarOpen(true);
+    setOpen(true);
   }
 
   const handleSnackBarClose = (event: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
-    setSnackBarOpen(false);
+    setOpen(false);
   }
 
   return (
-    isLoading
-    ? (<Loading />)
-    :
-    (
-      <>
-        {
-          isLoading && <Loading />
-        }
-        <Table size="small">
-          <TableBody>
-            <TableRow>
-              <TableCell align="center">
-                部屋
-              </TableCell>
-              <TableCell align="left">
-                {table.room.name}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell align="center">
-                経過時間
-              </TableCell>
-              <TableCell align="left">
-                {convertTimeToHM(table.startAt, new Date())}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell align="center">
-                合計
-              </TableCell>
-              <TableCell align="left">
-                {table.amount} 円
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-        <Button
-          color="primary"
-          variant="outlined"
-          onClick={confirmCreateBill}
-          disabled={table.validBillExists()}
-          className={classes.operationButton}
-        >
-          会計
-        </Button>
-        <Button
-          color="secondary"
-          variant="outlined"
-          onClick={confirmDeleteBill}
-          disabled={!table.validBillExists() || table.isEnded}
-          className={classes.operationButton}
-        >
-          会計取消
-        </Button>
-        <Button
-          color="primary" 
-          variant="contained"
-          onClick={confirmExit}
-          disabled={!table.validBillExists() || table.isEnded}
-          className={classes.operationButton}
-        >
-          退店
-        </Button>
-
-        <OrderStatusList
-          orders={table.orders}
-          handleServed={handleServed}
-          handleCancel={handleCancel}
-          handleOrdered={handleOrdered}
-        />
-
-        <ConfirmationDialog
-          open={createBillDialogOpen}
-          onClose={handleCreateBill}
-          topic='会計'
-        />
-        <ConfirmationDialog
-          open={deleteBillDialogOpen}
-          onClose={handleDeleteBill}
-          topic='会計取消'
-        />
-        <ConfirmationDialog
-          open={exitDialogOpen}
-          onClose={handleExit}
-          topic='退店'
-          subTopic='退店処理は取り消せません。'
-        />
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          open={snackBarOpen}
-          autoHideDuration={2000}
-          onClose={handleSnackBarClose}
-          message={`${snackBarTopic} 処理を完了しました。`}
-          action={
-            <>
-              <IconButton size="small" aria-label="close" color="inherit" onClick={handleSnackBarClose}>
-                <CloseIcon fontSize="small" />
-              </IconButton>
-            </>
-          }
-        />
-      </>
-    )
+    <>
+      {isLoading && <Loading />}
+      <TableInformation table={table} />
+      <BillOperationButton
+        operation="会計"
+        disabled={table.validBillExists()}
+        handleExecute={handleCreateBill}
+      />
+      <BillOperationButton
+        operation="会計取消"
+        disabled={!table.validBillExists() || table.isEnded}
+        handleExecute={handleDeleteBill}
+      />
+      <BillOperationButton
+        operation="退店"
+        subTopic='退店処理は取り消せません。'
+        disabled={!table.validBillExists() || table.isEnded}
+        handleExecute={handleExit}
+      />
+      <OrderStatusList
+        disabled={disabled}
+        orders={table.orders}
+        handleServed={handleServed}
+        handleCancel={handleCancel}
+        handleOrdered={handleOrdered}
+      />
+      <OperationSnackbar
+        open={open}
+        operation={topic}
+        handleClose={handleSnackBarClose}
+      />
+    </>
   )
 }

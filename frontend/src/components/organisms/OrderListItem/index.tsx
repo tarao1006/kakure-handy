@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ListItem, ListItemIcon, ListItemText } from '@atoms';
 import { CheckIcon, ClearIcon, RadioButtonUncheckedIcon } from '@icons'
-import { OperationDialog } from '@organisms';
+import { OrderOperationDialog } from '@organisms';
 import { Order } from '@model';
 
 interface OrderListItemProps {
@@ -46,7 +46,7 @@ export const OrderListItem = ({
           primaryTypographyProps={{ variant: "body2" }}
         />
       </ListItem>
-      <OperationDialog
+      <OrderOperationDialog
         open={open}
         disabled={disabled}
         order={order}
