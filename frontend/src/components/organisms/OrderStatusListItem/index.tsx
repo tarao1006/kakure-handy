@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Collapse, ListItem, ListItemText } from '@atoms';
 import { ExpandLess, ExpandMore } from '@icons';
 import { OrderList } from '@organisms';
@@ -22,6 +22,12 @@ export const OrderStatusListItem = ({
   handleOrdered
 }: OrderStatusListItemProps): JSX.Element => {
   const [open, setOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (status === "未提供" && orders.length !== 0) {
+      setOpen(true);
+    }
+  }, [orders]);
 
   const handleClick = () => {
     setOpen(!open);

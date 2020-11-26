@@ -37,11 +37,16 @@ export const BillOperationButton = ({
     setOpen(false);
   }
 
+  const onExecute = () => {
+    handleExecute();
+    setOpen(false);
+  }
+
   return (
     <>
       <Button
-        color="primary"
-        variant="outlined"
+        color={operation === "退店" ? "secondary" : "primary"}
+        variant={operation === "退店" ? "contained" : "outlined"}
         onClick={handleOpen}
         disabled={disabled}
         className={classes.operationButton}
@@ -51,7 +56,7 @@ export const BillOperationButton = ({
       <ConfirmationDialog
         open={open}
         onCancel={handelClose}
-        onExecute={handleExecute}
+        onExecute={onExecute}
         topic={operation}
         subTopic={subTopic}
       />

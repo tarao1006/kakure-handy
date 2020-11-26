@@ -1,13 +1,12 @@
 import * as React from 'react';
-import { Loading, OperationSnackbar } from '@molecules';
+import { OperationSnackbar } from '@molecules';
 import { OrderStatusList, TableInformation, BillOperationButton } from '@organisms';
-import { AuthContext, LayoutContext} from '@contexts';
 import { Table } from '@model';
 
 interface TableTemplateProps {
   table: Table;
   handleUpdateTable: () => Promise<void>;
-  handleUpdateOrder: (id: number) => Promise<void>;
+  handleUpdateOrder: (id: number, status: number) => Promise<void>;
   handleCreateBill: () => Promise<void>;
   handleDeleteBill: () => Promise<void>;
   handleExitTable: () => Promise<void>;
@@ -22,7 +21,6 @@ export const TableTemplate = ({
   handleExitTable
 }: TableTemplateProps): JSX.Element => {
   const [disabled, setDisabled] = React.useState<boolean>(false);
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [open, setOpen] = React.useState<boolean>(false);
   const [topic, setTopic] = React.useState<string>('');
 
@@ -49,7 +47,7 @@ export const TableTemplate = ({
 
   const handleServed = async (id: number) => {
     setDisabled(true);
-    await handleUpdateOrder(id);
+    await handleUpdateOrder(id, 2);
     await handleUpdateTable();
     setDisabled(false);
     setTopic('提供済にする');
@@ -58,7 +56,7 @@ export const TableTemplate = ({
 
   const handleCancel = async (id: number) => {
     setDisabled(true);
-    await handleUpdateOrder(id);
+    await handleUpdateOrder(id, 3);
     await handleUpdateTable();
     setDisabled(false);
     setTopic('キャンセルする');
@@ -67,7 +65,7 @@ export const TableTemplate = ({
 
   const handleOrdered = async (id: number) => {
     setDisabled(true);
-    await handleUpdateOrder(id);
+    await handleUpdateOrder(id, 1);
     await handleUpdateTable();
     setDisabled(false);
     setTopic('注文済に戻す');
@@ -87,7 +85,6 @@ export const TableTemplate = ({
 
   return (
     <>
-      {isLoading && <Loading />}
       <TableInformation table={table} />
       <BillOperationButton
         operation="会計"

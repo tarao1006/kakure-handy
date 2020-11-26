@@ -17,7 +17,7 @@ export const OperationSnackbar = ({
   return (
     <Snackbar
       anchorOrigin={{
-        vertical: 'bottom',
+        vertical: 'top',
         horizontal: 'center',
       }}
       open={open}
