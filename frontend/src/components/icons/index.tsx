@@ -1,5 +1,6 @@
 export { default as AccountCircle} from '@material-ui/icons/AccountCircle';
 export { default as Add } from '@material-ui/icons/Add';
+export { default as AddCircleOutlineOutlinedIcon } from '@material-ui/icons/AddCircleOutlineOutlined';
 export { default as CheckIcon } from '@material-ui/icons/Check';
 export { default as ClearIcon } from '@material-ui/icons/Clear';
 export { default as CloseIcon } from '@material-ui/icons/Close';
@@ -13,3 +14,4 @@ export { default as NotificationsIcon } from '@material-ui/icons/Notifications';
 export { default as PostAdd } from '@material-ui/icons/PostAdd';
 export { default as RadioButtonUncheckedIcon } from '@material-ui/icons/RadioButtonUnchecked';
 export { default as Remove } from '@material-ui/icons/Remove';
+export { default as RemoveCircleOutlineOutlinedIcon } from '@material-ui/icons/RemoveCircleOutlineOutlined';

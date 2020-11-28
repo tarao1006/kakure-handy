@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { FormControl, IconButton } from '@atoms';
-import { Add, Remove } from '@icons';
+import { AddCircleOutlineOutlinedIcon, RemoveCircleOutlineOutlinedIcon } from '@icons';
 import { NumberSelect } from '@molecules';
 import { Item, MIN_ORDER_COUNT, MAX_ORDER_COUNT } from '@model';
 import { useItems } from '@hooks';
@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
     icon: {
       display: 'flex',
       flexDirection: 'row',
-      alignItems: 'space-between',
+      justifyContent: 'space-between',
     },
   })
 );
@@ -41,13 +41,13 @@ export const NewOrderController: React.FC<FoldedListItemProps> = ({ item }) => {
   return (
     <div className={classes.icon}>
       <IconButton size='small' onClick={handleDecrement} disabled={item.count <= MIN_ORDER_COUNT}>
-        <Remove />
+        <RemoveCircleOutlineOutlinedIcon color="secondary" />
       </IconButton>
       <FormControl>
         <NumberSelect value={item.count} handleChange={handleChange} />
       </FormControl>
       <IconButton size='small' onClick={handleIncrement} disabled={item.count >= MAX_ORDER_COUNT}>
-        <Add />
+        <AddCircleOutlineOutlinedIcon color="primary" />
       </IconButton>
     </div>
 

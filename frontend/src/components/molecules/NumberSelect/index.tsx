@@ -20,6 +20,7 @@ export const NumberSelect = ({
       value={value}
       onChange={handleChange}
       SelectProps={{native: true}}
+      InputProps={{disableUnderline: true}}
     >
       {
         numList.map(num => (
