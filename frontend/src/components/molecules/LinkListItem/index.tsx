@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ListItem, ListItemText } from '@atoms';
-import { Table } from '@model';
+import { Table, ORDER_STATUS_ORDERED } from '@model';
 import { convertTimeToHM } from '@utils';
 
 interface LinkListItemProps {
@@ -26,7 +26,10 @@ export const LinkListItem = ({ table, handleClick }: LinkListItemProps): JSX.Ele
 
   return (
     <ListItem button component="a" onClick={handleLink}>
-      <ListItemText primary={table.room.name} secondary={`${convertTimeToHM(table.startAt, date)}経過`} />
+      <ListItemText
+        primary={table.room.name}
+        secondary={`${convertTimeToHM(table.startAt, date)}経過 未提供: ${table.orders.filter(order => order.status.id === ORDER_STATUS_ORDERED).length} 件`}
+      />
     </ListItem>
   )
 }
