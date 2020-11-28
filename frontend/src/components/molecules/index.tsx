@@ -8,6 +8,7 @@ export { NewOrderFormControl } from './NewOrderFormControl';
 export { NewOrderFormLabel } from './NewOrderFormLabel';
 export { NewOrderStepper } from './NewOrderStepper';
 export { NewTableSelect } from './NewTableSelect';
+export { NumberSelect } from './NumberSelect';
 export { OperationSnackbar } from './OperationSnackbar';
 export { OrderDialogContent } from './OrderDialogContent';
 export { OrderDialogOperationButton } from './OrderDialogOperationButton';

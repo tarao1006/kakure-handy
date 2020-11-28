@@ -1,7 +1,7 @@
 import React from 'react';
 import { List } from '@atoms';
 import { FolderListItem as ItemList } from '@molecules';
-import { FoldedListItem } from '@organisms';
+import { ItemListItem } from '@organisms';
 import { useItems } from '@hooks';
 
 export const CategoryList = ({
@@ -21,7 +21,7 @@ export const CategoryList = ({
                 {
                   items
                     .filter(item => item.category.id === category.id)
-                    .map(item => <FoldedListItem key={item.id} item={item} />)
+                    .map(item => <ItemListItem key={item.id} item={item} />)
                 }
               </List>
             }

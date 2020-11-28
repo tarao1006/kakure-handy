@@ -12,3 +12,4 @@ export { default as MenuIcon } from '@material-ui/icons/Menu';
 export { default as NotificationsIcon } from '@material-ui/icons/Notifications';
 export { default as PostAdd } from '@material-ui/icons/PostAdd';
 export { default as RadioButtonUncheckedIcon } from '@material-ui/icons/RadioButtonUnchecked';
+export { default as Remove } from '@material-ui/icons/Remove';

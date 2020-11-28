@@ -1,13 +1,10 @@
 import * as React from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import {
-  FormControl,
-  IconButton,
-  TextField
-} from '@material-ui/core';
-import { Add, Remove } from '@material-ui/icons';
+import { FormControl, IconButton } from '@atoms';
+import { Add, Remove } from '@icons';
+import { NumberSelect } from '@molecules';
 import { Item, MIN_ORDER_COUNT, MAX_ORDER_COUNT } from '@model';
-import useItems from '../../../hooks/useItems';
+import { useItems } from '@hooks';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,33 +15,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-
-let numList = [];
-for (let i = 0; i <= MAX_ORDER_COUNT; ++i) {
-  numList.push(i);
-}
-
-const NumberSelectList = ({ value, handleChange }) => {
-
-  return (
-    <TextField
-      select
-      value={value}
-      onChange={handleChange}
-      SelectProps={{
-        native: true,
-      }}
-    >
-      {
-        numList.map(num => (
-          <option key={num} value={num}>
-            {num}
-          </option>
-        ))
-      }
-    </TextField>
-  )
-}
 
 interface FoldedListItemProps {
   item: Item;
@@ -74,7 +44,7 @@ export const NewOrderController: React.FC<FoldedListItemProps> = ({ item }) => {
         <Remove />
       </IconButton>
       <FormControl>
-        <NumberSelectList value={item.count} handleChange={handleChange} />
+        <NumberSelect value={item.count} handleChange={handleChange} />
       </FormControl>
       <IconButton size='small' onClick={handleIncrement} disabled={item.count >= MAX_ORDER_COUNT}>
         <Add />

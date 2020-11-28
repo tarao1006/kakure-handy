@@ -1,7 +1,7 @@
 export { BillOperationButton } from './BillOperationButton';
 export { CategoryList } from './CategoryList';
 export { ConfirmationDialog } from './ConfirmationDialog';
-export { FoldedListItem } from './FoldedListItem';
+export { ItemListItem } from './ItemListItem';
 export { Footer } from './Footer';
 export { Header } from './Header';
 export { LogInForm } from './LogInForm';
