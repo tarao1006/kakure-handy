@@ -1,0 +1,572 @@
+[
+  {
+    "subcategory_id": 1,
+    "name": "旬野菜の彩りサラダ オレンジドレッシング",
+    "price": 850
+  },
+  {
+    "subcategory_id": 1,
+    "name": "水菜とくみあげゆばのサラダ オリジナル和風ドレッシング",
+    "price": 900
+  },
+  {
+    "subcategory_id": 1,
+    "name": "スモークサーモンとアボカドのシーザーサラダ",
+    "price": 950
+  },
+  {
+    "subcategory_id": 2,
+    "name": "鶏そぼろ奴っこ",
+    "price": 600
+  },
+  {
+    "subcategory_id": 2,
+    "name": "くみ上げ湯葉",
+    "price": 650
+  },
+  {
+    "subcategory_id": 2,
+    "name": "鯛のからすみ和え",
+    "price": 800
+  },
+  {
+    "subcategory_id": 2,
+    "name": "ほたるいかの沖漬け",
+    "price": 650
+  },
+  {
+    "subcategory_id": 2,
+    "name": "さばへしこ",
+    "price": 600
+  },
+  {
+    "subcategory_id": 2,
+    "name": "京漬物の盛り合わせ",
+    "price": 650
+  },
+  {
+    "subcategory_id": 2,
+    "name": "チャンジャクリームチーズ",
+    "price": 700
+  },
+  {
+    "subcategory_id": 3,
+    "name": "生麩とベーコンの九条葱バター醤油焼き",
+    "price": 950
+  },
+  {
+    "subcategory_id": 3,
+    "name": "生麩の揚げ出し",
+    "price": 700
+  },
+  {
+    "subcategory_id": 3,
+    "name": "エビのマヨネーズソース",
+    "price": 900
+  },
+  {
+    "subcategory_id": 3,
+    "name": "京赤地鶏の塩焼き",
+    "price": 1200
+  },
+  {
+    "subcategory_id": 3,
+    "name": "鴨肉黒七味焼き",
+    "price": 1500
+  },
+  {
+    "subcategory_id": 3,
+    "name": "和牛レアステーキ",
+    "price": 2400
+  },
+  {
+    "subcategory_id": 4,
+    "name": "ぶぶ漬け 鮭",
+    "price": 600
+  },
+  {
+    "subcategory_id": 4,
+    "name": "ぶぶ漬け 梅",
+    "price": 500
+  },
+  {
+    "subcategory_id": 4,
+    "name": "ぶぶ漬け 明太子",
+    "price": 700
+  },
+  {
+    "subcategory_id": 4,
+    "name": "ぶぶ漬け ちりめん山椒",
+    "price": 650
+  },
+  {
+    "subcategory_id": 4,
+    "name": "京風湯葉あんかけにゅうめん",
+    "price": 800
+  },
+  {
+    "subcategory_id": 4,
+    "name": "あぶり鯖寿司(4カン)",
+    "price": 1200
+  },
+  {
+    "subcategory_id": 4,
+    "name": "赤出汁",
+    "price": 400
+  },
+  {
+    "subcategory_id": 5,
+    "name": "ほうじ茶プリン",
+    "price": 500
+  },
+  {
+    "subcategory_id": 5,
+    "name": "抹茶アイス",
+    "price": 450
+  },
+  {
+    "subcategory_id": 5,
+    "name": "黒ごまアイス",
+    "price": 450
+  },
+  {
+    "subcategory_id": 6,
+    "name": "付き出し",
+    "price": 600
+  },
+  {
+    "subcategory_id": 7,
+    "name": "生ビール(キリン一番絞り) <中>",
+    "price": 700
+  },
+  {
+    "subcategory_id": 7,
+    "name": "瓶ビール(クラシックラガー)",
+    "price": 700
+  },
+  {
+    "subcategory_id": 7,
+    "name": "キリン零ICHI(ノンアルコール)",
+    "price": 600
+  },
+  {
+    "subcategory_id": 8,
+    "name": "シーバスリーガル ロック",
+    "price": 850
+  },
+  {
+    "subcategory_id": 8,
+    "name": "シーバスリーガル 水割り",
+    "price": 850
+  },
+  {
+    "subcategory_id": 8,
+    "name": "シーバスリーガル ソーダ",
+    "price": 850
+  },
+  {
+    "subcategory_id": 8,
+    "name": "シーバスリーガル その他",
+    "price": 850
+  },
+  {
+    "subcategory_id": 8,
+    "name": "山崎 ロック",
+    "price": 900
+  },
+  {
+    "subcategory_id": 8,
+    "name": "山崎 水割り",
+    "price": 900
+  },
+  {
+    "subcategory_id": 8,
+    "name": "山崎 ソーダ",
+    "price": 900
+  },
+  {
+    "subcategory_id": 8,
+    "name": "山崎 その他",
+    "price": 900
+  },
+  {
+    "subcategory_id": 9,
+    "name": "黒烏龍茶",
+    "price": 550
+  },
+  {
+    "subcategory_id": 9,
+    "name": "コカコーラ",
+    "price": 450
+  },
+  {
+    "subcategory_id": 9,
+    "name": "ジンジャエール(甘口)",
+    "price": 450
+  },
+  {
+    "subcategory_id": 9,
+    "name": "ジンジャエール(辛口)",
+    "price": 450
+  },
+  {
+    "subcategory_id": 9,
+    "name": "オレンジジュース",
+    "price": 450
+  },
+  {
+    "subcategory_id": 9,
+    "name": "グレープフルーツジュース",
+    "price": 450
+  },
+  {
+    "subcategory_id": 9,
+    "name": "梅ジュース 水割り",
+    "price": 450
+  },
+  {
+    "subcategory_id": 9,
+    "name": "梅ジュース ソーダ",
+    "price": 450
+  },
+  {
+    "subcategory_id": 9,
+    "name": "マンゴジュース",
+    "price": 450
+  },
+  {
+    "subcategory_id": 9,
+    "name": "緑茶(玉露)",
+    "price": 450
+  },
+  {
+    "subcategory_id": 10,
+    "name": "京まんざら(京都)純米酒",
+    "price": 800
+  },
+  {
+    "subcategory_id": 10,
+    "name": "伯楽星(宮城)純米酒吟醸",
+    "price": 1000
+  },
+  {
+    "subcategory_id": 11,
+    "name": "井田萬力(大分) ロック",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "井田萬力(大分) 水割り",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "井田萬力(大分) ソーダ",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "井田萬力(大分) その他",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "井田萬力(大分) 四合瓶",
+    "price": 4500
+  },
+  {
+    "subcategory_id": 11,
+    "name": "兼八(宮崎) ロック",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "兼八(宮崎) 水割り",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "兼八(宮崎) ソーダ",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "兼八(宮崎) その他",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "兼八(宮崎) 四合瓶",
+    "price": 4800
+  },
+  {
+    "subcategory_id": 11,
+    "name": "百年の孤独 ロック",
+    "price": 1000
+  },
+  {
+    "subcategory_id": 11,
+    "name": "百年の孤独 水割り",
+    "price": 1000
+  },
+  {
+    "subcategory_id": 11,
+    "name": "百年の孤独 ソーダ",
+    "price": 1000
+  },
+  {
+    "subcategory_id": 11,
+    "name": "百年の孤独 その他",
+    "price": 1000
+  },
+  {
+    "subcategory_id": 11,
+    "name": "八海山(新潟) ロック",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "八海山(新潟) 水割り",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "八海山(新潟) ソーダ",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "八海山(新潟) その他",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "㐂六(鹿児島) ロック",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "㐂六(鹿児島) 水割り",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "㐂六(鹿児島) ソーダ",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "㐂六(鹿児島) その他",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "㐂六(鹿児島) 四合瓶",
+    "price": 4500
+  },
+  {
+    "subcategory_id": 11,
+    "name": "富乃宝山(鹿児島) ロック",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "富乃宝山(鹿児島) 水割り",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "富乃宝山(鹿児島) ソーダ",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "富乃宝山(鹿児島) その他",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "富乃宝山(鹿児島) 四合瓶",
+    "price": 4800
+  },
+  {
+    "subcategory_id": 11,
+    "name": "朝日(鹿児島) ロック",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "朝日(鹿児島) 水割り",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "朝日(鹿児島) ソーダ",
+    "price": 700
+  },
+  {
+    "subcategory_id": 11,
+    "name": "朝日(鹿児島) その他",
+    "price": 700
+  },
+  {
+    "subcategory_id": 12,
+    "name": "七年熟成梅酒青谷の梅(京都) ロック",
+    "price": 700
+  },
+  {
+    "subcategory_id": 12,
+    "name": "七年熟成梅酒青谷の梅(京都) 水割り",
+    "price": 700
+  },
+  {
+    "subcategory_id": 12,
+    "name": "七年熟成梅酒青谷の梅(京都) ソーダ",
+    "price": 700
+  },
+  {
+    "subcategory_id": 12,
+    "name": "七年熟成梅酒青谷の梅(京都) その他",
+    "price": 700
+  },
+  {
+    "subcategory_id": 12,
+    "name": "あらごし梅酒(奈良) ロック",
+    "price": 750
+  },
+  {
+    "subcategory_id": 12,
+    "name": "あらごし梅酒(奈良) 水割り",
+    "price": 750
+  },
+  {
+    "subcategory_id": 12,
+    "name": "あらごし梅酒(奈良) ソーダ",
+    "price": 750
+  },
+  {
+    "subcategory_id": 12,
+    "name": "あらごし梅酒(奈良) その他",
+    "price": 750
+  },
+  {
+    "subcategory_id": 12,
+    "name": "うぐいすとまり鶯とろ(福岡) ロック",
+    "price": 750
+  },
+  {
+    "subcategory_id": 12,
+    "name": "うぐいすとまり鶯とろ(福岡) 水割り",
+    "price": 750
+  },
+  {
+    "subcategory_id": 12,
+    "name": "うぐいすとまり鶯とろ(福岡) ソーダ",
+    "price": 750
+  },
+  {
+    "subcategory_id": 12,
+    "name": "うぐいすとまり鶯とろ(福岡) その他",
+    "price": 750
+  },
+  {
+    "subcategory_id": 13,
+    "name": "ゆず酒 ロック",
+    "price": 700
+  },
+  {
+    "subcategory_id": 13,
+    "name": "ゆず酒 水割り",
+    "price": 700
+  },
+  {
+    "subcategory_id": 13,
+    "name": "ゆず酒 ソーダ",
+    "price": 700
+  },
+  {
+    "subcategory_id": 13,
+    "name": "ゆず酒 その他",
+    "price": 700
+  },
+  {
+    "subcategory_id": 13,
+    "name": "みかん ロック",
+    "price": 700
+  },
+  {
+    "subcategory_id": 13,
+    "name": "みかん 水割り",
+    "price": 700
+  },
+  {
+    "subcategory_id": 13,
+    "name": "みかん ソーダ",
+    "price": 700
+  },
+  {
+    "subcategory_id": 13,
+    "name": "みかん その他",
+    "price": 700
+  },
+  {
+    "subcategory_id": 13,
+    "name": "シークァーサー ロック",
+    "price": 700
+  },
+  {
+    "subcategory_id": 13,
+    "name": "シークァーサー 水割り",
+    "price": 700
+  },
+  {
+    "subcategory_id": 13,
+    "name": "シークァーサー ソーダ",
+    "price": 700
+  },
+  {
+    "subcategory_id": 13,
+    "name": "シークァーサー その他",
+    "price": 700
+  },
+  {
+    "subcategory_id": 14,
+    "name": "モエ・エ・シャンドン <full>",
+    "price": 9800
+  },
+  {
+    "subcategory_id": 14,
+    "name": "ブリュット・アンペリアル <half>",
+    "price": 6000
+  },
+  {
+    "subcategory_id": 14,
+    "name": "リースリング",
+    "price": 5000
+  },
+  {
+    "subcategory_id": 14,
+    "name": "ミュスカデ・セーヴル・メーヌ シュール・リー",
+    "price": 5500
+  },
+  {
+    "subcategory_id": 14,
+    "name": "シャブリ",
+    "price": 6300
+  },
+  {
+    "subcategory_id": 14,
+    "name": "ヴィーニ・ヴェルト・ルージュ",
+    "price": 5000
+  },
+  {
+    "subcategory_id": 14,
+    "name": "ドメーヌ・ド・ラ・ガランス キュヴェ・風(KAZE)ルージュ",
+    "price": 6000
+  },
+  {
+    "subcategory_id": 14,
+    "name": "レ ザルミエール",
+    "price": 8500
+  }
+]

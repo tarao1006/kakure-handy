@@ -1,0 +1,15 @@
+INSERT INTO item_category (id, category_type_id, name) VALUES (1, 1, "サラダ");
+INSERT INTO item_category (id, category_type_id, name) VALUES (2, 1, "肴");
+INSERT INTO item_category (id, category_type_id, name) VALUES (3, 1, "一品");
+INSERT INTO item_category (id, category_type_id, name) VALUES (4, 1, "御飯もの");
+INSERT INTO item_category (id, category_type_id, name) VALUES (5, 1, "水物");
+INSERT INTO item_category (id, category_type_id, name) VALUES (6, 1, "その他");
+INSERT INTO item_category (id, category_type_id, name) VALUES (7, 2, "ビール");
+INSERT INTO item_category (id, category_type_id, name) VALUES (8, 2, "ウィスキー");
+INSERT INTO item_category (id, category_type_id, name) VALUES (9, 2, "ソフトドリンク");
+INSERT INTO item_category (id, category_type_id, name) VALUES (10, 2, "日本酒");
+INSERT INTO item_category (id, category_type_id, name) VALUES (11, 2, "焼酎");
+INSERT INTO item_category (id, category_type_id, name) VALUES (12, 2, "梅酒");
+INSERT INTO item_category (id, category_type_id, name) VALUES (13, 2, "果実酒");
+INSERT INTO item_category (id, category_type_id, name) VALUES (14, 2, "ワイン");
+INSERT INTO item_category (id, category_type_id, name) VALUES (15, 2, "その他");
