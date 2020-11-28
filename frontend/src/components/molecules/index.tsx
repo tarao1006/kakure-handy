@@ -1,4 +1,5 @@
 export { Copyright } from './Copyright';
+export { FolderListItem } from './FolderListItem';
 export { LinkListItem } from './LinkListItem';
 export { Loading } from './Loading';
 export { Navigation } from './Navigation';

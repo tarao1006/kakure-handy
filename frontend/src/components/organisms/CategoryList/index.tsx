@@ -1,7 +1,7 @@
 import React from 'react';
 import { List } from '@atoms';
-import { InboxIcon } from '@icons';
-import { FoldedList } from '@organisms';
+import { FolderListItem as ItemList } from '@molecules';
+import { FoldedListItem } from '@organisms';
 import { useItems } from '@hooks';
 
 export const CategoryList = ({
@@ -13,11 +13,18 @@ export const CategoryList = ({
     <List>
       {
         categories.map((category, index) => (
-          <FoldedList
-            Icon={InboxIcon}
+          <ItemList
             key={index}
-            category={category}
-            items={items.filter(item => item.category.id === category.id)}
+            title={category.name}
+            collapsedContent={
+              <List component="div" disablePadding>
+                {
+                  items
+                    .filter(item => item.category.id === category.id)
+                    .map(item => <FoldedListItem key={item.id} item={item} />)
+                }
+              </List>
+            }
           />
         ))
       }
