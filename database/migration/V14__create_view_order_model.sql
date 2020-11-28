@@ -1,3 +1,24 @@
+CREATE VIEW menu_item_category_type AS (
+SELECT
+  menu_item.id,
+  menu_item.name,
+  menu_item.price,
+  item_category.id AS category_id,
+  item_category.name AS category_name,
+  item_category_type.id AS category_type_id,
+  item_category_type.name AS category_type_name
+FROM
+  menu_item
+INNER JOIN
+  item_category
+ON
+  menu_item.category_id = item_category.id
+INNER JOIN
+  item_category_type
+ON
+  item_category_type.id = item_category.category_type_id
+);
+
 CREATE VIEW order_model AS (
 SELECT
   cuisine_order.id,
@@ -5,19 +26,21 @@ SELECT
   cuisine_order.staff_id,
   cuisine_order.quantity,
   cuisine_order.created_at,
-  menu_item.id AS item_id,
-  menu_item.category_id,
-  menu_item.subcategory_id,
-  menu_item.name AS item_name,
-  menu_item.price,
+  menu_item_category_type.id AS item_id,
+  menu_item_category_type.name AS item_name,
+  menu_item_category_type.price,
+  menu_item_category_type.category_id,
+  menu_item_category_type.category_name,
+  menu_item_category_type.category_type_id,
+  menu_item_category_type.category_type_name,
   order_status.id AS status_id,
   order_status.status
 FROM
   cuisine_order
 INNER JOIN
-  menu_item
+  menu_item_category_type
 ON
-  cuisine_order.item_id = menu_item.id
+  cuisine_order.item_id = menu_item_category_type.id
 INNER JOIN
   order_status
 ON

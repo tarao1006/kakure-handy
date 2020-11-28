@@ -1,0 +1,77 @@
+[
+  {
+    "id": 1,
+    "category_type_id": 1,
+    "name": "サラダ"
+  },
+  {
+    "id": 2,
+    "category_type_id": 1,
+    "name": "肴"
+  },
+  {
+    "id": 3,
+    "category_type_id": 1,
+    "name": "一品"
+  },
+  {
+    "id": 4,
+    "category_type_id": 1,
+    "name": "御飯もの"
+  },
+  {
+    "id": 5,
+    "category_type_id": 1,
+    "name": "水物"
+  },
+  {
+    "id": 6,
+    "category_type_id": 1,
+    "name": "その他"
+  },
+  {
+    "id": 7,
+    "category_type_id": 2,
+    "name": "ビール"
+  },
+  {
+    "id": 8,
+    "category_type_id": 2,
+    "name": "ウィスキー"
+  },
+  {
+    "id": 9,
+    "category_type_id": 2,
+    "name": "ソフトドリンク"
+  },
+  {
+    "id": 10,
+    "category_type_id": 2,
+    "name": "日本酒"
+  },
+  {
+    "id": 11,
+    "category_type_id": 2,
+    "name": "焼酎"
+  },
+  {
+    "id": 12,
+    "category_type_id": 2,
+    "name": "梅酒"
+  },
+  {
+    "id": 13,
+    "category_type_id": 2,
+    "name": "果実酒"
+  },
+  {
+    "id": 14,
+    "category_type_id": 2,
+    "name": "ワイン"
+  },
+  {
+    "id": 15,
+    "category_type_id": 2,
+    "name": "その他"
+  }
+]

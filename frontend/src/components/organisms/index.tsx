@@ -15,7 +15,7 @@ export { OrderListItem } from './OrderListItem';
 export { OrderOperationDialog } from './OrderOperationDialog';
 export { OrderStatusList } from './OrderStatusList';
 export { OrderStatusListItem } from './OrderStatusListItem';
-export { SelectCategoryTab } from './SelectCategoryTab';
+export { SelectCategory } from './SelectCategory';
 export { SelectItem } from './SelectItem';
 export { SelectTable } from './SelectTable';
 export { TableInformation } from './TableInformation';

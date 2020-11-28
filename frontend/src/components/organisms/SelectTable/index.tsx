@@ -1,46 +1,24 @@
 import * as React from 'react';
-import {
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  Radio,
-  FormControlLabel,
-} from '@material-ui/core';
-import { Table } from '@model';
+import { NewOrderFormLabel, SelectTableList, NewOrderFormControl } from '@molecules';
 import useTables from '../../../hooks/useTables';
 
-export const SelectTable: React.FC<{}> = () => {
-  const { tables, targetTable, updateTable } = useTables();
-  const [value, setValue] = React.useState<Table | undefined>(targetTable);
+interface SelectTableProps {
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-  React.useEffect(() => {
-    setValue(targetTable);
-  }, [targetTable]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const id = Number.parseInt(e.target.value);
-    const table = tables.find(table => table.id === id);
-    setValue(table);
-    updateTable(table);
-  };
+export const SelectTable = ({
+  handleChange
+}: SelectTableProps): JSX.Element => {
+  const { tables, targetTable } = useTables();
 
   return (
-    <FormControl component="fieldset">
-      <FormLabel component="legend">
-        部屋を選択してください。
-      </FormLabel>
-      <RadioGroup value={value === undefined ? 0 : value.id} onChange={handleChange}>
-        {
-          tables.map(table => (
-            <FormControlLabel
-              key={table.id}
-              value={table.id}
-              control={<Radio color="primary" />}
-              label={table.room.name}
-            />
-          ))
-        }
-      </RadioGroup>
-    </FormControl>
+    <NewOrderFormControl>
+      <NewOrderFormLabel>部屋を選択してください。</NewOrderFormLabel>
+      <SelectTableList
+        tables={tables}
+        value={targetTable}
+        handleChange={handleChange}
+      />
+    </NewOrderFormControl>
   )
 }

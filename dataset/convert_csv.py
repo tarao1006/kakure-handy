@@ -53,4 +53,4 @@ if __name__ == "__main__":
             print(f'INSERT INTO {name} ({columns}) VALUES ({values});', file=f)
 
     shutil.copy(json_file, FRONTEND_DIR / json_file.name)
-    shutil.copy(sql_file, MIGRATION_DIR / f'{MIGRATION_PREFIX[name]}__create_{name}_data_.sql')
+    shutil.copy(sql_file, MIGRATION_DIR / f'{MIGRATION_PREFIX[name]}__create_{name}_data.sql')

@@ -1,45 +1,27 @@
 import * as React from 'react';
 import {
-  FormControl,
-  FormLabel,
-} from '@material-ui/core';
-import { SelectCategoryTab } from '@organisms';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: '100%',
-    },
-    tabRoot: {
-      flexGrow: 1,
-      backgroundColor: theme.palette.background.paper,
-    },
-    scrollArea: {
-      width: '100%',
-      maxHeight: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      overflow: 'scroll',
-    },
-  }),
-);
+  FormControl
+} from '@atoms';
+import { NewOrderFormLabel, NewOrderFormControl } from '@molecules';
+import { SelectCategory } from '@organisms';
 
 interface SelectItemProps {
   activeCategory: number;
-  setActiveCategory: (categoryId: number) => void;
+  setActiveCategory: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export const SelectItem: React.FC<SelectItemProps> = ({ activeCategory, setActiveCategory }) => {
-  const classes = useStyles();
+export const SelectItem = ({
+  activeCategory,
+  setActiveCategory
+}: SelectItemProps): JSX.Element => {
 
   return (
-    <FormControl component="fieldset" className={classes.root}>
-      <FormLabel component="legend">注文するメニューを選択してください。</FormLabel>
-        <SelectCategoryTab
-          activeCategory={activeCategory}
-          setActiveCategory={setActiveCategory}
-        />
-    </FormControl>
+    <NewOrderFormControl>
+      <NewOrderFormLabel>注文するメニューを選択してください。</NewOrderFormLabel>
+      <SelectCategory
+        activeCategory={activeCategory}
+        setActiveCategory={setActiveCategory}
+      />
+    </NewOrderFormControl>
   )
 }
