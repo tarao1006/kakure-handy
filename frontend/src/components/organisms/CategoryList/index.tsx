@@ -12,7 +12,9 @@ export const CategoryList = ({
 
   const handleClick = (index: number) => {
     let newOpens = Array.from({length: categories.length}, (k, v) => false);
-    newOpens[index] = true;
+    if (!opens[index]) {
+      newOpens[index] = true;
+    }
     setOpens(newOpens);
   }
 
