@@ -1,8 +1,6 @@
 package service
 
 import (
-	"log"
-
 	"github.com/jmoiron/sqlx"
 	"github.com/tarao1006/kakure-handy/repository"
 )
@@ -36,8 +34,6 @@ func (r *Room) AvailableRoom() ([]int64, error) {
 			res = append(res, ID)
 		}
 	}
-	log.Println(available)
-	log.Println(res)
 
 	return res, nil
 }
