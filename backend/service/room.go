@@ -32,10 +32,11 @@ func (r *Room) AvailableRoom() ([]int64, error) {
 	available := BIT_MASK ^ filled
 	res := make([]int64, 0)
 	for _, ID := range IDs {
-		if available&ID > 0 {
+		if available&ID == ID {
 			res = append(res, ID)
 		}
 	}
+	log.Println(available)
 	log.Println(res)
 
 	return res, nil
