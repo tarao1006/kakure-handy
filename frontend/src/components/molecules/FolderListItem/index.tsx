@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Collapse,
   ListItem,
@@ -8,14 +8,16 @@ import { ExpandLess, ExpandMore } from '@icons';
 
 interface FolderListItemProps {
   title: string;
+  collapsed?: boolean;
   collapsedContent: React.ReactNode;
 }
 
 export const FolderListItem = ({
   title,
-  collapsedContent
+  collapsedContent,
+  collapsed = true
 }: FolderListItemProps): JSX.Element => {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(!collapsed);
 
   const handleClick = () => {
     setOpen(!open)

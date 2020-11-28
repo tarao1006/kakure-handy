@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { List } from '@atoms';
+import { FolderListItem } from '@molecules';
+import { OrderList } from '@organisms';
 import { Order } from '@model';
-import { OrderStatusListItem } from '@organisms';
 
 interface OrderStatusListProps {
   disabled: boolean;
@@ -36,29 +37,42 @@ export const OrderStatusList = ({
 
   return (
     <List>
-      <OrderStatusListItem
-        disabled={disabled}
-        status="未提供"
-        orders={orderedOrders}
-        handleServed={handleServed}
-        handleCancel={handleCancel}
-        handleOrdered={handleOrdered}
+      <FolderListItem
+        title={`未提供 (${orderedOrders.length} 件)`}
+        collapsedContent={
+          <OrderList
+            disabled={disabled}
+            orders={orderedOrders}
+            handleServed={handleServed}
+            handleCancel={handleCancel}
+            handleOrdered={handleOrdered}
+          />
+        }
+        collapsed={orderedOrders.length !== 0}
       />
-      <OrderStatusListItem
-        disabled={disabled}
-        status="提供済"
-        orders={servedOrders}
-        handleServed={handleServed}
-        handleCancel={handleCancel}
-        handleOrdered={handleOrdered}
+      <FolderListItem
+        title={`提供済 (${servedOrders.length} 件)`}
+        collapsedContent={
+          <OrderList
+            disabled={disabled}
+            orders={servedOrders}
+            handleServed={handleServed}
+            handleCancel={handleCancel}
+            handleOrdered={handleOrdered}
+          />
+        }
       />
-      <OrderStatusListItem
-        disabled={disabled}
-        status="キャンセル"
-        orders={cancelledOrders}
-        handleServed={handleServed}
-        handleCancel={handleCancel}
-        handleOrdered={handleOrdered}
+      <FolderListItem
+        title={`キャンセル (${cancelledOrders.length} 件)`}
+        collapsedContent={
+          <OrderList
+            disabled={disabled}
+            orders={cancelledOrders}
+            handleServed={handleServed}
+            handleCancel={handleCancel}
+            handleOrdered={handleOrdered}
+          />
+        }
       />
     </List>
   )
