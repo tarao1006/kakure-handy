@@ -7,8 +7,7 @@ import { convertToItems, convertToTables } from '@model';
 import { getTables, getItems, createOrder } from '@api';
 import useItems from '../../hooks/useItems';
 import useTables from '../../hooks/useTables';
-import drink from '@dataset/categoriesDrink.json';
-import food from '@dataset/categoriesFood.json';
+import category from '@dataset/item_category.json';
 
 export const NewOrder = () => {
   const { currentUser } = React.useContext(AuthContext);

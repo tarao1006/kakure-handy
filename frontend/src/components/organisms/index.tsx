@@ -1,5 +1,5 @@
 export { BillOperationButton } from './BillOperationButton';
-export { DrinkList, FoodList } from './CategoryList';
+export { CategoryList } from './CategoryList';
 export { ConfirmationDialog } from './ConfirmationDialog';
 export { FoldedList } from './FoldedList';
 export { FoldedListItem } from './FoldedListItem';

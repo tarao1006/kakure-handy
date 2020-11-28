@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CombinedState, INITIALIZE_ITEM, ADD_ITEM, INCREMENT_ITEM, DECREMENT_ITEM } from '../reducers';
 import { Item } from '../model';
 
-const useItems = () => {
+export const useItems = () => {
 
   const dispatch = useDispatch();
   const items = useSelector<CombinedState, Item[]>(state => state.items.items);

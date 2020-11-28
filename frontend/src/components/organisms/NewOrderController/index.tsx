@@ -55,7 +55,7 @@ export const NewOrderController: React.FC<FoldedListItemProps> = ({ item }) => {
   const { add, increment, decrement } = useItems();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let newItem = new Item(item.id, item.categoryId, item.subcategoryId, item.name, item.price);
+    let newItem = new Item(item.id, item.name, item.price, item.category);
     newItem.count = Number.parseInt(e.target.value);
     add(newItem);
   }

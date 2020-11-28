@@ -5,6 +5,7 @@ export { default as ClearIcon } from '@material-ui/icons/Clear';
 export { default as CloseIcon } from '@material-ui/icons/Close';
 export { default as ExpandLess } from '@material-ui/icons/ExpandLess';
 export { default as ExpandMore } from '@material-ui/icons/ExpandMore';
+export { default as InboxIcon } from '@material-ui/icons/MoveToInbox';
 export { default as KeyboardArrowLeftIcon } from '@material-ui/icons/KeyboardArrowLeft';
 export { default as LockOutlinedIcon } from '@material-ui/icons/LockOpenOutlined';
 export { default as MenuIcon } from '@material-ui/icons/Menu';

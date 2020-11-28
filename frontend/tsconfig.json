@@ -17,6 +17,7 @@
       "@model": ["./src/model/index.ts"],
       "@utils": ["./src/utils/index.ts"],
       "@api": ["./src/api/index.ts"],
+      "@hooks": ["./src/hooks/index.ts"],
       "@modules": ["./src/modules/index.ts"],
       "@contexts": ["./src/contexts/index.tsx"],
       "@atoms": ["./src/components/atoms/index.tsx"],

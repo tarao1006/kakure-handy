@@ -1,7 +1,4 @@
 import * as React from 'react';
-import {
-  FormControl
-} from '@atoms';
 import { NewOrderFormLabel, NewOrderFormControl } from '@molecules';
 import { SelectCategory } from '@organisms';
 

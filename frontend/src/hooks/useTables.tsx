@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CombinedState, INITIALIZE_TABLE, UPDATE_TABLE, RESET_TABLE } from '../reducers';
 import { Table } from '../model';
 
-const useTables = () => {
+export const useTables = () => {
 
   const dispatch = useDispatch();
   const tables = useSelector<CombinedState, Table[]>(state => state.tables.tables);

@@ -1,38 +1,36 @@
-const FOOD_CATEGORY_ID = 1;
-const DRINK_CATEGORY_ID = 2;
+import { Category, CategoryDTO } from '@model';
+export const FOOD_CATEGORY_ID = 1;
+export const DRINK_CATEGORY_ID = 2;
 export const MIN_ORDER_COUNT = 0;
 export const MAX_ORDER_COUNT = 20;
 
 export class Item {
   id: number;
-  categoryId?: number;
-  subcategoryId?: number;
-  name?: string;
-  price?: number;
+  name: string;
+  price: number;
+  category: Category;
   count?: number;
 
-  constructor(id: number, categoryId: number, subcategoryId: number, name: string, price: number) {
+  constructor(id: number, name: string, price: number, category: Category) {
     this.id = id;
-    this.categoryId = categoryId;
-    this.subcategoryId = subcategoryId;
     this.name = name;
     this.price = price;
+    this.category = category;
     this.count = 0;
   };
 
   isFood = (): boolean => {
-    return this.categoryId === FOOD_CATEGORY_ID;
+    return this.category.id === FOOD_CATEGORY_ID;
   };
 
   isDrink = (): boolean => {
-    return this.categoryId === DRINK_CATEGORY_ID;
+    return this.category.id === DRINK_CATEGORY_ID;
   };
 }
 
 export interface ItemDTO {
   id: number;
-  category_id: number;
-  subcategory_id: number;
+  category: CategoryDTO;
   name: string;
   price: number;
 }
@@ -40,10 +38,14 @@ export interface ItemDTO {
 export const convertToItem = (item: ItemDTO): Item => {
   return new Item(
     item.id,
-    item.category_id,
-    item.subcategory_id,
     item.name,
-    item.price
+    item.price,
+    {
+      id: item.category.id,
+      name: item.category.name,
+      categoryTypeId: item.category.category_type_id,
+      categoryTypeName: item.category.category_type_name,
+    },
   );
 }
 

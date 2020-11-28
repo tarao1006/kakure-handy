@@ -12,16 +12,12 @@ export const NewOrderTemplate = ({handleOrder}: NewOrderTemplateProps): JSX.Elem
   const [activeStep, setActiveStep] = React.useState<number>(1);
   const [activeCategory, setActiveCategory] = React.useState<number>(0);
   const { targetItems } = useItems();
-  const { tables, targetTable, updateTable } = useTables();
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    updateTable(tables.find(table => table.id === Number.parseInt(event.target.value)));
-  };
+  const { targetTable } = useTables();
 
   const getStepContent = (step: number) => {
     switch (step) {
       case 0:
-        return <SelectTable handleChange={handleChange} />
+        return <SelectTable />
       case 1:
         return <SelectItem activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
       case 2:

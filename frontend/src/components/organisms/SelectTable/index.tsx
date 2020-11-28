@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { NewOrderFormLabel, SelectTableList, NewOrderFormControl } from '@molecules';
-import useTables from '../../../hooks/useTables';
+import { useTables } from '@hooks';
 
-interface SelectTableProps {
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
+interface SelectTableProps {}
 
-export const SelectTable = ({
-  handleChange
-}: SelectTableProps): JSX.Element => {
-  const { tables, targetTable } = useTables();
+export const SelectTable = ({}: SelectTableProps): JSX.Element => {
+  const { tables, targetTable, updateTable } = useTables();
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    updateTable(tables.find(table => table.id === Number.parseInt(event.target.value)));
+  };
 
   return (
     <NewOrderFormControl>
