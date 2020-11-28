@@ -16,18 +16,20 @@ type Order struct {
 }
 
 type OrderDTO struct {
-	ID            int64     `db:"id"`
-	TableID       int64     `db:"table_id"`
-	StaffID       int64     `db:"staff_id"`
-	Quantity      int64     `db:"quantity"`
-	CreatedAt     time.Time `db:"created_at"`
-	ItemID        int64     `db:"item_id"`
-	ItemName      string    `db:"item_name"`
-	CategoryID    int64     `db:"category_id"`
-	SubcategoryID int64     `db:"subcategory_id"`
-	Price         int64     `db:"price"`
-	StatusID      int64     `db:"status_id"`
-	Status        string    `db:"status"`
+	ID               int64     `db:"id"`
+	TableID          int64     `db:"table_id"`
+	StaffID          int64     `db:"staff_id"`
+	Quantity         int64     `db:"quantity"`
+	CreatedAt        time.Time `db:"created_at"`
+	ItemID           int64     `db:"item_id"`
+	ItemName         string    `db:"item_name"`
+	CategoryID       int64     `db:"item_category_id"`
+	CategoryName     string    `db:"item_category_name"`
+	CategoryTypeID   int64     `db:"item_category_type_id"`
+	CategoryTypeName string    `db:"item_category_type_name"`
+	Price            int64     `db:"item_price"`
+	StatusID         int64     `db:"status_id"`
+	Status           string    `db:"status"`
 }
 
 type OrderParam struct {
@@ -55,11 +57,15 @@ func ConvertToOrder(order OrderDTO) Order {
 		Quantity:  order.Quantity,
 		CreatedAt: order.CreatedAt,
 		Item: Item{
-			ID:            order.ItemID,
-			Name:          order.ItemName,
-			CategoryID:    order.CategoryID,
-			SubcategoryID: order.SubcategoryID,
-			Price:         order.Price,
+			ID:   order.ItemID,
+			Name: order.ItemName,
+			Category: Category{
+				ID:               order.CategoryID,
+				Name:             order.CategoryName,
+				CategoryTypeID:   order.CategoryTypeID,
+				CategoryTypeName: order.CategoryTypeName,
+			},
+			Price: order.Price,
 		},
 		Status: Status{
 			ID:     order.StatusID,

@@ -8,23 +8,28 @@ import (
 )
 
 func AllItems(db *sqlx.DB) ([]model.Item, error) {
-	items := make([]model.Item, 0)
+	items := make([]model.ItemDTO, 0)
 	if err := db.Select(&items, `
-		SELECT id, category_id, subcategory_id, name, price FROM menu_item ORDER BY id
+		SELECT id, name, price, category_id, category_name, category_type_id, category_type_name FROM item_model ORDER BY id
 	`); err != nil {
 		return nil, err
 	}
-	return items, nil
+	res := make([]model.Item, 0)
+	for _, item := range items {
+		res = append(res, model.ConvertToItem(item))
+	}
+	return res, nil
 }
 
 func FindItemByID(db *sqlx.DB, ID int64) (*model.Item, error) {
-	item := model.Item{}
+	item := model.ItemDTO{}
 	if err := db.Get(&item, `
-		SELECT id, category_id, subcategory_id, name, price FROM room WHERE id = ?
+		SELECT id, name, price, category_id, category_name, category_type_id, category_type_name FROM item_model WHERE id = ?
 	`, ID); err != nil {
 		return nil, err
 	}
-	return &item, nil
+	res := model.ConvertToItem(item)
+	return &res, nil
 }
 
 func CreateItem(db *sqlx.Tx, item *model.Item) (result sql.Result, err error) {

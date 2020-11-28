@@ -28,11 +28,11 @@ SELECT
   cuisine_order.created_at,
   menu_item_category_type.id AS item_id,
   menu_item_category_type.name AS item_name,
-  menu_item_category_type.price,
-  menu_item_category_type.category_id,
-  menu_item_category_type.category_name,
-  menu_item_category_type.category_type_id,
-  menu_item_category_type.category_type_name,
+  menu_item_category_type.price AS item_price,
+  menu_item_category_type.category_id AS item_category_id,
+  menu_item_category_type.category_name AS item_category_name,
+  menu_item_category_type.category_type_id AS item_category_type_id,
+  menu_item_category_type.category_type_name AS item_category_type_name,
   order_status.id AS status_id,
   order_status.status
 FROM

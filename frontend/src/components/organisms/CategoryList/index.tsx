@@ -5,8 +5,8 @@ import {
 } from '@material-ui/core';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import { FoldedList } from '@organisms';
-import drink from '@dataset/categoriesDrink.json';
-import food from '@dataset/categoriesFood.json';
+import drink from '@dataset/item_category.json';
+import food from '@dataset/item_category.json';
 import useItems from '../../../hooks/useItems';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
