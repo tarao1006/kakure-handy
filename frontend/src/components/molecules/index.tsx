@@ -1,3 +1,4 @@
+export { CategoryListItem } from './CategoryListItem';
 export { Copyright } from './Copyright';
 export { FolderListItem } from './FolderListItem';
 export { LinkListItem } from './LinkListItem';
