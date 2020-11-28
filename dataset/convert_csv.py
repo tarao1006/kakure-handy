@@ -15,14 +15,16 @@ NAMES = {
     'item_category_type',
     'item_category',
     'menu_item',
-    'order_status'
+    'order_status',
+    'room'
 }
 
 MIGRATION_PREFIX = {
     'item_category_type': 'V4',
     'item_category': 'V5',
     'menu_item': 'V6',
-    'order_status': 'V7'
+    'order_status': 'V7',
+    'room': 'V8'
 }
 
 
@@ -31,6 +33,13 @@ def stringify(value):
         return f'"{value}"'
     else:
         return f'{value}'
+
+
+def replace_separator(value):
+    if isinstance(value, str):
+        return value.replace('-', ', ')
+    else:
+        return value
 
 
 if __name__ == "__main__":
@@ -42,7 +51,7 @@ if __name__ == "__main__":
     csv_file = CSV_DIR / f'{name}.csv'
     json_file = JSON_DIR / f'{name}.json'
     sql_file = SQL_DIR / f'{name}.sql'
-    c = pd.read_csv(csv_file)
+    c = pd.read_csv(csv_file).applymap(replace_separator)
     columns = ', '.join(c.columns)
 
     with open(json_file, 'w', encoding='utf-8') as f:

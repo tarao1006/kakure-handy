@@ -1,10 +1,11 @@
-import * as React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import { AuthContext } from '@contexts';
 import { Button } from '@atoms';
 import { createTable } from '@api';
 import { NewTableSelect } from '@molecules';
+import { Room } from '@model';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,61 +19,27 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const rooms = [
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "1, 2",
-  "2, 3",
-  "1, 2, 3",
-  "か",
-  "く",
-  "れ",
-  "か, く",
-  "く, れ",
-  "か, く, れ",
-  "カウンター"
-]
-
-const capacities = {
-  1: 5,
-  2: 5,
-  3: 5,
-  4: 2,
-  5: 2,
-  6: 3,
-  7: 10,
-  8: 10,
-  9: 20,
-  10: 5,
-  11: 5,
-  12: 5,
-  13: 10,
-  14: 10,
-  15: 20,
-  16: 5
+interface NewTableTemplateProps {
+  availableRooms: Room[];
 }
 
-export const NewTableTemplate = (): JSX.Element => {
-  const { currentUser } = React.useContext(AuthContext);
+export const NewTableTemplate = ({availableRooms}: NewTableTemplateProps): JSX.Element => {
+  const { currentUser } = useContext(AuthContext);
   const classes = useStyles();
   const history = useHistory();
-  const [tableId, setTableId] = React.useState<number>(1);
-  const [count, setCount] = React.useState<number>(0);
+  const [targetRoom, setTargetRoom] = useState<Room>(availableRooms[0]);
+  const [count, setCount] = useState<number>(0);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const token = await currentUser.getIdToken();
-    await createTable(token, tableId);
+    await createTable(token, targetRoom.id);
     history.push('/');
   }
 
   const handleTableIdChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setTableId(parseInt(event.target.value as string));
+    setTargetRoom(availableRooms.find(room => room.id === parseInt(event.target.value as string)));
   }
 
   const handleCountChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -82,16 +49,24 @@ export const NewTableTemplate = (): JSX.Element => {
   return (
     <form noValidate onSubmit={handleSubmit}>
       <NewTableSelect
-        id={tableId}
+        id={targetRoom.id}
         handleChange={handleTableIdChange}
         label="部屋"
-        values={rooms}
+        options={
+          availableRooms.map((room, idx) => (
+            <option key={idx + 1} value={room.id}>{room.name}</option>
+          ))
+        }
       />
       <NewTableSelect
         id={count}
         handleChange={handleCountChange}
         label="人数"
-        values={Array.from({length: capacities[tableId]}, (v, k) => `${k + 1}`)}
+        options={
+          (Array.from({length: targetRoom.capacity}, (k, v) => v + 1)).map((value, idx) => (
+            <option key={idx + 1} value={`${value}`}>{value}</option>
+          ))
+        }
       />
       <Button
         type="submit"

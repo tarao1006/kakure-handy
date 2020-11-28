@@ -60,6 +60,7 @@ func (s *Server) Route() http.Handler {
 	orderController := controller.NewOrder(s.db)
 	billController := controller.NewBill(s.db)
 	itemController := controller.NewItem(s.db)
+	roomController := controller.NewRoom(s.db)
 
 	r := mux.NewRouter()
 
@@ -76,6 +77,8 @@ func (s *Server) Route() http.Handler {
 	r.Methods(http.MethodDelete).Path("/table/{id:[0-9]+}/bill").Handler(AppHandler{billController.Delete})
 
 	r.Methods(http.MethodGet).Path("/item").Handler(AppHandler{itemController.Index})
+
+	r.Methods(http.MethodGet).Path("/room/available").Handler(AppHandler{roomController.Available})
 
 	recoverMiddleware := middleware.NewRecover()
 	authMiddleware := middleware.NewAuth(s.authClient, s.db)

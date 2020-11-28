@@ -32,7 +32,7 @@ INSERT INTO bill (id, table_id, amount) VALUES (NULL, 2, 10100);
 UPDATE dinner_table SET end_at = "2020-08-02 19:00:00", is_ended = true WHERE id = 2;
 
 -- 来客中のお客さん
-INSERT INTO dinner_table (id, room_id, person_count, start_at) VALUES (3, 3, 3, NOW());
-INSERT INTO dinner_table (id, room_id, person_count, start_at) VALUES (4, 4, 2, NOW());
+INSERT INTO dinner_table (id, room_id, person_count, start_at) VALUES (3, 4, 3, NOW());
+INSERT INTO dinner_table (id, room_id, person_count, start_at) VALUES (4, 8, 2, NOW());
 
 SET foreign_key_checks = 1;

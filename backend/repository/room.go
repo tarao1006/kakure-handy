@@ -8,7 +8,7 @@ import (
 func FindRoomByID(db *sqlx.DB, ID int64) (*model.Room, error) {
 	room := model.Room{}
 	if err := db.Get(&room, `
-		SELECT id, name FROM room WHERE id = ?
+		SELECT id, name, capacity FROM room WHERE id = ?
 	`, ID); err != nil {
 		return nil, err
 	}
