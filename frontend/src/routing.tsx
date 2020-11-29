@@ -21,12 +21,16 @@ import {
 import { Layout } from './laytout';
 
 interface RedirectRouteProps {
-  path: string
-  Child: React.FC
-  exact?: boolean
+  path: string;
+  children: React.ReactNode;
+  exact?: boolean;
 }
 
-const RedirectRoute: React.FC<RedirectRouteProps> = ({ path, Child, exact }) => {
+const RedirectRoute = ({
+  path,
+  children,
+  exact
+}: RedirectRouteProps): JSX.Element => {
   const { currentUser } = React.useContext(AuthContext);
 
   return (
@@ -37,7 +41,7 @@ const RedirectRoute: React.FC<RedirectRouteProps> = ({ path, Child, exact }) => 
         if (currentUser === undefined) {
           return <Loading />
         } else {
-          return currentUser !== null ? <Child /> : <Redirect to={`/login?redirect_to=${encodeURIComponent(match.url)}`} />
+          return currentUser !== null ? children : <Redirect to={`/login?redirect_to=${encodeURIComponent(match.url)}`} />
         }
       }}
     />
@@ -71,20 +75,20 @@ const Routing = () => {
             <RedirectRoute
               path='/'
               exact
-              Child={Tables}
+              children={<Tables />}
             />
             <RedirectRoute
               path='/new-order'
-              Child={NewOrder}
+              children={<NewOrder />}
             />
             <RedirectRoute
               path='/table/:tableId'
               exact
-              Child={TableDetail}
+              children={<TableDetail />}
             />
             <RedirectRoute
               path='/new-table'
-              Child={NewTable}
+              children={<NewTable />}
             />
             <Route
               path='/forget-password'
