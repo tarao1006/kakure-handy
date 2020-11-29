@@ -15,13 +15,13 @@ CREATE TABLE menu_item (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   category_id INT UNSIGNED NOT NULL,
   name VARCHAR(30) NOT NULL UNIQUE,
-  price INT UNSIGNED NOT NULL,
+  price INT NOT NULL,
   FOREIGN KEY (category_id) REFERENCES item_category(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE course_item (
   item_id INT UNSIGNED NOT NULL,
-  contents TEXT NOT NULL,
+  content_ids TEXT NOT NULL,
   FOREIGN KEY (item_id) REFERENCES menu_item(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

@@ -15,3 +15,4 @@ INSERT INTO item_category (id, category_type_id, name) VALUES (14, 2, "ワイン
 INSERT INTO item_category (id, category_type_id, name) VALUES (15, 2, "その他");
 INSERT INTO item_category (id, category_type_id, name) VALUES (16, 3, "コース");
 INSERT INTO item_category (id, category_type_id, name) VALUES (17, 1, "鍋");
+INSERT INTO item_category (id, category_type_id, name) VALUES (18, 3, "コースアイテム");

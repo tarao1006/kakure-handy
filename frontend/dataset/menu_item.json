@@ -643,5 +643,90 @@
     "category_id": 16,
     "name": "国産豚のハリハリ鍋とお料理のコース",
     "price": 5000
+  },
+  {
+    "category_id": 18,
+    "name": "隱の特製付き出し五種盛り",
+    "price": 0
+  },
+  {
+    "category_id": 18,
+    "name": "お造り盛り合わせ",
+    "price": 0
+  },
+  {
+    "category_id": 18,
+    "name": "季節の焼き物",
+    "price": 0
+  },
+  {
+    "category_id": 18,
+    "name": "国産牛のレアステーキ",
+    "price": 0
+  },
+  {
+    "category_id": 18,
+    "name": "季節の小鍋(お一人様用小鍋)",
+    "price": 0
+  },
+  {
+    "category_id": 18,
+    "name": "鯖寿司",
+    "price": 0
+  },
+  {
+    "category_id": 18,
+    "name": "デザート",
+    "price": 0
+  },
+  {
+    "category_id": 18,
+    "name": "本日の付き出し",
+    "price": 0
+  },
+  {
+    "category_id": 18,
+    "name": "お造り",
+    "price": 0
+  },
+  {
+    "category_id": 18,
+    "name": "おすすめ一品目",
+    "price": 0
+  },
+  {
+    "category_id": 18,
+    "name": "お鍋(鯛しゃぶ)",
+    "price": 0
+  },
+  {
+    "category_id": 18,
+    "name": "お鍋(国産牛のしゃぶしゃぶ)",
+    "price": 0
+  },
+  {
+    "category_id": 18,
+    "name": "お鍋(国産牛のすきやき)",
+    "price": 0
+  },
+  {
+    "category_id": 18,
+    "name": "お鍋(京赤地鶏の水炊き)",
+    "price": 0
+  },
+  {
+    "category_id": 18,
+    "name": "お鍋(京赤地鶏のすきやき)",
+    "price": 0
+  },
+  {
+    "category_id": 18,
+    "name": "お鍋(国産豚のハリハリ鍋)",
+    "price": 0
+  },
+  {
+    "category_id": 18,
+    "name": "仕上げ(細めん又は雑炊)",
+    "price": 0
   }
 ]

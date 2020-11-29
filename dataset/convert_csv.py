@@ -37,6 +37,13 @@ def stringify(value):
         return f'{value}'
 
 
+def listify(value):
+    if isinstance(value, str):
+        return f'[{value}]'
+    else:
+        return f'{value}'
+
+
 def replace_separator(value):
     if isinstance(value, str):
         return value.replace('-', ', ')
