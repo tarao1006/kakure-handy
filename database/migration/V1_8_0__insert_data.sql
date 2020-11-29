@@ -33,6 +33,9 @@ UPDATE dinner_table SET end_at = "2020-08-02 19:00:00", is_ended = true WHERE id
 
 -- 来客中のお客さん
 INSERT INTO dinner_table (id, room_id, person_count, start_at) VALUES (3, 4, 3, NOW());
+INSERT INTO cuisine_order (id, table_id, staff_id, item_id, quantity, status_id, created_at) VALUES (15, 3, 1, 27, 2, 2, NOW());
+
 INSERT INTO dinner_table (id, room_id, person_count, start_at) VALUES (4, 8, 2, NOW());
+INSERT INTO cuisine_order (id, table_id, staff_id, item_id, quantity, status_id, created_at) VALUES (16, 4, 1, 27, 2, 2, NOW());
 
 SET foreign_key_checks = 1;
