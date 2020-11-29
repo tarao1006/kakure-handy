@@ -1,5 +1,7 @@
 package model
 
+const CATEGORY_COURSE_ID int64 = 3
+
 type Category struct {
 	ID               int64  `db:"id" json:"id"`
 	Name             string `db:"name" json:"name"`

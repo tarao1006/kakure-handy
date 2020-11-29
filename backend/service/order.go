@@ -101,3 +101,33 @@ func (o *Order) Update(param *model.OrderParam) (*model.Order, error) {
 
 	return order, nil
 }
+
+func (o *Order) Next(ID int64) (*model.Order, error) {
+	nowOrder, err := repository.FindOrderByID(o.db, ID)
+	if err != nil {
+		return nil, err
+	}
+
+	if nowOrder.Item.Category.CategoryTypeID != model.CATEGORY_COURSE_ID {
+		return nil, errors.New("valid only for course")
+	}
+
+	if err := dbutil.TXHandler(o.db, func(tx *sqlx.Tx) error {
+
+		_, err := repository.ProgressOrder(tx, ID, nowOrder.CourseProgress+1)
+		if err != nil {
+			return err
+		}
+
+		return err
+	}); err != nil {
+		return nil, errors.Wrap(err, "failed order insert transaction")
+	}
+
+	order, err := repository.FindOrderByID(o.db, ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return order, nil
+}

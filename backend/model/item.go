@@ -2,6 +2,25 @@ package model
 
 const APPETIZER_ID int64 = 27
 
+var COURSE_ITEM_IDs = []int64{
+	123,
+	124,
+	125,
+	126,
+	127,
+	128,
+	129,
+}
+
+func IsCourse(ID int64) bool {
+	for _, course_id := range COURSE_ITEM_IDs {
+		if ID == course_id {
+			return true
+		}
+	}
+	return false
+}
+
 type Item struct {
 	ID       int64    `json:"id"`
 	Name     string   `json:"name"`

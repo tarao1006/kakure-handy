@@ -20,7 +20,7 @@ func NewOrder(db *sqlx.DB) *Order {
 	return &Order{db: db}
 }
 
-func (a *Order) Create(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
+func (o *Order) Create(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
 	tableID, err := httputil.ExtractID(mux.Vars(r), "id")
 	if err != nil {
 		return http.StatusBadRequest, nil, errors.New("required parameter is missing")
@@ -45,7 +45,7 @@ func (a *Order) Create(_ http.ResponseWriter, r *http.Request) (int, interface{}
 			TableID:  tableID,
 		})
 	}
-	orderService := service.NewOrder(a.db)
+	orderService := service.NewOrder(o.db)
 	order, err := orderService.Create(params)
 	if e, ok := err.(model.TableIsEndedError); ok {
 		return http.StatusBadRequest, nil, e
@@ -56,7 +56,7 @@ func (a *Order) Create(_ http.ResponseWriter, r *http.Request) (int, interface{}
 	return http.StatusCreated, order, nil
 }
 
-func (a *Order) Update(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
+func (o *Order) Update(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
 	vars := mux.Vars(r)
 
 	tableID, err := httputil.ExtractID(vars, "table_id")
@@ -78,8 +78,8 @@ func (a *Order) Update(_ http.ResponseWriter, r *http.Request) (int, interface{}
 	param.ID = orderID
 	param.TableID = tableID
 
-	orderService := service.NewOrder(a.db)
-	orderDetail, err := orderService.Update(param)
+	orderService := service.NewOrder(o.db)
+	order, err := orderService.Update(param)
 	if err != nil {
 		if err.Error() == "invalid operation" {
 			return http.StatusBadRequest, nil, err
@@ -87,14 +87,20 @@ func (a *Order) Update(_ http.ResponseWriter, r *http.Request) (int, interface{}
 		return http.StatusInternalServerError, nil, err
 	}
 
-	return http.StatusOK, orderDetail, nil
+	return http.StatusOK, order, nil
 }
 
 func (o *Order) Next(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
-	_, err := httputil.ExtractID(mux.Vars(r), "id")
+	ID, err := httputil.ExtractID(mux.Vars(r), "id")
 	if err != nil {
 		return http.StatusBadRequest, nil, errors.New("required parameter is missing")
 	}
 
-	return 200, nil, nil
+	orderService := service.NewOrder(o.db)
+	order, err := orderService.Next(ID)
+	if err != nil {
+		return http.StatusInternalServerError, nil, err
+	}
+
+	return http.StatusOK, order, nil
 }
