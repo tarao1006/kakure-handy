@@ -39,7 +39,7 @@ export const NewTable = () => {
     <>
       {isLoading && <Loading />}
       {isError && <Typography variant="h5" style={{textAlign: 'center'}}>空きがありません</Typography>}
-      {availableRooms.length !== 0 &&<NewTableTemplate availableRooms={availableRooms} />}
+      {availableRooms.length !== 0 && <NewTableTemplate availableRooms={availableRooms} />}
     </>
   )
 }

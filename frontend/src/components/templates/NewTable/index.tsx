@@ -35,7 +35,7 @@ export const NewTableTemplate = ({availableRooms}: NewTableTemplateProps): JSX.E
 
     const token = await currentUser.getIdToken();
     await createTable(token, targetRoom.id, count);
-    history.push('/');
+    history.push('/new-table-success');
   }
 
   const handleTableIdChange = (event: React.ChangeEvent<{ value: unknown }>) => {

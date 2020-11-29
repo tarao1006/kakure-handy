@@ -13,8 +13,9 @@ import {
   LogIn,
   MailSent,
   NewOrder,
-  NewTable,
   NewOrderSuccess,
+  NewTable,
+  NewTableSuccess,
   TableDetail,
   Tables,
 } from '@pages';
@@ -101,9 +102,14 @@ const Routing = () => {
               component={MailSent}
             />
             <Route
-              path='/order-success'
+              path='/new-order-success'
               exact
               component={NewOrderSuccess}
+            />
+            <Route
+              path='/new-table-success'
+              exact
+              component={NewTableSuccess}
             />
             <LogInRoute />
           </Layout>

@@ -43,7 +43,7 @@ export const NewOrder = () => {
     const res = await createOrder(token, targetTable.id, targetItems);
     if (res.length !== 0) {
       setIsLoading(false);
-      history.push('/order-success');
+      history.push('/new-order-success');
       resetTable();
     }
   }
