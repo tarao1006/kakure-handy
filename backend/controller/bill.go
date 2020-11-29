@@ -47,11 +47,10 @@ func (b *Bill) Create(_ http.ResponseWriter, r *http.Request) (int, interface{},
 	}
 
 	billService := service.NewBill(b.db)
-	res, err := billService.Create(tableID, amount)
-	if err != nil {
-		if err.Error() == "invalid table id" {
-			return http.StatusBadRequest, nil, err
-		}
+	res, createErr := billService.Create(tableID, amount)
+	if e, ok := createErr.(model.BillAlreadyExistError); ok {
+		return http.StatusBadRequest, nil, e
+	} else if createErr != nil {
 		return http.StatusInternalServerError, nil, err
 	}
 
