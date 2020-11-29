@@ -5,7 +5,6 @@ export interface Order {
   id: number;
   tableId: number;
   staffId: number;
-  courseProgress: number;
   quantity: number;
   createdAt: Date;
   item: Item;
@@ -28,7 +27,6 @@ export const convertToOrder = (order: OrderDTO): Order => {
     id: order.id,
     tableId: order.table_id,
     staffId: order.staff_id,
-    courseProgress: order.course_progress,
     quantity: order.quantity,
     createdAt: new Date(order.created_at),
     item: convertToItem(order.item),

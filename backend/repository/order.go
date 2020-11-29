@@ -37,14 +37,7 @@ func FindOrderByID(db *sqlx.DB, ID int64) (*model.Order, error) {
 }
 
 func CreateOrder(db *sqlx.Tx, param *model.OrderParam) (result sql.Result, err error) {
-	var query string
-	if model.IsCourse(param.ItemID) {
-		query = "INSERT INTO cuisine_order (staff_id, table_id, item_id, quantity, course_progress) VALUES (?,?,?,?,1)"
-	} else {
-		query = "INSERT INTO cuisine_order (staff_id, table_id, item_id, quantity) VALUES (?,?,?,?)"
-	}
-
-	stmt, err := db.Prepare(query)
+	stmt, err := db.Prepare("INSERT INTO cuisine_order (staff_id, table_id, item_id, quantity) VALUES (?,?,?,?)")
 	if err != nil {
 		return nil, err
 	}
@@ -69,18 +62,4 @@ func UpdateOrder(db *sqlx.Tx, ID int64, statusID int64) (result sql.Result, err 
 	}()
 
 	return stmt.Exec(statusID, ID)
-}
-
-func ProgressOrder(db *sqlx.Tx, ID int64, progress int64) (result sql.Result, err error) {
-	stmt, err := db.Prepare(`UPDATE cuisine_order SET course_progress = ? WHERE id = ?`)
-	if err != nil {
-		return nil, err
-	}
-	defer func() {
-		if closeErr := stmt.Close(); closeErr != nil {
-			err = closeErr
-		}
-	}()
-
-	return stmt.Exec(progress, ID)
 }

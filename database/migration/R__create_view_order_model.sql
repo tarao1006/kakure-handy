@@ -26,7 +26,6 @@ SELECT
   cuisine_order.staff_id,
   cuisine_order.quantity,
   cuisine_order.created_at,
-  cuisine_order.course_progress,
   menu_item_category_type.id AS item_id,
   menu_item_category_type.name AS item_name,
   menu_item_category_type.price AS item_price,

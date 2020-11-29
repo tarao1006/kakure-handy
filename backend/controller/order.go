@@ -89,20 +89,3 @@ func (o *Order) Update(_ http.ResponseWriter, r *http.Request) (int, interface{}
 
 	return http.StatusOK, order, nil
 }
-
-func (o *Order) Next(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
-	ID, err := httputil.ExtractID(mux.Vars(r), "id")
-	if err != nil {
-		return http.StatusBadRequest, nil, errors.New("required parameter is missing")
-	}
-
-	orderService := service.NewOrder(o.db)
-	order, progressErr := orderService.Next(ID)
-	if e, ok := progressErr.(model.IsNotCourseError); ok {
-		return http.StatusBadRequest, nil, e
-	} else if progressErr != nil {
-		return http.StatusInternalServerError, nil, err
-	}
-
-	return http.StatusOK, order, nil
-}

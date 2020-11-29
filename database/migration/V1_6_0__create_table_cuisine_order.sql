@@ -5,7 +5,6 @@ CREATE TABLE cuisine_order (
   item_id INT UNSIGNED NOT NULL,
   quantity INT UNSIGNED NOT NULL,
   status_id INT UNSIGNED NOT NULL DEFAULT 1,
-  course_progress INT DEFAULT NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (staff_id) REFERENCES staff (id),
   FOREIGN KEY (table_id) REFERENCES dinner_table (id),
