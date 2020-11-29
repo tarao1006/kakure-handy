@@ -26,9 +26,26 @@ func (o *Order) Create(params []model.OrderParam) ([]model.Order, error) {
 		return nil, model.TableIsEndedError{TableID: params[0].TableID}
 	}
 
+	newParams := make([]model.OrderParam, 0)
+	for _, param := range params {
+		newParams = append(newParams, param)
+		if model.IsCourse(param.ItemID) {
+			itemIDs := model.COURSE_ITEM_IDs[param.ItemID]
+			for _, ID := range itemIDs {
+				newParams = append(newParams, model.OrderParam{
+					TableID:  param.TableID,
+					StaffID:  param.StaffID,
+					ItemID:   ID,
+					Quantity: param.Quantity,
+					StatusID: model.ORDER_STATUS_PENDING,
+				})
+			}
+		}
+	}
+
 	IDs := make([]int64, 0)
 	if err := dbutil.TXHandler(o.db, func(tx *sqlx.Tx) error {
-		for _, param := range params {
+		for _, param := range newParams {
 			result, err := repository.CreateOrder(tx, &param)
 			if err != nil {
 				return err

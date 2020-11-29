@@ -2,7 +2,7 @@ package model
 
 const APPETIZER_ID int64 = 27
 
-var COURSE_ITEM_IDs = []int64{
+var COURSE_IDs = []int64{
 	123,
 	124,
 	125,
@@ -12,8 +12,18 @@ var COURSE_ITEM_IDs = []int64{
 	129,
 }
 
+var COURSE_ITEM_IDs = map[int64][]int64{
+	123: {130, 131, 132, 133, 134, 135, 136},
+	124: {137, 138, 139, 140, 146, 136},
+	125: {137, 138, 139, 141, 146, 136},
+	126: {137, 138, 139, 142, 146, 136},
+	127: {137, 138, 139, 143, 146, 136},
+	128: {137, 138, 139, 144, 146, 136},
+	129: {137, 138, 139, 145, 146, 136},
+}
+
 func IsCourse(ID int64) bool {
-	for _, course_id := range COURSE_ITEM_IDs {
+	for _, course_id := range COURSE_IDs {
 		if ID == course_id {
 			return true
 		}

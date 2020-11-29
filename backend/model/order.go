@@ -5,6 +5,11 @@ import (
 	"time"
 )
 
+const ORDER_STATUS_ORDERED int64 = 1
+const ORDER_STATUS_SERVED int64 = 2
+const ORDER_STATUS_CANCELLED int64 = 3
+const ORDER_STATUS_PENDING int64 = 4
+
 type Order struct {
 	ID        int64     `json:"id"`
 	TableID   int64     `json:"table_id"`
