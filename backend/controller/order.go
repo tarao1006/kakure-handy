@@ -97,8 +97,10 @@ func (o *Order) Next(_ http.ResponseWriter, r *http.Request) (int, interface{}, 
 	}
 
 	orderService := service.NewOrder(o.db)
-	order, err := orderService.Next(ID)
-	if err != nil {
+	order, progressErr := orderService.Next(ID)
+	if e, ok := progressErr.(model.IsNotCourseError); ok {
+		return http.StatusBadRequest, nil, e
+	} else if progressErr != nil {
 		return http.StatusInternalServerError, nil, err
 	}
 

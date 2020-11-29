@@ -109,7 +109,7 @@ func (o *Order) Next(ID int64) (*model.Order, error) {
 	}
 
 	if nowOrder.Item.Category.CategoryTypeID != model.CATEGORY_COURSE_ID {
-		return nil, errors.New("valid only for course")
+		return nil, model.IsNotCourseError{}
 	}
 
 	if err := dbutil.TXHandler(o.db, func(tx *sqlx.Tx) error {

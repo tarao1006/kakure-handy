@@ -52,6 +52,12 @@ func (e TableIsEndedError) Error() string {
 	return fmt.Sprintf("table id %d is ended", e.TableID)
 }
 
+type IsNotCourseError struct{}
+
+func (e IsNotCourseError) Error() string {
+	return "valid only for course"
+}
+
 func ConvertToOrder(order OrderDTO) Order {
 	var courseProgress int64 = 0
 	if order.CourseProgress.Valid {
