@@ -89,3 +89,12 @@ func (a *Order) Update(_ http.ResponseWriter, r *http.Request) (int, interface{}
 
 	return http.StatusOK, orderDetail, nil
 }
+
+func (o *Order) Next(_ http.ResponseWriter, r *http.Request) (int, interface{}, error) {
+	_, err := httputil.ExtractID(mux.Vars(r), "id")
+	if err != nil {
+		return http.StatusBadRequest, nil, errors.New("required parameter is missing")
+	}
+
+	return 200, nil, nil
+}

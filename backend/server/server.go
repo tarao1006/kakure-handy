@@ -76,6 +76,8 @@ func (s *Server) Route() http.Handler {
 	r.Methods(http.MethodGet).Path("/table/{id:[0-9]+}/bill").Handler(AppHandler{billController.Show})
 	r.Methods(http.MethodDelete).Path("/table/{id:[0-9]+}/bill").Handler(AppHandler{billController.Delete})
 
+	r.Methods(http.MethodPut).Path("/order/{id}/next").Handler(AppHandler{orderController.Next})
+
 	r.Methods(http.MethodGet).Path("/item").Handler(AppHandler{itemController.Index})
 
 	r.Methods(http.MethodGet).Path("/room/available").Handler(AppHandler{roomController.Available})

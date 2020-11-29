@@ -5,6 +5,7 @@ export interface Order {
   id: number;
   tableId: number;
   staffId: number;
+  courseProgress: number;
   quantity: number;
   createdAt: Date;
   item: Item;
@@ -15,21 +16,23 @@ export interface OrderDTO {
   id: number;
   table_id: number;
   staff_id: number;
+  course_progress: number;
   quantity: number;
   created_at: string;
   item: ItemDTO;
   status: Status;
 }
 
-export const convertToOrder = (object: OrderDTO): Order => {
+export const convertToOrder = (order: OrderDTO): Order => {
   return {
-    id: object.id,
-    tableId: object.table_id,
-    staffId: object.staff_id,
-    quantity: object.quantity,
-    createdAt: new Date(object.created_at),
-    item: convertToItem(object.item),
-    status: object.status
+    id: order.id,
+    tableId: order.table_id,
+    staffId: order.staff_id,
+    courseProgress: order.course_progress,
+    quantity: order.quantity,
+    createdAt: new Date(order.created_at),
+    item: convertToItem(order.item),
+    status: order.status
   }
 }
 
