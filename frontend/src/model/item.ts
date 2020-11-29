@@ -21,15 +21,15 @@ export class Item {
   };
 
   isFood = (): boolean => {
-    return this.category.id === FOOD_CATEGORY_ID;
+    return this.category.categoryTypeId === FOOD_CATEGORY_ID;
   };
 
   isDrink = (): boolean => {
-    return this.category.id === DRINK_CATEGORY_ID;
+    return this.category.categoryTypeId === DRINK_CATEGORY_ID;
   };
 
   isCourse = (): boolean => {
-    return this.category.id === COURSE_CATEGORY_ID;
+    return this.category.categoryTypeId === COURSE_CATEGORY_ID;
   };
 }
 

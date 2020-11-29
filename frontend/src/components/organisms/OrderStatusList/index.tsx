@@ -23,17 +23,26 @@ export const OrderStatusList = ({
   const [orderedOrders, setOrderedOrders] = useState<Order[]>([]);
   const [servedOrders, setServedOrders] = useState<Order[]>([]);
   const [cancelledOrders, setCancelledOrders] = useState<Order[]>([]);
+  const [courseOrders, setCourseOrders] = useState<Order[]>();
 
   useEffect(() => {
     let ordersByStatus = {
       "ordered": [],
       "served": [],
-      "cancelled": []
+      "cancelled": [],
+      "course": []
     }
-    orders.forEach(order => ordersByStatus[order.status.status].push(order));
+    orders.forEach(order => {
+      if (order.item.isCourse() && order.status.status === "ordered") {
+        ordersByStatus["course"].push(order);
+      } else {
+        ordersByStatus[order.status.status].push(order);
+      }
+    });
     setOrderedOrders(ordersByStatus["ordered"]);
     setServedOrders(ordersByStatus["served"]);
     setCancelledOrders(ordersByStatus["cancelled"]);
+    setCourseOrders(ordersByStatus["course"]);
     setIsLoading(false);
   }, [orders]);
 
@@ -55,6 +64,18 @@ export const OrderStatusList = ({
                 />
               }
               collapsed={orderedOrders.length === 0}
+            />
+            <FolderListItem
+              title={`コース (${courseOrders.length} 件)`}
+              collapsedContent={
+                <OrderList
+                  disabled={disabled}
+                  orders={courseOrders}
+                  handleServed={handleServed}
+                  handleCancel={handleCancel}
+                  handleOrdered={handleOrdered}
+                />
+              }
             />
             <FolderListItem
               title={`提供済 (${servedOrders.length} 件)`}
