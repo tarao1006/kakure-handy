@@ -1,6 +1,7 @@
 import { Category, CategoryDTO } from '@model';
 export const FOOD_CATEGORY_ID = 1;
 export const DRINK_CATEGORY_ID = 2;
+export const COURSE_CATEGORY_ID = 3;
 export const MIN_ORDER_COUNT = 0;
 export const MAX_ORDER_COUNT = 20;
 
