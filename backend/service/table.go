@@ -25,23 +25,12 @@ func (t *Table) Create(params *model.TableParam) (*model.Table, error) {
 	occupiedRoomIDs := model.OccupiedRoomIDs(tables)
 	availableRoomIDBit := model.AvailableRoomIDBit(occupiedRoomIDs)
 
-	if params.RoomID&availableRoomIDBit != params.RoomID {
+	if !params.Available(availableRoomIDBit) {
 		room, err := repository.FindRoomByID(t.db, params.RoomID)
 		if err != nil {
 			return nil, err
 		}
 		return nil, model.RoomUnavailableError{RoomName: room.Name}
-	}
-
-	for _, table := range tables {
-		room, err := repository.FindRoomByID(t.db, params.RoomID)
-		if err != nil {
-			return nil, err
-		}
-
-		if (table.Room.Name == room.Name) && !table.IsEnded {
-			return nil, model.RoomUnavailableError{RoomName: table.Room.Name}
-		}
 	}
 
 	if err := dbutil.TXHandler(t.db, func(tx *sqlx.Tx) error {

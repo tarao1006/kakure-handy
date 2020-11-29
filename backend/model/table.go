@@ -37,6 +37,10 @@ type TableParam struct {
 	PersonCount int64 `json:"person_count"`
 }
 
+func (tp *TableParam) Available(availableBit int64) bool {
+	return tp.RoomID&availableBit == tp.RoomID
+}
+
 type RoomUnavailableError struct {
 	RoomName string
 }
