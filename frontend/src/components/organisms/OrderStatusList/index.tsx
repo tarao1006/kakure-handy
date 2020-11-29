@@ -33,7 +33,7 @@ export const OrderStatusList = ({
       "course": []
     }
     orders.forEach(order => {
-      if (order.item.isCourse() && order.status.status === "ordered") {
+      if (order.item.isCourse() && order.status.status === "ordered" || order.status.status === "pending") {
         ordersByStatus["course"].push(order);
       } else {
         ordersByStatus[order.status.status].push(order);

@@ -43,6 +43,7 @@ func (o *Order) Create(_ http.ResponseWriter, r *http.Request) (int, interface{}
 			Quantity: param.Quantity,
 			StaffID:  user.ID,
 			TableID:  tableID,
+			StatusID: model.ORDER_STATUS_ORDERED,
 		})
 	}
 	orderService := service.NewOrder(o.db)

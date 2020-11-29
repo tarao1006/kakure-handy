@@ -37,7 +37,7 @@ func FindOrderByID(db *sqlx.DB, ID int64) (*model.Order, error) {
 }
 
 func CreateOrder(db *sqlx.Tx, param *model.OrderParam) (result sql.Result, err error) {
-	stmt, err := db.Prepare("INSERT INTO cuisine_order (staff_id, table_id, item_id, quantity) VALUES (?,?,?,?)")
+	stmt, err := db.Prepare("INSERT INTO cuisine_order (staff_id, table_id, item_id, quantity, status_id) VALUES (?,?,?,?,?)")
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func CreateOrder(db *sqlx.Tx, param *model.OrderParam) (result sql.Result, err e
 		}
 	}()
 
-	return stmt.Exec(param.StaffID, param.TableID, param.ItemID, param.Quantity)
+	return stmt.Exec(param.StaffID, param.TableID, param.ItemID, param.Quantity, param.StatusID)
 }
 
 func UpdateOrder(db *sqlx.Tx, ID int64, statusID int64) (result sql.Result, err error) {
