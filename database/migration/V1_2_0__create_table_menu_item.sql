@@ -19,6 +19,12 @@ CREATE TABLE menu_item (
   FOREIGN KEY (category_id) REFERENCES item_category(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE course_item (
+  item_id INT UNSIGNED NOT NULL,
+  contents TEXT NOT NULL,
+  FOREIGN KEY (item_id) REFERENCES menu_item(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- 将来使う予定
 CREATE TABLE item_price (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

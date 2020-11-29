@@ -25,6 +25,14 @@ INSERT INTO menu_item (category_id, name, price) VALUES (5, "ほうじ茶プリ�
 INSERT INTO menu_item (category_id, name, price) VALUES (5, "抹茶アイス", 450);
 INSERT INTO menu_item (category_id, name, price) VALUES (5, "黒ごまアイス", 450);
 INSERT INTO menu_item (category_id, name, price) VALUES (6, "付き出し", 600);
+INSERT INTO menu_item (category_id, name, price) VALUES (17, "鯛しゃぶ", 6500);
+INSERT INTO menu_item (category_id, name, price) VALUES (17, "国産豚のハリハリ鍋", 5000);
+INSERT INTO menu_item (category_id, name, price) VALUES (17, "京赤地鶏のすきやき", 5500);
+INSERT INTO menu_item (category_id, name, price) VALUES (17, "京赤地鶏の水炊き", 5500);
+INSERT INTO menu_item (category_id, name, price) VALUES (17, "国産牛のすき焼き", 6300);
+INSERT INTO menu_item (category_id, name, price) VALUES (17, "国産牛のしゃぶ", 6300);
+INSERT INTO menu_item (category_id, name, price) VALUES (6, "細めん 一人前", 300);
+INSERT INTO menu_item (category_id, name, price) VALUES (6, "雑炊 一人前", 500);
 INSERT INTO menu_item (category_id, name, price) VALUES (7, "生ビール(キリン一番絞り) <中>", 700);
 INSERT INTO menu_item (category_id, name, price) VALUES (7, "瓶ビール(クラシックラガー)", 700);
 INSERT INTO menu_item (category_id, name, price) VALUES (7, "キリン零ICHI(ノンアルコール)", 600);
@@ -112,3 +120,10 @@ INSERT INTO menu_item (category_id, name, price) VALUES (14, "シャブリ", 630
 INSERT INTO menu_item (category_id, name, price) VALUES (14, "ヴィーニ・ヴェルト・ルージュ", 5000);
 INSERT INTO menu_item (category_id, name, price) VALUES (14, "ドメーヌ・ド・ラ・ガランス キュヴェ・風(KAZE)ルージュ", 6000);
 INSERT INTO menu_item (category_id, name, price) VALUES (14, "レ ザルミエール", 8500);
+INSERT INTO menu_item (category_id, name, price) VALUES (16, "おすすめお任せコース", 6000);
+INSERT INTO menu_item (category_id, name, price) VALUES (16, "鯛しゃぶとお料理のコース", 6000);
+INSERT INTO menu_item (category_id, name, price) VALUES (16, "国産牛のしゃぶしゃぶとお料理のコース", 6300);
+INSERT INTO menu_item (category_id, name, price) VALUES (16, "国産牛のすきやきとお料理のコース", 6300);
+INSERT INTO menu_item (category_id, name, price) VALUES (16, "京赤地鶏の水炊きとお料理のコース", 5500);
+INSERT INTO menu_item (category_id, name, price) VALUES (16, "京赤地鶏のすきやきとお料理のコース", 5500);
+INSERT INTO menu_item (category_id, name, price) VALUES (16, "国産豚のハリハリ鍋とお料理のコース", 5000);

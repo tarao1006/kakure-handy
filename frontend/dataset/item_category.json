@@ -73,5 +73,15 @@
     "id": 15,
     "category_type_id": 2,
     "name": "その他"
+  },
+  {
+    "id": 16,
+    "category_type_id": 3,
+    "name": "コース"
+  },
+  {
+    "id": 17,
+    "category_type_id": 1,
+    "name": "鍋"
   }
 ]

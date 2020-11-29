@@ -15,6 +15,7 @@ NAMES = {
     'item_category_type',
     'item_category',
     'menu_item',
+    'course_item',
     'order_status',
     'room'
 }
@@ -23,6 +24,7 @@ MIGRATION_PREFIX = {
     'item_category_type': 'V1_2_1',
     'item_category': 'V1_2_2',
     'menu_item': 'V1_2_3',
+    'course_item': 'V1_2_4',
     'order_status': 'V1_3_1',
     'room': 'V1_4_1'
 }

@@ -135,6 +135,46 @@
     "price": 600
   },
   {
+    "category_id": 17,
+    "name": "鯛しゃぶ",
+    "price": 6500
+  },
+  {
+    "category_id": 17,
+    "name": "国産豚のハリハリ鍋",
+    "price": 5000
+  },
+  {
+    "category_id": 17,
+    "name": "京赤地鶏のすきやき",
+    "price": 5500
+  },
+  {
+    "category_id": 17,
+    "name": "京赤地鶏の水炊き",
+    "price": 5500
+  },
+  {
+    "category_id": 17,
+    "name": "国産牛のすき焼き",
+    "price": 6300
+  },
+  {
+    "category_id": 17,
+    "name": "国産牛のしゃぶ",
+    "price": 6300
+  },
+  {
+    "category_id": 6,
+    "name": "細めん 一人前",
+    "price": 300
+  },
+  {
+    "category_id": 6,
+    "name": "雑炊 一人前",
+    "price": 500
+  },
+  {
     "category_id": 7,
     "name": "生ビール(キリン一番絞り) <中>",
     "price": 700
@@ -568,5 +608,40 @@
     "category_id": 14,
     "name": "レ ザルミエール",
     "price": 8500
+  },
+  {
+    "category_id": 16,
+    "name": "おすすめお任せコース",
+    "price": 6000
+  },
+  {
+    "category_id": 16,
+    "name": "鯛しゃぶとお料理のコース",
+    "price": 6000
+  },
+  {
+    "category_id": 16,
+    "name": "国産牛のしゃぶしゃぶとお料理のコース",
+    "price": 6300
+  },
+  {
+    "category_id": 16,
+    "name": "国産牛のすきやきとお料理のコース",
+    "price": 6300
+  },
+  {
+    "category_id": 16,
+    "name": "京赤地鶏の水炊きとお料理のコース",
+    "price": 5500
+  },
+  {
+    "category_id": 16,
+    "name": "京赤地鶏のすきやきとお料理のコース",
+    "price": 5500
+  },
+  {
+    "category_id": 16,
+    "name": "国産豚のハリハリ鍋とお料理のコース",
+    "price": 5000
   }
 ]
