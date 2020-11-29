@@ -3,7 +3,7 @@ export { LogIn } from './LogIn';
 export { MailSent } from './MailSent';
 export { NewOrder } from './NewOrder';
 export { NewTable } from './NewTable';
-export { OrderSuccess } from './OrderSuccess';
+export { NewOrderSuccess } from './NewOrderSuccess';
 export { TableDetail } from './Table';
 export { Tables } from './Tables';
 export { Top } from './Top';

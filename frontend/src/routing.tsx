@@ -7,7 +7,6 @@ import {
 import { Provider } from 'react-redux';
 import { AuthProvider, AuthContext } from './contexts/auth';
 import { store } from './reducers';
-import { Header } from '@organisms';
 import { Loading } from '@molecules';
 import {
   ForgetPassword,
@@ -15,7 +14,7 @@ import {
   MailSent,
   NewOrder,
   NewTable,
-  OrderSuccess,
+  NewOrderSuccess,
   TableDetail,
   Tables,
 } from '@pages';
@@ -100,7 +99,7 @@ const Routing = () => {
             <Route
               path='/order-success'
               exact
-              component={OrderSuccess}
+              component={NewOrderSuccess}
             />
             <LogInRoute />
           </Layout>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Completed } from '@templates';
 
-export const OrderSuccess = () => {
+export const NewOrderSuccess = () => {
 
   return (
     <Completed
