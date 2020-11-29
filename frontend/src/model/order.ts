@@ -15,7 +15,6 @@ export interface OrderDTO {
   id: number;
   table_id: number;
   staff_id: number;
-  course_progress: number;
   quantity: number;
   created_at: string;
   item: ItemDTO;
