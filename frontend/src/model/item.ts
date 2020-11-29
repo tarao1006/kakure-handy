@@ -27,6 +27,10 @@ export class Item {
   isDrink = (): boolean => {
     return this.category.id === DRINK_CATEGORY_ID;
   };
+
+  isCourse = (): boolean => {
+    return this.category.id === COURSE_CATEGORY_ID;
+  };
 }
 
 export interface ItemDTO {
