@@ -37,14 +37,14 @@ export const exitTable = async (idToken: string, id: string): Promise<TableDTO> 
   return base.ToJson<TableDTO>(res);
 }
 
-export const createTable = async (idToken: string, roomId: number): Promise<TableDTO> => {
+export const createTable = async (idToken: string, roomId: number, personCount: number): Promise<TableDTO> => {
   const res = await fetch(`${base.BACKEND_URL}/table`, {
     method: "POST",
     headers: new Headers({
       Authorization: `Bearer ${idToken}`
     }),
     credentials: "same-origin",
-    body: JSON.stringify({"room_id": roomId})
+    body: JSON.stringify({"room_id": roomId, "person_count": personCount})
   })
 
   return base.ToJson<TableDTO>(res);

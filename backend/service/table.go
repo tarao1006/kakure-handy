@@ -1,6 +1,8 @@
 package service
 
 import (
+	"log"
+
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
 	"github.com/tarao1006/kakure-handy/dbutil"
@@ -44,6 +46,16 @@ func (t *Table) Create(params *model.TableParam) (*model.Table, error) {
 		}
 
 		params.ID = id
+
+		if _, err := repository.CreateOrder(tx, &model.OrderParam{
+			TableID:  params.ID,
+			StaffID:  params.StaffID,
+			ItemID:   model.APPETIZER_ID,
+			Quantity: params.PersonCount,
+		}); err != nil {
+			log.Println(err)
+			return err
+		}
 
 		return err
 	}); err != nil {

@@ -1,5 +1,7 @@
 package model
 
+const APPETIZER_ID int64 = 27
+
 type Item struct {
 	ID       int64    `json:"id"`
 	Name     string   `json:"name"`

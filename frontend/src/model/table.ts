@@ -4,6 +4,7 @@ import { Room } from './room';
 
 export class Table {
   id: number;
+  personCount: number;
   isReserved: boolean;
   isStarted: boolean;
   isEnded: boolean;
@@ -16,6 +17,7 @@ export class Table {
 
   constructor(
     id: number,
+    personCount: number,
     isReserved: boolean,
     isStarted: boolean,
     isEnded: boolean,
@@ -27,6 +29,7 @@ export class Table {
     orders: Order[]
   ) {
     this.id = id;
+    this.personCount = personCount;
     this.isReserved = isReserved;
     this.isStarted = isStarted;
     this.isEnded = isEnded;
@@ -45,6 +48,7 @@ export class Table {
 
 export interface TableDTO {
   id: number;
+  person_count: number;
   is_reserved: boolean;
   is_started: boolean;
   is_ended: boolean;
@@ -59,6 +63,7 @@ export interface TableDTO {
 export const convertToTable = (table: TableDTO): Table => {
   return new Table(
     table.id,
+    table.person_count,
     table.is_reserved,
     table.is_started,
     table.is_ended,

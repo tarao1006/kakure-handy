@@ -34,7 +34,7 @@ export const NewTableTemplate = ({availableRooms}: NewTableTemplateProps): JSX.E
     event.preventDefault();
 
     const token = await currentUser.getIdToken();
-    await createTable(token, targetRoom.id);
+    await createTable(token, targetRoom.id, count);
     history.push('/');
   }
 

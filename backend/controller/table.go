@@ -50,6 +50,12 @@ func (t *Table) Create(_ http.ResponseWriter, r *http.Request) (int, interface{}
 		return http.StatusBadRequest, nil, err
 	}
 
+	user, err := httputil.GetUserFromContext(r.Context())
+	if err != nil {
+		return http.StatusInternalServerError, nil, err
+	}
+	params.StaffID = user.ID
+
 	tableService := service.NewTable(t.db)
 	table, err := tableService.Create(params)
 	if e, ok := err.(model.RoomUnavailableError); ok {
