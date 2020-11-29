@@ -23,6 +23,9 @@ mysql/drop:
 flyway/baseline:
 	$(DOCKER_COMPOSE) run --rm $(MIGRATION_SERVICE) $(FLYWAY_CONF) baseline
 
+flyway/info:
+	$(DOCKER_COMPOSE) run --rm $(MIGRATION_SERVICE) $(FLYWAY_CONF) info
+
 flyway/clean:
 	$(DOCKER_COMPOSE) run --rm $(MIGRATION_SERVICE) $(FLYWAY_CONF) clean
 

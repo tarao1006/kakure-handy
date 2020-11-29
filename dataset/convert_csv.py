@@ -20,11 +20,11 @@ NAMES = {
 }
 
 MIGRATION_PREFIX = {
-    'item_category_type': 'V4',
-    'item_category': 'V5',
-    'menu_item': 'V6',
-    'order_status': 'V7',
-    'room': 'V8'
+    'item_category_type': 'V1_2_1',
+    'item_category': 'V1_2_2',
+    'menu_item': 'V1_2_3',
+    'order_status': 'V1_3_1',
+    'room': 'V1_4_1'
 }
 
 
@@ -62,4 +62,4 @@ if __name__ == "__main__":
             print(f'INSERT INTO {name} ({columns}) VALUES ({values});', file=f)
 
     shutil.copy(json_file, FRONTEND_DIR / json_file.name)
-    shutil.copy(sql_file, MIGRATION_DIR / f'{MIGRATION_PREFIX[name]}__create_{name}_data.sql')
+    shutil.copy(sql_file, MIGRATION_DIR / f'{MIGRATION_PREFIX[name]}__insert_data_{name}.sql')

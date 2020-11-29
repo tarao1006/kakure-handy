@@ -1,11 +1,3 @@
-CREATE TABLE room (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  name VARCHAR(30) NOT NULL,
-  capacity INT UNSIGNED NOT NULL,
-  PRIMARY KEY (id),
-  UNIQUE KEY (name)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 INSERT INTO room (id, name, capacity) VALUES (1, "1", 5);
 INSERT INTO room (id, name, capacity) VALUES (2, "2", 5);
 INSERT INTO room (id, name, capacity) VALUES (3, "1, 2", 10);
