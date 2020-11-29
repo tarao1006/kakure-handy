@@ -22,6 +22,17 @@ func (t *Table) Create(params *model.TableParam) (*model.Table, error) {
 		return nil, err
 	}
 
+	occupiedRoomIDs := model.OccupiedRoomIDs(tables)
+	availableRoomIDBit := model.AvailableRoomIDBit(occupiedRoomIDs)
+
+	if params.RoomID&availableRoomIDBit != params.RoomID {
+		room, err := repository.FindRoomByID(t.db, params.RoomID)
+		if err != nil {
+			return nil, err
+		}
+		return nil, model.RoomUnavailableError{RoomName: room.Name}
+	}
+
 	for _, table := range tables {
 		room, err := repository.FindRoomByID(t.db, params.RoomID)
 		if err != nil {

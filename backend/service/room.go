@@ -19,13 +19,6 @@ func (r *Room) AvailableRoom() ([]int64, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	occupiedRoomIDs := make([]int64, 0)
-	for _, table := range tables {
-		if !table.IsEnded {
-			occupiedRoomIDs = append(occupiedRoomIDs, table.Room.ID)
-		}
-	}
-
+	occupiedRoomIDs := model.OccupiedRoomIDs(tables)
 	return model.AvailableRoomIDs(occupiedRoomIDs), nil
 }

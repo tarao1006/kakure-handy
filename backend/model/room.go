@@ -9,9 +9,9 @@ type Room struct {
 	Capacity int64  `db:"capacity" json:"capacity"`
 }
 
-func AvailableRoomIDs(occupiedTableIDs []int64) []int64 {
+func AvailableRoomIDs(occupiedRoomIDs []int64) []int64 {
 	var filled int64 = 0
-	for _, ID := range occupiedTableIDs {
+	for _, ID := range occupiedRoomIDs {
 		filled |= ID
 	}
 
@@ -23,4 +23,12 @@ func AvailableRoomIDs(occupiedTableIDs []int64) []int64 {
 		}
 	}
 	return res
+}
+
+func AvailableRoomIDBit(occupiedRoomIDs []int64) int64 {
+	var filled int64 = 0
+	for _, ID := range occupiedRoomIDs {
+		filled |= ID
+	}
+	return ROOM_AVAILABLE_BIT_MASK ^ filled
 }

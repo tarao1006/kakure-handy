@@ -78,3 +78,13 @@ func ConvertToTable(table TableDTO, orders []Order) Table {
 		Orders: orders,
 	}
 }
+
+func OccupiedRoomIDs(tables []Table) []int64 {
+	res := make([]int64, 0)
+	for _, table := range tables {
+		if !table.IsEnded {
+			res = append(res, table.Room.ID)
+		}
+	}
+	return res
+}
