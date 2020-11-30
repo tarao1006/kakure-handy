@@ -4,4 +4,4 @@ CREATE TABLE room (
   capacity INT UNSIGNED NOT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY (name)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+);

@@ -5,4 +5,4 @@ CREATE TABLE bill (
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (table_id) REFERENCES dinner_table (id),
   PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+);
