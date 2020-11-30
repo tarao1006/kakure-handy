@@ -26,36 +26,39 @@ func (o *Order) Create(params []model.OrderParam) ([]model.Order, error) {
 		return nil, model.TableIsEndedError{TableID: params[0].TableID}
 	}
 
-	newParams := make([]model.OrderParam, 0)
-	for _, param := range params {
-		newParams = append(newParams, param)
-		if model.IsCourse(param.ItemID) {
-			itemIDs := model.COURSE_ITEM_IDs[param.ItemID]
-			for _, ID := range itemIDs {
-				newParams = append(newParams, model.OrderParam{
-					TableID:  param.TableID,
-					StaffID:  param.StaffID,
-					ItemID:   ID,
-					Quantity: param.Quantity,
-					StatusID: model.ORDER_STATUS_PENDING,
-				})
-			}
-		}
-	}
-
 	IDs := make([]int64, 0)
 	if err := dbutil.TXHandler(o.db, func(tx *sqlx.Tx) error {
-		for _, param := range newParams {
+		for _, param := range params {
 			result, err := repository.CreateOrder(tx, &param)
 			if err != nil {
 				return err
 			}
-			id, err := result.LastInsertId()
+			ID, err := result.LastInsertId()
 			if err != nil {
 				return err
 			}
+			IDs = append(IDs, ID)
 
-			IDs = append(IDs, id)
+			if itemIDs, ok := model.COURSE_ITEM_IDs[param.ItemID]; ok {
+				for _, itemID := range itemIDs {
+					result, err := repository.CreateOrder(tx, &model.OrderParam{
+						TableID:       param.TableID,
+						StaffID:       param.StaffID,
+						ItemID:        itemID,
+						ParentOrderID: ID,
+						Quantity:      param.Quantity,
+						StatusID:      model.ORDER_STATUS_PENDING,
+					})
+					if err != nil {
+						return err
+					}
+					ID, err := result.LastInsertId()
+					if err != nil {
+						return err
+					}
+					IDs = append(IDs, ID)
+				}
+			}
 		}
 
 		return err
