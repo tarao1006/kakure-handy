@@ -25,6 +25,7 @@ SELECT
   cuisine_order.table_id,
   cuisine_order.staff_id,
   cuisine_order.quantity,
+  cuisine_order.parent_order_id,
   cuisine_order.created_at,
   menu_item_category_type.id AS item_id,
   menu_item_category_type.name AS item_name,
